@@ -1057,6 +1057,8 @@ void GameWidget::loadMap(QString mapName)
     else
         qDebug() << "Completed load map.";
 
+    field.setFaction(&faction);
+
     mapLoad = true;
     tileSet.subRects.clear();
     tileSets.clear();
