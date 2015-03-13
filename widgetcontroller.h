@@ -1,0 +1,39 @@
+#ifndef WIDGETCONTROLLER_H
+#define WIDGETCONTROLLER_H
+
+#include <QWidget>
+#include <QStackedWidget>
+#include <QVBoxLayout>
+#include <QPaintEvent>
+
+#include "mainmenu.h"
+#include "choosemapmenu.h"
+#include "optionmenu.h"
+#include "gamewidget.h"
+
+class WidgetController : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit WidgetController(QWidget *parent = 0);
+
+private:
+    QStackedWidget* stackedWidget;
+
+    void paintEvent(QPaintEvent* );
+
+    void loadMap(GameWidget *gameWidget);
+
+private slots:
+    void showMainMenu();
+
+    void showChooseMapMenu();
+    void showOptionMenu();
+
+    void loadMap1();
+    void loadMap2();
+    void loadMap3();
+    void closeWidget();
+};
+
+#endif // WIDGETCONTROLLER_H
