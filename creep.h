@@ -25,6 +25,8 @@ public:
     DefaultUnit* defUnit;
 
     Creep();
+
+    QPixmap getAnimationInformation(int *lastX, int *lastY, int *animationCurrIter, int *animationMaxIter);
 };
 
 #endif // CREEP_H

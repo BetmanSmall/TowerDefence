@@ -21,9 +21,9 @@ GameWidget::GameWidget(QWidget *parent) :
     zoomMaxSizeCell = 256;
     zoomMinSizeCell = 48;
 
-    defaultNumCreateCreeps = 15;
+    defaultNumCreateCreeps = 100;
 
-    creepsMove_TimerMilliSec = 1000;
+    creepsMove_TimerMilliSec = 100;
     towersAttack_TimerMilliSec = 1000;
     scanMouseMove_TimerMilliSec = 100;
 
@@ -90,7 +90,10 @@ void GameWidget::timerEvent(QTimerEvent *event)
 
     if(timerId == creepsMove_TimerId)
     {
-        field.setCreep();
+        if(test == 0)
+            field.setCreep();
+        test = test<4 ? test+1 : 0;
+
         if(int result = field.stepAllCreeps())
         {
             if(result == 2)
@@ -322,29 +325,51 @@ void GameWidget::drawCreeps()
     {
         for(int x = 0; x < fieldX; x++)
         {
-            int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
-            int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;// - sizeCell/2;//+1;
-            int localSizeCell = sizeCell;//-1;
-            int localSpaceCell = sizeCell/4;
-
             if(int num = field.containCreep(x, y))
             {
-                QColor color;
-                switch (num) {
-                case 1:
-                    color = QColor(255, 0, 0);
-                    break;
-                case 2:
-                    color = QColor(0, 255, 0);
-                    break;
-                case 3:
-                    color = QColor(0, 0, 255);
-                    break;
-                default:
-                    break;
+                int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
+                int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;// - sizeCell/2;//+1;
+                int localSizeCell = sizeCell;//-1;
+                int localSpaceCell = sizeCell/3;
+
+//                QColor color;
+//                switch (num) {
+//                case 1:
+//                    color = QColor(255, 0, 0);
+//                    break;
+//                case 2:
+//                    color = QColor(0, 255, 0);
+//                    break;
+//                case 3:
+//                    color = QColor(0, 0, 255);
+//                    break;
+//                default:
+//                    break;
+//                }
+//                p.fillRect(pxlsX+1 + localSpaceCell, pxlsY+1 + localSpaceCell, localSizeCell-1 - 2*(localSpaceCell), localSizeCell-1 - 2*(localSpaceCell), color);
+
+                std::vector<Creep*> creeps = field.getCreeps(x, y);
+                for(int k = 0; k < creeps.size(); k++)
+                {
+                    int lastX, lastY;
+                    int animationCurrIter, animationMaxIter;
+                    QPixmap pixmap = creeps[k]->getAnimationInformation(&lastX, &lastY, &animationCurrIter, &animationMaxIter);
+
+                    pxlsX = mainCoorMapX + spaceWidget + x*sizeCell - localSpaceCell;
+                    pxlsY = mainCoorMapY + spaceWidget + y*sizeCell - localSpaceCell;
+
+                    if(lastX < x)
+                        pxlsX -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                    if(lastX > x)
+                        pxlsX += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                    if(lastY < y)
+                        pxlsY -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                    if(lastY > y)
+                        pxlsY += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+
+                    p.drawPixmap(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2, pixmap);
+//                    p.drawRect(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2);
                 }
-                p.fillRect(pxlsX+1 + localSpaceCell, pxlsY+1 + localSpaceCell, localSizeCell-1 - 2*(localSpaceCell), localSizeCell-1 - 2*(localSpaceCell), color);
-                p.drawPixmap(pxlsX, pxlsY, localSizeCell/* + sizeCell/2*/, localSizeCell/* + sizeCell/2*/, field.getCreepPixmap(x, y));
             }
         }
     }
@@ -488,7 +513,7 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
             field.createExitPoint(mouseX,mouseY);
             if(field.isSetSpawnPoint())
                 startTimer_CreepsMoveAndTowerAttack();
-            test = 1;
+//            test = 1;
 
 //            field.setCreep(mouseX, mouseY);
         }

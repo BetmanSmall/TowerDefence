@@ -59,26 +59,36 @@
    <terrain name="idle_right" tile="2"/>
    <terrain name="idle_down_right" tile="3"/>
    <terrain name="idle_down" tile="4"/>
-   <terrain name="walk1_up" tile="5"/>
-   <terrain name="walk2_up" tile="10"/>
-   <terrain name="walk3_up" tile="15"/>
+   <terrain name="walk1_up" tile="10"/>
+   <terrain name="walk2_up" tile="5"/>
+   <terrain name="walk3_up" tile="10"/>
    <terrain name="walk4_up" tile="20"/>
-   <terrain name="walk1_up_right" tile="6"/>
-   <terrain name="walk2_up_right" tile="11"/>
-   <terrain name="walk3_up_right" tile="16"/>
+   <terrain name="walk5_up" tile="15"/>
+   <terrain name="walk6_up" tile="20"/>
+   <terrain name="walk1_up_right" tile="11"/>
+   <terrain name="walk2_up_right" tile="6"/>
+   <terrain name="walk3_up_right" tile="11"/>
    <terrain name="walk4_up_right" tile="21"/>
-   <terrain name="walk1_right" tile="7"/>
-   <terrain name="walk2_right" tile="12"/>
-   <terrain name="walk3_right" tile="17"/>
+   <terrain name="walk5_up_right" tile="16"/>
+   <terrain name="walk6_up_right" tile="21"/>
+   <terrain name="walk1_right" tile="12"/>
+   <terrain name="walk2_right" tile="7"/>
+   <terrain name="walk3_right" tile="12"/>
    <terrain name="walk4_right" tile="22"/>
-   <terrain name="walk1_down_right" tile="8"/>
-   <terrain name="walk2_down_right" tile="13"/>
-   <terrain name="walk3_down_right" tile="18"/>
+   <terrain name="walk5_right" tile="17"/>
+   <terrain name="walk6_right" tile="22"/>
+   <terrain name="walk1_down_right" tile="13"/>
+   <terrain name="walk2_down_right" tile="8"/>
+   <terrain name="walk3_down_right" tile="13"/>
    <terrain name="walk4_down_right" tile="23"/>
-   <terrain name="walk1_down" tile="9"/>
-   <terrain name="walk2_down" tile="14"/>
-   <terrain name="walk3_down" tile="19"/>
+   <terrain name="walk5_down_right" tile="18"/>
+   <terrain name="walk6_down_right" tile="23"/>
+   <terrain name="walk1_down" tile="14"/>
+   <terrain name="walk2_down" tile="9"/>
+   <terrain name="walk3_down" tile="14"/>
    <terrain name="walk4_down" tile="24"/>
+   <terrain name="walk5_down" tile="19"/>
+   <terrain name="walk6_down" tile="24"/>
    <terrain name="attack1_up" tile="25"/>
    <terrain name="attack2_up" tile="30"/>
    <terrain name="attack3_up" tile="35"/>
@@ -114,12 +124,6 @@
    <terrain name="death1_down" tile="49"/>
    <terrain name="death2_down" tile="54"/>
    <terrain name="death3_down" tile="59"/>
-  </terraintypes>
- </tileset>
- <tileset firstgid="448" name="grunt" tilewidth="72" tileheight="72">
-  <image source="textures/grunt.png" trans="ff00ff" width="360" height="864"/>
-  <terraintypes>
-   <terrain name="Creep" tile="0"/>
   </terraintypes>
  </tileset>
  <layer name="background" width="36" height="25">

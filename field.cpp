@@ -427,6 +427,14 @@ Creep* Field::getCreep(int x, int y)
 //    return field[sizeX*y + x].creep;
 }
 
+std::vector<Creep*> Field::getCreeps(int x, int y)
+{
+//    if(!field[sizeX*y + x].creeps.empty())
+        return field[sizeX*y + x].creeps;
+//    else
+//        return NULL;
+}
+
 int Field::getCreepHpInCell(int x, int y)
 {
     if(x >= 0 && x < getSizeX())

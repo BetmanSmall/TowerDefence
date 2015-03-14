@@ -1,7 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-#define CIRCLET8
+//#define CIRCLET8
 #include <iostream>
 
 #include <QPixmap>
@@ -92,6 +92,7 @@ public:
     void clearStepCell(int x, int y);
 
     Creep* getCreep(int x, int y);
+    std::vector<Creep *> getCreeps(int x, int y);
     int getCreepHpInCell(int x, int y);
 
     bool containBusy(int x, int y);
