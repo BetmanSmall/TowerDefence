@@ -136,7 +136,7 @@ bool Field::towersAttack()
 
 void Field::waveAlgorithm(int x, int y)
 {
-    qDebug() << "X: " << x << " Y: " << y;
+    qDebug() << "Field::waveAlgorithm() :: X: " << x << " Y: " << y;
     if(x == -1 && y == -1)
         if(isSetExitPoint())
         {
@@ -258,66 +258,119 @@ int Field::stepAllCreeps()
 
 int Field::stepOneCreep(int num)
 {
+    qDebug() << "Field::stepOneCreep()";
     Creep* tmpCreep = creeps.getCreep(num);
     if(tmpCreep->alive)
     {
-        int x = tmpCreep->currX;
-        int y = tmpCreep->currY;
-
-        int exitX = x, exitY = y;
-
-        int min = getNumStep(x,y);
-
-        if(min == 1)
-            return 1;
-        if(min == 0)
-            return -1;
-
-        int defaultStep = min;
-
-        for(int tmpY = -1; tmpY < 2; tmpY++)
+        if(tmpCreep->animationCurrIter < tmpCreep->animationMaxIter)
         {
-            for(int tmpX = -1; tmpX < 2; tmpX++)
-            {
-                if(!(tmpX == 0 && tmpY == 0))
-                {
-                    int num = getNumStep(x + tmpX, y + tmpY);
-                    if(num <= min && num != 0)
+            qDebug() << "tmpCreep->animationCurrIter: " << tmpCreep << "->" << tmpCreep->animationCurrIter;
+            tmpCreep->pixmap = tmpCreep->walkPixmaps[tmpCreep->animationCurrIter];
+            tmpCreep->animationCurrIter = tmpCreep->animationCurrIter+1;
+        }
+        else
+        {
+            int currX = tmpCreep->currX;
+            int currY = tmpCreep->currY;
+
+            int exitX = currX, exitY = currY;
+
+            int min = getNumStep(currX,currY);
+            if(min == 1)
+                return 1;
+            if(min == 0)
+                return -1;
+
+            int defaultStep = min;
+            //--------------Looking specific cell-----------------------
+            for(int tmpY = -1; tmpY < 2; tmpY++)
+                for(int tmpX = -1; tmpX < 2; tmpX++)
+                    if(!(tmpX == 0 && tmpY == 0))
                     {
-                        if(num == min)
-                        {
-                            if(rand()%2)
+                        int num = getNumStep(currX + tmpX, currY + tmpY);
+                        if(num <= min && num != 0)
+                            if(num == min)
                             {
-                                exitX = x + tmpX;
-                                exitY = y + tmpY;
+                                if(rand()%2)
+                                {
+                                    exitX = currX + tmpX;
+                                    exitY = currY + tmpY;
+                                }
                             }
-                        }
-                        else if(num == defaultStep-1)
-                        {
-                            exitX = x + tmpX;
-                            exitY = y + tmpY;
-                            min = num;
-                        }
+                            else if(num == defaultStep-1)
+                            {
+                                exitX = currX + tmpX;
+                                exitY = currY + tmpY;
+                                min = num;
+                            }
                     }
-                }
-            }
-        }
+            //-----------------------------------------------------------
 
-        if(exitX != x || exitY != y)
-        {
-            tmpCreep->currX = exitX;
-            tmpCreep->currY = exitY;
-            tmpCreep->number = min;
-            setCreep(exitX, exitY, tmpCreep);
-            clearCreep(x, y, tmpCreep);
-//            field[sizeX*exitY + exitX].creep = tmpCreep;
-//            field[sizeX*y + x].creep = NULL;
+            if(exitX != currX || exitY != currY)
+            {
+                qDebug() << "exitX: " << exitX << " exitY: " << exitY;
+                qDebug() << "currX: " << currX << " currY: " << currY;
+                clearCreep(currX, currY, tmpCreep);
+                tmpCreep->lastX = currX;
+                tmpCreep->lastY = currY;
+                tmpCreep->currX = exitX;
+                tmpCreep->currY = exitY;
+                tmpCreep->number = min;
+                tmpCreep->animationCurrIter = 0;
+
+                if(exitX < currX && exitY < currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_left.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_up_left;
+                }
+                else if(exitX == currX && exitY < currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_up;
+                }
+                else if(exitX > currX && exitY < currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_right.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_up_right;
+                }
+                else if(exitX < currX && exitY == currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_left.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_left;
+                }
+                else if(exitX > currX && exitY == currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_right.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_right;
+                }
+                else if(exitX < currX && exitY > currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_left.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_down_left;
+                }
+                else if(exitX == currX && exitY > currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_down;
+                }
+                else if(exitX > currX && exitY > currY)
+                {
+                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_right.size();
+                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_down_right;
+                }
+                qDebug() << "tmpCreep->animationMaxIter: " << tmpCreep << "->" << tmpCreep->animationMaxIter;
+                qDebug() << "TEST!";
+                tmpCreep->pixmap = tmpCreep->walkPixmaps[0];
+                qDebug() << "TEST2!";
+
+                setCreep(exitX, exitY, tmpCreep);
+            }
+//            else
+//            {
+//                cerr << "Bad" << endl;
+//                return false;
+//            }
         }
-//        else
-//        {
-//            cerr << "Bad" << endl;
-//            return false;
-//        }
     }
     else
         return -2;

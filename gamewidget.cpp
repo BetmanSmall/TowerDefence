@@ -449,7 +449,7 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
 //                msgBox.setDefaultButton(QMessageBox::Ok);
 
                 int ret = msgBox.exec();
-                qDebug() << "ret: " << ret;
+//                qDebug() << "ret: " << ret;
 
                 field.setTower(mouseX, mouseY, towers[ret]);
 
@@ -676,34 +676,52 @@ void GameWidget::loadMap(QString mapName)
                 tileSet.tileWidth = xmlReader.attributes().value("tilewidth").toInt();
                 tileSet.tileHeight = xmlReader.attributes().value("tileheight").toInt();
                 //qDebug() << "tileSet.firstTileID: " << tileSet.firstTileID;
-                //qDebug() << "tileSet.name: " << tileSet.name;
+                qDebug() << "tileSet.name: " << tileSet.name;
                 //qDebug() << "tileSet.spacing: " << tileSet.spacing;
                 //qDebug() << "tileSet.margin: " << tileSet.margin;
-                //qDebug() << "tileSet.tileWidth: " << tileSet.tileWidth;
-                //qDebug() << "tileSet.tileHeight: " << tileSet.tileHeight;
+//                qDebug() << "tileSet.tileWidth: " << tileSet.tileWidth;
+//                qDebug() << "tileSet.tileHeight: " << tileSet.tileHeight;
                 if(tileSet.name.contains("creep"))
                 {
+                    qDebug() << "tileSet.name.contains('creep')";
+
                     DefaultUnit unit;
 //                    loadUnit = true;
+
+                    xmlReader.readNext(); // <tileset "empty">
                     xmlReader.readNext(); // <properties>
+//                    qDebug() << xmlReader.name().toString() << " " << xmlReader.isStartElement();
+                    xmlReader.readNext(); // <properties "empty">
                     xmlReader.readNext(); // <property>
+//                    qDebug() << xmlReader.name().toString() << " " << xmlReader.isStartElement();
 
                     while(xmlReader.name().toString() == "property")
                     {
-                        if(xmlReader.attributes().value("name").toString() == "healt_point")
+//                        qDebug() << xmlReader.name().toString() << " " << xmlReader.isStartElement();
+
+                        if(xmlReader.attributes().value("name").toString() == "health_point")
                             unit.healtPoint = xmlReader.attributes().value("value").toInt();
                         else if(xmlReader.attributes().value("name").toString() == "name")
                             unit.name = xmlReader.attributes().value("value").toString();
-                        xmlReader.readNext();
+
+                        xmlReader.readNext(); // </property>
+//                        qDebug() << xmlReader.name().toString() << " " << xmlReader.isStartElement();
+                        xmlReader.readNext(); // </property "empty">
+//                        qDebug() << xmlReader.name().toString() << " " << xmlReader.isStartElement();
+                        xmlReader.readNext(); // <property> - </properties>
+//                        qDebug() << xmlReader.name().toString() << " " << xmlReader.isStartElement();
                     }
 
-                    xmlReader.readNext(); // <properties>
+//                    qDebug() << "unit.healtPoint" << unit.healtPoint;
+//                    qDebug() << "unit.name" << unit.name;
+
+                    xmlReader.readNext(); // </properties "empty">
                     xmlReader.readNext(); // <image>
 
                     if(xmlReader.name().toString() == "image")
                     {
                         QString imagePath = xmlReader.attributes().value("source").toString();
-                        //qDebug() << "imagepath: " << imagePath;
+//                        qDebug() << "imagepath: " << imagePath;
 
                         imagePath.prepend("../../QtProjects/TowerDefence/maps/");
                         //qDebug() << imagePath;
@@ -716,8 +734,8 @@ void GameWidget::loadMap(QString mapName)
                         int columns = tileSet.img.width() / tileSet.tileWidth;
                         int rows = tileSet.img.height() / tileSet.tileHeight;
 
-                        qDebug() << "columnsPixmap: " << columns;
-                        qDebug() << "rowsPixmap: " << rows;
+//                        qDebug() << "columnsPixmap: " << columns;
+//                        qDebug() << "rowsPixmap: " << rows;
 
                         for(int y = 0; y < rows; y++)
                             for(int x = 0; x < columns; x++)
@@ -727,7 +745,10 @@ void GameWidget::loadMap(QString mapName)
                             }
                     }
 
+                    xmlReader.readNext(); // </image>
+                    xmlReader.readNext(); // </image "empty">
                     xmlReader.readNext(); // <terraintypes>
+                    xmlReader.readNext(); // <terraintypes "empty">
                     xmlReader.readNext(); // <terrain>
 
                     while(xmlReader.name().toString() == "terrain")
@@ -848,9 +869,13 @@ void GameWidget::loadMap(QString mapName)
                                     unit.death_down.push_back(pixmap);
                             }
                         }
-                        xmlReader.readNext();
+                        xmlReader.readNext(); // </terrain>
+                        xmlReader.readNext(); // </terrain "empty">
+                        xmlReader.readNext(); // <terrain> - </terraintypes>
                     }
 
+//                    qDebug() << "unit.walk" << unit.walk_down.size();
+                    qDebug() << "unit.walk_down.size(): " << &unit << "->" << unit.walk_down.size();
                     qDebug() << "faction.creatyNewUnit(unit);";
                     faction.creatyNewUnit(unit);
                     unit.clearVectors();

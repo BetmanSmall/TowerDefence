@@ -8,13 +8,19 @@
 class Creep
 {
 public:
-//    int type;
-    int number;
-//    int speed;
-    int currX, currY;
     int hp;
     bool alive;
+    int number;
+    int animationCurrIter;
+    int animationMaxIter;
+//    int speed;
+//    int type;
+
+    int currX, currY;
+    int lastX, lastY;
+
     QPixmap pixmap;
+    std::vector<QPixmap> walkPixmaps;
 
     DefaultUnit* defUnit;
 
