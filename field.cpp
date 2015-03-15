@@ -258,15 +258,15 @@ int Field::stepAllCreeps()
 
 int Field::stepOneCreep(int num)
 {
-    qDebug() << "Field::stepOneCreep()";
+//    qDebug() << "Field::stepOneCreep()";
     Creep* tmpCreep = creeps.getCreep(num);
     if(tmpCreep->alive)
     {
         if(tmpCreep->animationCurrIter < tmpCreep->animationMaxIter)
         {
-            qDebug() << "tmpCreep->animationCurrIter: " << tmpCreep << "->" << tmpCreep->animationCurrIter;
-            tmpCreep->pixmap = tmpCreep->walkPixmaps[tmpCreep->animationCurrIter];
-            tmpCreep->animationCurrIter = tmpCreep->animationCurrIter+1;
+//            qDebug() << "tmpCreep->animationCurrIter: " << tmpCreep << "->" << tmpCreep->animationCurrIter;
+            tmpCreep->pixmap = tmpCreep->walkPixmaps[tmpCreep->animationCurrIter++];
+//            tmpCreep->animationCurrIter = tmpCreep->animationCurrIter+1;
         }
         else
         {
@@ -308,8 +308,8 @@ int Field::stepOneCreep(int num)
 
             if(exitX != currX || exitY != currY)
             {
-                qDebug() << "exitX: " << exitX << " exitY: " << exitY;
-                qDebug() << "currX: " << currX << " currY: " << currY;
+//                qDebug() << "exitX: " << exitX << " exitY: " << exitY;
+//                qDebug() << "currX: " << currX << " currY: " << currY;
                 clearCreep(currX, currY, tmpCreep);
                 tmpCreep->lastX = currX;
                 tmpCreep->lastY = currY;
@@ -358,10 +358,8 @@ int Field::stepOneCreep(int num)
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_right.size();
                     tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_down_right;
                 }
-                qDebug() << "tmpCreep->animationMaxIter: " << tmpCreep << "->" << tmpCreep->animationMaxIter;
-                qDebug() << "TEST!";
+//                qDebug() << "tmpCreep->animationMaxIter: " << tmpCreep << "->" << tmpCreep->animationMaxIter;
                 tmpCreep->pixmap = tmpCreep->walkPixmaps[0];
-                qDebug() << "TEST2!";
 
                 setCreep(exitX, exitY, tmpCreep);
             }
@@ -524,7 +522,13 @@ bool Field::setCreep(int x, int y, Creep* creep)//, int type)
     {
         if(creep == NULL)
         {
-            Creep* creep = creeps.createCreep(x, y, faction1->getDefaultUnitById(0));
+            Creep* creep;
+            if(creepSet)
+                creep = creeps.createCreep(x, y, faction1->getDefaultUnitById(0));
+            else
+                creep = creeps.createCreep(x, y, faction1->getDefaultUnitById(1));
+            creepSet = !creepSet;
+
             if(creep == NULL)
                 return false;
             field[sizeX*y + x].creeps.push_back(creep);

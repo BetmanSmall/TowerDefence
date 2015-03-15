@@ -21,9 +21,9 @@ GameWidget::GameWidget(QWidget *parent) :
     zoomMaxSizeCell = 256;
     zoomMinSizeCell = 48;
 
-    defaultNumCreateCreeps = 100;
+    defaultNumCreateCreeps = 10;
 
-    creepsMove_TimerMilliSec = 100;
+    creepsMove_TimerMilliSec = 10;
     towersAttack_TimerMilliSec = 1000;
     scanMouseMove_TimerMilliSec = 100;
 
@@ -217,8 +217,8 @@ void GameWidget::paintEvent(QPaintEvent *)
 //        {
             drawField();
             drawRelief();
-            drawCreeps();
             drawTowers();
+            drawCreeps();
 //            drawGrid();
 //            drawStepsAndMouse();
 
