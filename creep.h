@@ -11,13 +11,14 @@ public:
     int hp;
     bool alive;
     int number;
-    int animationCurrIter;
-    int animationMaxIter;
 //    int speed;
 //    int type;
 
     int currX, currY;
     int lastX, lastY;
+
+    int animationCurrIter;
+    int animationMaxIter;
 
     QPixmap pixmap;
     std::vector<QPixmap> walkPixmaps;

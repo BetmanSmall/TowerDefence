@@ -1,58 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="25" tilewidth="32" tileheight="32" nextobjectid="3">
- <tileset firstgid="1" name="arctic" tilewidth="32" tileheight="32">
-  <image source="textures/arctic.png" trans="ffffff" width="512" height="768"/>
-  <terraintypes>
-   <terrain name="white" tile="0"/>
-  </terraintypes>
-  <tile id="1" terrain=",,,0"/>
-  <tile id="2" terrain=",,0,0"/>
-  <tile id="3" terrain=",,0,"/>
-  <tile id="4" terrain=",0,,0"/>
-  <tile id="5" terrain="0,0,0,0"/>
-  <tile id="6" terrain="0,,0,"/>
-  <tile id="7" terrain=",0,,"/>
-  <tile id="8" terrain="0,0,,"/>
-  <tile id="9" terrain="0,,,"/>
-  <tile id="10" terrain=",0,0,0"/>
-  <tile id="11" terrain="0,,0,0"/>
-  <tile id="12" terrain="0,0,,0"/>
-  <tile id="13" terrain="0,0,0,"/>
-  <tile id="14" terrain=",0,0,"/>
-  <tile id="15" terrain="0,,,0"/>
+ <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
+  <image source="textures/warcraft2/tilesets/winter/terrain/winter.png" trans="ffffff" width="512" height="768"/>
  </tileset>
- <tileset firstgid="385" name="towers" tilewidth="32" tileheight="32">
-  <image source="textures/guard_tower_normal.png" trans="ff00ff" width="32" height="96"/>
+ <tileset firstgid="385" name="tower1_scout" tilewidth="64" tileheight="64">
+  <properties>
+   <property name="attack" value="10"/>
+   <property name="name" value="Scout"/>
+   <property name="radius" value="1"/>
+   <property name="size" value="2"/>
+   <property name="type" value="1"/>
+  </properties>
+  <image source="textures/warcraft2/tilesets/winter/human/buildings/scout_tower.png" trans="ff00ff" width="64" height="128"/>
   <terraintypes>
-   <terrain name="Tower" tile="0">
-    <properties>
-     <property name="attack" value="5"/>
-     <property name="radius" value="5"/>
-     <property name="type" value="1"/>
-    </properties>
-   </terrain>
-   <terrain name="Tower" tile="1">
-    <properties>
-     <property name="attack" value="25"/>
-     <property name="radius" value="1"/>
-     <property name="type" value="1"/>
-    </properties>
-   </terrain>
-   <terrain name="Tower" tile="2">
-    <properties>
-     <property name="attack" value="10"/>
-     <property name="radius" value="2"/>
-     <property name="type" value="1"/>
-    </properties>
-   </terrain>
+   <terrain name="idle_up" tile="0"/>
+   <terrain name="idle_down" tile="1"/>
   </terraintypes>
  </tileset>
- <tileset firstgid="388" name="creep1_grunt" tilewidth="72" tileheight="72">
+ <tileset firstgid="387" name="creep1_grunt" tilewidth="72" tileheight="72">
   <properties>
    <property name="health_point" value="100"/>
    <property name="name" value="Grunt"/>
   </properties>
-  <image source="textures/grunt.png" trans="ff00ff" width="360" height="864"/>
+  <image source="textures/warcraft2/orc/units/grunt.png" trans="ff00ff" width="360" height="864"/>
   <terraintypes>
    <terrain name="idle_up" tile="0"/>
    <terrain name="idle_up_right" tile="1"/>
@@ -126,12 +96,12 @@
    <terrain name="death3_down" tile="59"/>
   </terraintypes>
  </tileset>
- <tileset firstgid="448" name="creep2_troll_axethrower" tilewidth="72" tileheight="72">
+ <tileset firstgid="447" name="creep2_troll_axethrower" tilewidth="72" tileheight="72">
   <properties>
    <property name="health_point" value="100"/>
    <property name="name" value="Troll"/>
   </properties>
-  <image source="textures/troll_axethrower.png" trans="ff00ff" width="360" height="864"/>
+  <image source="textures/warcraft2/orc/units/troll_axethrower.png" trans="ff00ff" width="360" height="864"/>
   <terraintypes>
    <terrain name="idle_up" tile="0"/>
    <terrain name="idle_up_right" tile="1"/>
@@ -204,12 +174,6 @@
    <terrain name="death2_down" tile="54"/>
    <terrain name="death3_down" tile="59"/>
   </terraintypes>
-  <tile id="0">
-   <properties>
-    <property name="health_point" value="100"/>
-    <property name="name" value="Troll"/>
-   </properties>
-  </tile>
  </tileset>
  <layer name="background" width="36" height="25">
   <data>

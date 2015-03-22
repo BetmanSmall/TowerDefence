@@ -121,8 +121,6 @@ Creep* Creeps::createCreep(int x, int y, DefaultUnit* unit)
         creeps[amount].hp = 100;
         creeps[amount].alive = true;
         creeps[amount].number = amount+1;
-        creeps[amount].animationCurrIter = 0;
-        creeps[amount].animationMaxIter = 0;
         creeps[amount].currX = x;
         creeps[amount].currY = y;
         creeps[amount].lastX = x;
@@ -130,6 +128,9 @@ Creep* Creeps::createCreep(int x, int y, DefaultUnit* unit)
 
 //        creeps[amount].speed = speed;
 //        creeps[amount].type = type;
+
+        creeps[amount].animationCurrIter = 0;
+        creeps[amount].animationMaxIter = 0;
 
         creeps[amount].pixmap = defaultPixmapForCreep;
         creeps[amount].defUnit = unit;

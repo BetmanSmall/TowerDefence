@@ -16,24 +16,30 @@ public:
     Cell()
     {
         step = 0;
-        null = true;
+        empty = true;
         busy = false;
+        spawn = false;
+        exit = false;
+
 //        tower = NULL;
         tower = false;
-//        creep = NULL;
-//        creeps = 0;
+//        creeps = NULL;
+
 //        pixmap = null;
 //        busyPixmap = null;
     }
 
     int step;
-    bool null;
+    bool empty;
     bool busy;
+
+    bool spawn; // NEED Check!!!!! ?????  Check
+    bool exit; // NEED Check!!!!! ????? // NEED Check!!!!! ????? // NEED Check!!!!! ?????
+
 //    Tower* tower;
     bool tower;
-//    Creep* creep;
     vector<Creep*> creeps;
-//    int creeps;
+
     QPixmap backgroundPixmap;
     QPixmap busyPixmap;
 };
@@ -56,8 +62,8 @@ class Field
     int sizeX, sizeY;
 
     int mouseX, mouseY;
-    int exitPointX, exitPointY;
     int spawnPointX, spawnPointY;
+    int exitPointX, exitPointY;
 
 public:
     Field():field(NULL) {}
@@ -97,13 +103,14 @@ public:
     std::vector<Creep *> getCreeps(int x, int y);
     int getCreepHpInCell(int x, int y);
 
+    bool containEmpty(int x, int y);
     bool containBusy(int x, int y);
     bool containTower(int x, int y);
     int containCreep(int x, int y, Creep* creep = NULL);
 
     bool setBusy(int x, int y, QPixmap pixmap);
     bool setTower(int x, int y, int type = 0);
-    bool setTower(int x, int y, Tower tower);
+    bool setTower(int x, int y, DefaultTower* defTower);
     bool setCreep(int x = -1, int y = -1, Creep* creep = NULL);//, int type = 0);
 
     bool clearBusy(int x, int y);

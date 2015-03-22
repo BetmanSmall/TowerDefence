@@ -51,15 +51,18 @@ public:
     void drawGrid();
     void drawField();
     void drawRelief();
-    void drawTowers();
+    void drawTowersByField();
+    void drawTowersByTowers();
     void drawCreeps();
     void drawStepsAndMouse();
+    void drawTowerUnderConstruction();
 
     bool whichCell(int *mouseX, int *mouseY);
 
     void startTimer_CreepsMoveAndTowerAttack();
     void stopTimer_CreepsMoveAndTowerAttack();
 
+    void buildTower(int x = -1, int y = -1);
     void mousePressEvent(QMouseEvent* event);
     void wheelEvent(QWheelEvent* event);
 
@@ -72,6 +75,10 @@ public:
     bool gameStart;
     bool gamePause;
     bool mapLoad;
+
+//    bool setUpBuildTower;
+    DefaultTower* towerUnderConstruction;
+    int towerUnderConstructionX, towerUnderConstructionY;
 
     int mainCoorMapX, mainCoorMapY;
     int pixelsShiftMap;

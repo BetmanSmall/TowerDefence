@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     faction.cpp \
     tower.cpp \
     creep.cpp \
-    defaultunit.cpp
+    defaultunit.cpp \
+    defaulttower.cpp
 
 HEADERS  += \
     towers.h \
@@ -38,7 +39,8 @@ HEADERS  += \
     faction.h \
     tower.h \
     creep.h \
-    defaultunit.h
+    defaultunit.h \
+    defaulttower.h
 
 FORMS    += \
     mainmenu.ui \

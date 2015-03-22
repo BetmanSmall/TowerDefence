@@ -40,9 +40,11 @@ public:
     int getSize();
     int getAmount();
 
-    Tower* getTower(int number);
+    Tower* getTowerById(int number);
+    Tower* getTower(int x = -1, int y = -1);
+
     Tower* createTower(int x, int y, int type = 0);
-    Tower* createTower(int x, int y, Tower tower);
+    Tower* createTower(int x, int y, DefaultTower* tower);
     bool deleteTower(int &x, int &y);
 
     void setDefaulPixmapForTower(QPixmap pixmap);

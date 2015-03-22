@@ -10,6 +10,7 @@ public:
     int healtPoint;
     int type;
 //    int speed;
+
     QPixmap pixmap;
 
     QPixmap idle_up;

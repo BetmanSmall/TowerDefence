@@ -3,18 +3,26 @@
 
 #include <QPixmap>
 
+#include "defaulttower.h"
+
 class Tower
 {
 //private:
 public:
-    int type;
-    int radius;
+    QString name;
     int attack;
+    int radius;
+    int size;
+    int type;
+
     int currX, currY;
+
     QPixmap pixmap;
 
+    DefaultTower* defTower;
+
     Tower();
-    Tower(int type, int radius, int attack, QPixmap pixmap);
+//    Tower(int type, int radius, int attack, QPixmap pixmap);
 };
 
 #endif // TOWER_H

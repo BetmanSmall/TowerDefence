@@ -35,9 +35,21 @@ int Towers::getAmount()
     return amount;
 }
 
-Tower* Towers::getTower(int number)
+Tower* Towers::getTowerById(int number)
 {
     return &towers[number];
+}
+
+Tower* Towers::getTower(int x, int y)
+{
+    if(x == -1 && y == -1)
+        return &towers[amount-1];
+    else
+        for(int k = 0; k < amount; k++)
+            if(towers[k].currX == x && towers[k].currY == y)
+                return &towers[k];
+
+    return NULL;
 }
 
 Tower* Towers::createTower(int x, int y, int type)
@@ -65,16 +77,20 @@ Tower* Towers::createTower(int x, int y, int type)
     return NULL;
 }
 
-Tower* Towers::createTower(int x, int y, Tower tower)
+Tower* Towers::createTower(int x, int y, DefaultTower* tower)
 {
     if(amount < size)
     {
-        towers[amount].attack = tower.attack;
+        towers[amount].name = tower->name;
+        towers[amount].attack = tower->attack;
+        towers[amount].radius = tower->radius;
+        towers[amount].size = tower->size;
+        towers[amount].type = tower->type;
         towers[amount].currX = x;
         towers[amount].currY = y;
-        towers[amount].radius = tower.radius;
-        towers[amount].type = tower.type;
-        towers[amount].pixmap = tower.pixmap;
+        towers[amount].pixmap = tower->pixmap;
+
+        towers[amount].defTower = tower;
 
         return &towers[amount++];
     }

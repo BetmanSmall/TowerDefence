@@ -17,10 +17,10 @@ void Field::createField(int newSizeX, int newSizeY)
         sizeY = newSizeY;
         mouseX = -1;
         mouseY = -1;
-        exitPointX = -1;
-        exitPointY = -1;
         spawnPointX = -1;
         spawnPointY = -1;
+        exitPointX = -1;
+        exitPointY = -1;
     }
     else
     {
@@ -64,7 +64,9 @@ bool Field::createSpawnPoint(int num, int x, int y)
     {
         spawnPointX = x;
         spawnPointY = y;
-        clearBusy(x,y);
+        field[sizeX*y+x].spawn = true; // BAGS!!!!!
+        field[sizeX*y+x].empty = false; // BAGS!!!!!
+        clearBusy(x,y); // BAGS!!!!!
     }
     creeps.deleteMass();
     creeps.createMass(num);
@@ -76,7 +78,9 @@ void Field::createExitPoint(int x, int y)
 {
     exitPointX = x;
     exitPointY = y;
-    clearBusy(x, y);
+    field[sizeX*y+x].exit = true; // BAGS!!!!!
+    field[sizeX*y+x].empty = false; // BAGS!!!!!
+    clearBusy(x, y); // BAGS!!!!!
     waveAlgorithm(x, y);
 }
 
@@ -94,7 +98,7 @@ bool Field::towersAttack()
 {
     for(int k = 0; k < towers.getAmount(); k++)
     {
-        Tower* tmpTower = towers.getTower(k);
+        Tower* tmpTower = towers.getTowerById(k);
         int x = tmpTower->currX;
         int y = tmpTower->currY;
         int type = tmpTower->type;
@@ -443,6 +447,11 @@ int Field::getCreepHpInCell(int x, int y)
     return 0;
 }
 
+bool Field::containEmpty(int x, int y)
+{
+    return field[sizeX*y + x].empty;
+}
+
 bool Field::containBusy(int x, int y)
 {
     return field[sizeX*y + x].busy;
@@ -473,10 +482,10 @@ int Field::containCreep(int x, int y, Creep *creep)
 
 bool Field::setBusy(int x, int y, QPixmap pixmap)
 {
-    if(field[sizeX*y + x].null)
+    if(field[sizeX*y + x].empty)
     {
         field[sizeX*y + x].busy = true;
-        field[sizeX*y + x].null = false;
+        field[sizeX*y + x].empty = false;
         if(!pixmap.isNull())
             field[sizeX*y + x].busyPixmap = pixmap;
         return true;
@@ -487,28 +496,42 @@ bool Field::setBusy(int x, int y, QPixmap pixmap)
 
 bool Field::setTower(int x, int y, int type)
 {
-    if(field[sizeX*y + x].null)
+    if(field[sizeX*y + x].empty)
     {
         if(!isSetExitPoint(x, y) && !isSetSpawnPoint(x, y))
         {
             field[sizeX*y + x].tower = towers.createTower(x, y);
-            field[sizeX*y + x].null = false;
+            field[sizeX*y + x].empty = false;
             return true;
         }
     }
     return false;
 }
 
-bool Field::setTower(int x, int y, Tower tower)
+bool Field::setTower(int x, int y, DefaultTower* defTower)
 {
-    if(field[sizeX*y + x].null)
+    Tower* tower = towers.createTower(x, y, defTower);
+    if(tower != NULL)
     {
-        if(!isSetExitPoint(x, y) && !isSetSpawnPoint(x, y))
-        {
-            field[sizeX*y + x].tower = towers.createTower(x, y, tower);
-            field[sizeX*y + x].null = false;
-            return true;
-        }
+        int size = tower->defTower->size;
+
+        for(int tmpX = 0; tmpX < size; tmpX++)
+            for(int tmpY = 0; tmpY < size; tmpY++)
+                if(containEmpty(tmpX+x, tmpY+y))
+                {
+//                    if(!isSetExitPoint(x, y) && !isSetSpawnPoint(x, y)) // BAGS!!!!!!!!!!!!!
+//                    {
+                        field[sizeX*(tmpY+y) + (tmpX+x)].tower = tower;
+                        field[sizeX*(tmpY+y) + (tmpX+x)].empty = false;
+//                        return true;
+//                    }
+                }
+                else
+                {
+                    towers.deleteTower(x, y);
+                    return false;
+                }
+        return true;
     }
     return false;
 }
@@ -518,7 +541,7 @@ bool Field::setCreep(int x, int y, Creep* creep)//, int type)
     if(x == -1 && y == -1)
         return setCreep(spawnPointX, spawnPointY, creep);//, type);
 
-    if(field[sizeX*y + x].null || !field[sizeX*y + x].creeps.empty())
+    if(field[sizeX*y + x].empty || !field[sizeX*y + x].creeps.empty())
     {
         if(creep == NULL)
         {
@@ -540,7 +563,7 @@ bool Field::setCreep(int x, int y, Creep* creep)//, int type)
             field[sizeX*y + x].creeps.push_back(creep);
 //            field[sizeX*y + x].creep = creep;
 
-        field[sizeX*y + x].null = false;
+        field[sizeX*y + x].empty = false;
         return true;
     }
 
@@ -549,12 +572,12 @@ bool Field::setCreep(int x, int y, Creep* creep)//, int type)
 
 bool Field::clearBusy(int x, int y)
 {
-    if(!field[sizeX*y + x].null)
+    if(!field[sizeX*y + x].empty)
     {
         if(containBusy(x,y))
         {
             field[sizeX*y + x].busy = false;
-            field[sizeX*y + x].null = true;
+            field[sizeX*y + x].empty = true;
             return true;
         }
     }
@@ -564,12 +587,12 @@ bool Field::clearBusy(int x, int y)
 
 bool Field::clearTower(int x, int y)
 {
-    if(!field[sizeX*y + x].null)
+    if(!containEmpty(x, y))
     {
         if(containTower(x,y))
         {
             field[sizeX*y + x].tower = NULL;
-            field[sizeX*y + x].null = true;
+            field[sizeX*y + x].empty = true;
             return true;
         }
     }
@@ -578,7 +601,7 @@ bool Field::clearTower(int x, int y)
 
 bool Field::clearCreep(int x, int y, Creep *creep)
 {
-    if(!field[sizeX*y + x].null)
+    if(!field[sizeX*y + x].empty)
     {
         if(creep == NULL)
             field[sizeX*y + x].creeps.clear();
@@ -589,7 +612,7 @@ bool Field::clearCreep(int x, int y, Creep *creep)
         }
 
         if(field[sizeX*y + x].creeps.empty())
-            field[sizeX*y + x].null = true;
+            field[sizeX*y + x].empty = true;
 
         return true;
     }
@@ -598,8 +621,18 @@ bool Field::clearCreep(int x, int y, Creep *creep)
 
 bool Field::deleteTower(int x, int y)
 {
-    if(towers.deleteTower(x, y))
-        return clearTower(x, y);
+    Tower* tower = towers.getTower(x, y);
+
+    if(tower != NULL)
+    {
+        int size = tower->defTower->size;
+        towers.deleteTower(tower->currX, tower->currY);
+
+        for(int tmpX = 0; tmpX < size; tmpX++)
+            for(int tmpY = 0; tmpY < size; tmpY++)
+                clearTower(tmpX+x, tmpY+y);
+    }
+
     return false;
 }
 
