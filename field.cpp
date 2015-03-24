@@ -64,8 +64,8 @@ bool Field::createSpawnPoint(int num, int x, int y)
     {
         spawnPointX = x;
         spawnPointY = y;
-        field[sizeX*y+x].spawn = true; // BAGS!!!!!
-        field[sizeX*y+x].empty = false; // BAGS!!!!!
+//        field[sizeX*y+x].spawn = true; // BAGS!!!!!
+//        field[sizeX*y+x].empty = false; // BAGS!!!!!
         clearBusy(x,y); // BAGS!!!!!
     }
     creeps.deleteMass();
@@ -78,8 +78,8 @@ void Field::createExitPoint(int x, int y)
 {
     exitPointX = x;
     exitPointY = y;
-    field[sizeX*y+x].exit = true; // BAGS!!!!!
-    field[sizeX*y+x].empty = false; // BAGS!!!!!
+//    field[sizeX*y+x].exit = true; // BAGS!!!!!
+//    field[sizeX*y+x].empty = false; // BAGS!!!!!
     clearBusy(x, y); // BAGS!!!!!
     waveAlgorithm(x, y);
 }
