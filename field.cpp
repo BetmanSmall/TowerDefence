@@ -447,6 +447,16 @@ int Field::getCreepHpInCell(int x, int y)
     return 0;
 }
 
+std::vector<Tower*> Field::getAllTowers()
+{
+    std::vector<Tower*> exitTowers;
+
+    for(int k = 0; k < towers.getAmount(); k++)
+        exitTowers.push_back(towers.getTowerById(k));
+
+    return exitTowers;
+}
+
 bool Field::containEmpty(int x, int y)
 {
     return field[sizeX*y + x].empty;
@@ -510,14 +520,18 @@ bool Field::setTower(int x, int y, int type)
 
 bool Field::setTower(int x, int y, DefaultTower* defTower)
 {
+    int size = defTower->size;
+    for(int tmpX = 0; tmpX < size; tmpX++)
+        for(int tmpY = 0; tmpY < size; tmpY++)
+            if(!containEmpty(tmpX+x, tmpY+y))
+                return false;
+
     Tower* tower = towers.createTower(x, y, defTower);
     if(tower != NULL)
     {
-        int size = tower->defTower->size;
-
         for(int tmpX = 0; tmpX < size; tmpX++)
             for(int tmpY = 0; tmpY < size; tmpY++)
-                if(containEmpty(tmpX+x, tmpY+y))
+//                if(containEmpty(tmpX+x, tmpY+y))
                 {
 //                    if(!isSetExitPoint(x, y) && !isSetSpawnPoint(x, y)) // BAGS!!!!!!!!!!!!!
 //                    {
@@ -526,11 +540,11 @@ bool Field::setTower(int x, int y, DefaultTower* defTower)
 //                        return true;
 //                    }
                 }
-                else
-                {
-                    towers.deleteTower(x, y);
-                    return false;
-                }
+//                else
+//                {
+//                    towers.deleteTower(x, y);
+//                    return false;
+//                }
         return true;
     }
     return false;

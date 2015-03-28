@@ -102,7 +102,8 @@ public:
     Creep* getCreep(int x, int y);
     std::vector<Creep *> getCreeps(int x, int y);
     int getCreepHpInCell(int x, int y);
-//    std:vector<
+
+    std::vector<Tower*> getAllTowers();
 
     bool containEmpty(int x, int y);
     bool containBusy(int x, int y);
