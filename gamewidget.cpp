@@ -242,7 +242,7 @@ void GameWidget::paintEvent(QPaintEvent *)
 //            drawTowersByTowers();
             drawCreeps();
 //            drawGrid();
-            drawStepsAndMouse();
+//            drawStepsAndMouse();
             drawTowerUnderConstruction();
 
             p.setPen(QColor(255,0,0));
