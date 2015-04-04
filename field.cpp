@@ -269,7 +269,7 @@ int Field::stepOneCreep(int num)
         if(tmpCreep->animationCurrIter < tmpCreep->animationMaxIter)
         {
 //            qDebug() << "tmpCreep->animationCurrIter: " << tmpCreep << "->" << tmpCreep->animationCurrIter;
-            tmpCreep->pixmap = tmpCreep->walkPixmaps[tmpCreep->animationCurrIter++];
+            tmpCreep->pixmap = tmpCreep->activePixmaps[tmpCreep->animationCurrIter++];
 //            tmpCreep->animationCurrIter = tmpCreep->animationCurrIter+1;
         }
         else
@@ -325,45 +325,53 @@ int Field::stepOneCreep(int num)
                 if(exitX < currX && exitY < currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_left.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_up_left;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_left;
+                    tmpCreep->direction = DirectionUpLeft;
                 }
                 else if(exitX == currX && exitY < currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_up;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up;
+                    tmpCreep->direction = DirectionUp;
                 }
                 else if(exitX > currX && exitY < currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_right.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_up_right;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_right;
+                    tmpCreep->direction = DirectionUpRight;
                 }
                 else if(exitX < currX && exitY == currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_left.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_left;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_left;
+                    tmpCreep->direction = DirectionLeft;
                 }
                 else if(exitX > currX && exitY == currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_right.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_right;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_right;
+                    tmpCreep->direction = DirectionRight;
                 }
                 else if(exitX < currX && exitY > currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_left.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_down_left;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_left;
+                    tmpCreep->direction = DirectionDownLeft;
                 }
                 else if(exitX == currX && exitY > currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_down;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down;
+                    tmpCreep->direction = DirectionDown;
                 }
                 else if(exitX > currX && exitY > currY)
                 {
                     tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_right.size();
-                    tmpCreep->walkPixmaps = tmpCreep->defUnit->walk_down_right;
+                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_right;
+                    tmpCreep->direction = DirectionDownRight;
                 }
 //                qDebug() << "tmpCreep->animationMaxIter: " << tmpCreep << "->" << tmpCreep->animationMaxIter;
-                tmpCreep->pixmap = tmpCreep->walkPixmaps[0];
+                tmpCreep->pixmap = tmpCreep->activePixmaps[0];
 
                 setCreep(exitX, exitY, tmpCreep);
             }
@@ -373,6 +381,17 @@ int Field::stepOneCreep(int num)
 //                return false;
 //            }
         }
+    }
+    else if(tmpCreep->preDeath)
+    {
+        if(tmpCreep->animationCurrIter < tmpCreep->animationMaxIter)
+        {
+//            qDebug() << "tmpCreep->animationCurrIter: " << tmpCreep << "->" << tmpCreep->animationCurrIter;
+            tmpCreep->pixmap = tmpCreep->activePixmaps[tmpCreep->animationCurrIter++];
+//            tmpCreep->animationCurrIter = tmpCreep->animationCurrIter+1;
+        }
+        else
+            tmpCreep->preDeath = false;
     }
     else
         return -2;

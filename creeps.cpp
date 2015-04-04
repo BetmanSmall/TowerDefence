@@ -65,9 +65,59 @@ bool Creeps::attackCreep(int x, int y, int hp, Creep *creep)
             if(localHP <= 0)
             {
                 creeps[k].hp = 0;
-                creeps[k].currX = -1;
-                creeps[k].currY = -1;
+//                creeps[k].currX = -1;
+//                creeps[k].currY = -1;
                 creeps[k].alive = false;
+                creeps[k].preDeath = true;
+
+                // ЛАЖА
+                creeps[k].animationCurrIter = 0;
+                Direction direction = creeps[k].direction;
+
+                if(direction == DirectionUpLeft)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_up_left.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_up_left;
+                }
+                else if(direction == DirectionUp)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_up.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_up;
+                }
+                else if(direction == DirectionUpRight)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_up_right.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_up_right;
+                }
+                else if(direction == DirectionLeft)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_left.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_left;
+                }
+                else if(direction == DirectionRight)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_right.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_right;
+                }
+                else if(direction == DirectionDownLeft)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_down_left.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_down_left;
+                }
+                else if(direction == DirectionDown)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_down.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_down;
+                }
+                else if(direction == DirectionDownRight)
+                {
+                    creeps[k].animationMaxIter = creeps[k].defUnit->death_down_right.size();
+                    creeps[k].activePixmaps = creeps[k].defUnit->death_down_right;
+                }
+//                qDebug() << "tmpCreep->animationMaxIter: " << tmpCreep << "->" << tmpCreep->animationMaxIter;
+                creeps[k].pixmap = creeps[k].activePixmaps[0];
+                // ЛАЖА !!!!!!
+
                 creep = &creeps[k];
                 return true;
             }
@@ -120,6 +170,7 @@ Creep* Creeps::createCreep(int x, int y, DefaultUnit* unit)
     {
         creeps[amount].hp = 100;
         creeps[amount].alive = true;
+        creeps[amount].preDeath = false;
         creeps[amount].number = amount+1;
         creeps[amount].currX = x;
         creeps[amount].currY = y;

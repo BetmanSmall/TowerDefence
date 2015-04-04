@@ -5,23 +5,37 @@
 
 #include "defaultunit.h"
 
+enum Direction
+{
+    DirectionUp,
+    DirectionUpRight,
+    DirectionRight,
+    DirectionDownRight,
+    DirectionDown,
+    DirectionDownLeft,
+    DirectionLeft,
+    DirectionUpLeft
+};
+
 class Creep
 {
 public:
     int hp;
     bool alive;
+    bool preDeath;
     int number;
 //    int speed;
 //    int type;
 
     int currX, currY;
     int lastX, lastY;
+    Direction direction;
 
     int animationCurrIter;
     int animationMaxIter;
 
     QPixmap pixmap;
-    std::vector<QPixmap> walkPixmaps;
+    std::vector<QPixmap> activePixmaps;
 
     DefaultUnit* defUnit;
 

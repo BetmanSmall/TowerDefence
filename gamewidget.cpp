@@ -29,7 +29,7 @@ GameWidget::GameWidget(QWidget *parent) :
 
     defaultNumCreateCreeps = 10;
 
-    creepsMove_TimerMilliSec = 10;
+    creepsMove_TimerMilliSec = 100;
     towersAttack_TimerMilliSec = 1000;
     scanMouseMove_TimerMilliSec = 100;
 
@@ -241,8 +241,8 @@ void GameWidget::paintEvent(QPaintEvent *)
 //            drawTowersByField();
             drawTowersByTowers();
             drawCreeps();
-            drawGrid();
-            drawStepsAndMouse();
+//            drawGrid();
+//            drawStepsAndMouse();
             drawTowerUnderConstruction();
 
             p.setPen(QColor(255,0,0));
@@ -355,7 +355,7 @@ void GameWidget::drawTowersByTowers()
         int size = towers[k]->defTower->size;
 
         int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;
-        int pxlsY = mainCoorMapX + spaceWidget + y*sizeCell;
+        int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;
         int localSizeCell = sizeCell*size;
 
         if(!mapLoad)
@@ -387,24 +387,27 @@ void GameWidget::drawCreeps()
                 std::vector<Creep*> creeps = field.getCreeps(x, y);
                 for(int k = 0; k < creeps.size(); k++)
                 {
-                    int lastX, lastY;
-                    int animationCurrIter, animationMaxIter;
-                    QPixmap pixmap = creeps[k]->getAnimationInformation(&lastX, &lastY, &animationCurrIter, &animationMaxIter);
+                    if(creeps[k]->alive || creeps[k]->preDeath) // fixed!!!
+                    {
+                        int lastX, lastY;
+                        int animationCurrIter, animationMaxIter;
+                        QPixmap pixmap = creeps[k]->getAnimationInformation(&lastX, &lastY, &animationCurrIter, &animationMaxIter);
 
-                    pxlsX = mainCoorMapX + spaceWidget + x*sizeCell - localSpaceCell;
-                    pxlsY = mainCoorMapY + spaceWidget + y*sizeCell - localSpaceCell;
+                        pxlsX = mainCoorMapX + spaceWidget + x*sizeCell - localSpaceCell;
+                        pxlsY = mainCoorMapY + spaceWidget + y*sizeCell - localSpaceCell;
 
-                    if(lastX < x)
-                        pxlsX -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
-                    if(lastX > x)
-                        pxlsX += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
-                    if(lastY < y)
-                        pxlsY -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
-                    if(lastY > y)
-                        pxlsY += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                        if(lastX < x)
+                            pxlsX -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                        if(lastX > x)
+                            pxlsX += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                        if(lastY < y)
+                            pxlsY -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                        if(lastY > y)
+                            pxlsY += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
 
-                    p.drawPixmap(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2, pixmap);
-//                    p.drawRect(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2);
+                        p.drawPixmap(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2, pixmap);
+    //                    p.drawRect(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2);
+                    }
                 }
             }
         }
@@ -630,6 +633,10 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
             field.createSpawnPoint(defaultNumCreateCreeps, mouseX, mouseY);
 
             startTimer_CreepsMoveAndTowerAttack();
+        }
+        else if(event->button() == Qt::MidButton)
+        {
+            field.setCreep(mouseX, mouseY);
         }
     }
     update();
