@@ -10,6 +10,8 @@ void Field::createField(int newSizeX, int newSizeY)
         towers.createField(newSizeX*newSizeY);
         creeps.createMass(30);
 
+        creepSet = true;
+
         gameOverLimitCreeps = 3;
         currentFinishedCreeps = 0;
 
@@ -101,7 +103,7 @@ bool Field::towersAttack()
         Tower* tmpTower = towers.getTowerById(k);
         int x = tmpTower->currX;
         int y = tmpTower->currY;
-        int type = tmpTower->type;
+//        int type = tmpTower->type;
         int radius = tmpTower->radius; // 1 // 5
 
         int defaultHp = 100;
@@ -293,6 +295,7 @@ int Field::stepOneCreep(int num)
                     {
                         int num = getNumStep(currX + tmpX, currY + tmpY);
                         if(num <= min && num != 0)
+                        {
                             if(num == min)
                             {
                                 if(rand()%2)
@@ -307,6 +310,7 @@ int Field::stepOneCreep(int num)
                                 exitY = currY + tmpY;
                                 min = num;
                             }
+                        }
                     }
             //-----------------------------------------------------------
 
@@ -496,10 +500,11 @@ int Field::containCreep(int x, int y, Creep *creep)
 {
     if(!field[sizeX*y + x].creeps.empty())
     {
+        int size = field[sizeX*y + x].creeps.size();
         if(creep == NULL)
-            return field[sizeX*y + x].creeps.size();
+            return size;
         else
-            for(int k = 0; k < field[sizeX*y + x].creeps.size(); k++)
+            for(int k = 0; k < size; k++)
                 if(field[sizeX*y + x].creeps[k] == creep)
                     return k+1;
     }
@@ -523,7 +528,7 @@ bool Field::setBusy(int x, int y, QPixmap pixmap)
         return false;
 }
 
-bool Field::setTower(int x, int y, int type)
+bool Field::setTower(int x, int y)//, int type)
 {
     if(field[sizeX*y + x].empty)
     {
@@ -669,17 +674,17 @@ bool Field::deleteTower(int x, int y)
     return false;
 }
 
-bool Field::setPixmapInCell(int x, int y, QPixmap pixmap)
+void Field::setPixmapInCell(int x, int y, QPixmap pixmap)
 {
     field[sizeX*y + x].backgroundPixmap = pixmap;
 }
 
-bool Field::setPixmapForCreep(QPixmap pixmap)
+void Field::setPixmapForCreep(QPixmap pixmap)
 {
     creeps.setDefaulPixmapForCreep(pixmap);
 }
 
-bool Field::setPixmapForTower(QPixmap pixmap)
+void Field::setPixmapForTower(QPixmap pixmap)
 {
     towers.setDefaulPixmapForTower(pixmap);
 }

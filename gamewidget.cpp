@@ -350,7 +350,8 @@ void GameWidget::drawTowersByTowers()
 {
     std::vector<Tower*> towers = field.getAllTowers();
 
-    for(int k = 0; k < towers.size(); k++)
+    int size = towers.size();
+    for(int k = 0; k < size; k++)
     {
         int x = towers[k]->currX;
         int y = towers[k]->currY;
@@ -376,7 +377,8 @@ void GameWidget::drawCreeps()
     {
         for(int x = 0; x < fieldX; x++)
         {
-            if(int num = field.containCreep(x, y))
+            int num = field.containCreep(x, y);
+            if(num)
             {
                 int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
                 int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;// - sizeCell/2;//+1;
@@ -387,7 +389,8 @@ void GameWidget::drawCreeps()
 //                p.fillRect(pxlsX+1 + localSpaceCell, pxlsY+1 + localSpaceCell, localSizeCell-1 - 2*(localSpaceCell), localSizeCell-1 - 2*(localSpaceCell), color);
 
                 std::vector<Creep*> creeps = field.getCreeps(x, y);
-                for(int k = 0; k < creeps.size(); k++)
+                int size = creeps.size();
+                for(int k = 0; k < size; k++)
                 {
                     if(creeps[k]->alive || creeps[k]->preDeath) // fixed!!!
                     {
@@ -529,12 +532,13 @@ void GameWidget::buildTower(int x, int y)
         qDebug() << "buildTower1(" << x << "," << y << ");";
 
         vector<DefaultTower*> towers = faction.getFirstTowers();
-//        qDebug() << "towers.size(): " << towers.size();
+        int size = towers.size();
+//        qDebug() << "towers.size(): " << size;
 
         QMessageBox msgBox;
         msgBox.setText("Какую башню ты хочешь построить?");
 
-        for(int k = 0; k < towers.size(); k++)
+        for(int k = 0; k < size; k++)
         {
             QPushButton* b1 = new QPushButton(QIcon(towers[k]->pixmap), QString());
             msgBox.addButton(b1, QMessageBox::AcceptRole);
@@ -556,12 +560,13 @@ void GameWidget::buildTower(int x, int y)
             qDebug() << "buildTower2(" << x << "," << y << ");";
 
             vector<DefaultTower*> towers = faction.getFirstTowers();
-//            qDebug() << "towers.size(): " << towers.size();
+            int size = towers.size();
+//            qDebug() << "towers.size(): " << size;
 
             QMessageBox msgBox;
             msgBox.setText("Какую башню ты хочешь построить?");
 
-            for(int k = 0; k < towers.size(); k++)
+            for(int k = 0; k < size; k++)
             {
                 QPushButton* b1 = new QPushButton(QIcon(towers[k]->pixmap), QString());
                 msgBox.addButton(b1, QMessageBox::AcceptRole);
@@ -772,13 +777,13 @@ void GameWidget::loadMap(QString mapName)
 
     //map
     int mapSizeX, mapSizeY;
-    int mapTileWidth, mapTileHeight;
+    int mapTileWidth;//, mapTileHeight;
 
     //tileset
     vector<TileSet> tileSets;
     TileSet tileSet;
 //    DefaultUnit unit;
-    bool loadUnit = false;
+//    bool loadUnit = false;
 
     //layer
     bool layer = false;
@@ -798,7 +803,7 @@ void GameWidget::loadMap(QString mapName)
                 mapSizeX = xmlReader.attributes().value("width").toInt();
                 mapSizeY = xmlReader.attributes().value("height").toInt();
                 mapTileWidth = xmlReader.attributes().value("tilewidth").toInt();
-                mapTileHeight = xmlReader.attributes().value("tileheight").toInt();
+//                mapTileHeight = xmlReader.attributes().value("tileheight").toInt();
                 //qDebug() << "mapSizeX: " << mapSizeX;
                 //qDebug() << "mapSizeY: " << mapSizeY;
                 //qDebug() << "mapTileWidth: " << mapTileWidth;
@@ -1283,26 +1288,26 @@ void GameWidget::loadMap(QString mapName)
                 }
                 else if(name == "Tower")
                 {
-                    int towerAttack = -1;
-                    int towerRadius = -1;
-                    int towerType = -1;
+//                    int towerAttack = -1;
+//                    int towerRadius = -1;
+//                    int towerType = -1;
 
-                    xmlReader.readNext(); // <properties>
-                    xmlReader.readNext(); // <property>
+//                    xmlReader.readNext(); // <properties>
+//                    xmlReader.readNext(); // <property>
 
-                    while(xmlReader.name().toString() == "property")
-                    {
-                        if(xmlReader.attributes().value("name").toString() == "attack")
-                            towerAttack = xmlReader.attributes().value("value").toInt();
-                        else if(xmlReader.attributes().value("name").toString() == "radius")
-                            towerRadius = xmlReader.attributes().value("value").toInt();
-                        else if(xmlReader.attributes().value("name").toString() == "type")
-                            towerType = xmlReader.attributes().value("value").toInt();
-                        xmlReader.readNext();
-                    }
+//                    while(xmlReader.name().toString() == "property")
+//                    {
+//                        if(xmlReader.attributes().value("name").toString() == "attack")
+//                            towerAttack = xmlReader.attributes().value("value").toInt();
+//                        else if(xmlReader.attributes().value("name").toString() == "radius")
+//                            towerRadius = xmlReader.attributes().value("value").toInt();
+//                        else if(xmlReader.attributes().value("name").toString() == "type")
+//                            towerType = xmlReader.attributes().value("value").toInt();
+//                        xmlReader.readNext();
+//                    }
 
-                    global_pixmap = pixmap;
-                    field.setPixmapForTower(pixmap);
+//                    global_pixmap = pixmap;
+//                    field.setPixmapForTower(pixmap);
 //                    faction.creatyNewTower(towerType, towerRadius, towerAttack, pixmap);
 //                    qDebug() << "Tower Set!";
                 }
@@ -1326,7 +1331,8 @@ void GameWidget::loadMap(QString mapName)
                     int num = 0;
                     int tileGID = xmlReader.attributes().value("gid").toInt();
 
-                    for(int k = 0; k < tileSets.size(); k++)
+                    int size = tileSets.size();
+                    for(int k = 0; k < size; k++)
                         if(tileGID >= tileSets[k].firstTileID)
                             num = k;
 
@@ -1365,7 +1371,8 @@ void GameWidget::loadMap(QString mapName)
                 int num = 0;
                 int tileGID = xmlReader.attributes().value("gid").toInt();
 
-                for(int k = 0; k < tileSets.size(); k++)
+                int size = tileSets.size();
+                for(int k = 0; k < size; k++)
                     if(tileGID >= tileSets[k].firstTileID)
                         num = k;
 

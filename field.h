@@ -51,7 +51,7 @@ class Field
     Creeps creeps;
     Faction* faction1;
 
-    bool creepSet = true;
+    bool creepSet;
 
     int gameOverLimitCreeps;
     int currentFinishedCreeps;
@@ -111,7 +111,7 @@ public:
     int containCreep(int x, int y, Creep* creep = NULL);
 
     bool setBusy(int x, int y, QPixmap pixmap);
-    bool setTower(int x, int y, int type = 0);
+    bool setTower(int x, int y);//, int type = 0);
     bool setTower(int x, int y, DefaultTower* defTower);
     bool setCreep(int x = -1, int y = -1, Creep* creep = NULL);//, int type = 0);
 
@@ -121,9 +121,9 @@ public:
 
     bool deleteTower(int x = -1, int y = -1);
 
-    bool setPixmapInCell(int x, int y, QPixmap pixmap);
-    bool setPixmapForCreep(QPixmap pixmap);
-    bool setPixmapForTower(QPixmap pixmap);
+    void setPixmapInCell(int x, int y, QPixmap pixmap);
+    void setPixmapForCreep(QPixmap pixmap);
+    void setPixmapForTower(QPixmap pixmap);
 
     QPixmap getBusyPixmapOfCell(int x, int y);
     QPixmap getPixmapOfCell(int x, int y);
