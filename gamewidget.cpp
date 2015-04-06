@@ -5,6 +5,7 @@ GameWidget::GameWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameWidget)
 {
+    TOWER_DEFENCE_PATH = "../../TowerDefence/";
     ui->setupUi(this);
 
     srand(time(0));
@@ -12,6 +13,7 @@ GameWidget::GameWidget(QWidget *parent) :
     gameStart = true;
     gamePause = false;
     mapLoad = false;
+
 
 //    qDebug() << "towerUnderConstruction: " << towerUnderConstruction;
 //    qDebug() << "&towerUnderConstruction: " << &towerUnderConstruction;
@@ -79,7 +81,7 @@ GameWidget::GameWidget(QWidget *parent) :
 //    field.createSpawnPoint(defaultNumCreateCreeps, 0, 0);
 //    field.createExitPoint(field.getSizeX()-1, field.getSizeY()-1);
 
-//    loadMap("../../QtProjects/TowerDefence/maps/arcticv1.tmx");
+    loadMap(TOWER_DEFENCE_PATH + "maps/arcticv1.tmx");
 }
 
 GameWidget::~GameWidget()
@@ -870,7 +872,7 @@ void GameWidget::loadMap(QString mapName)
                         QString imagePath = xmlReader.attributes().value("source").toString();
 //                        qDebug() << "imagepath: " << imagePath;
 
-                        imagePath.prepend("../../QtProjects/TowerDefence/maps/");
+                        imagePath.prepend(TOWER_DEFENCE_PATH + "maps/");
                         //qDebug() << imagePath;
                         if(!tileSet.img.load(imagePath))
                         {
@@ -1070,7 +1072,7 @@ void GameWidget::loadMap(QString mapName)
                         QString imagePath = xmlReader.attributes().value("source").toString();
 //                        qDebug() << "imagepath: " << imagePath;
 
-                        imagePath.prepend("../../QtProjects/TowerDefence/maps/");
+                        imagePath.prepend(TOWER_DEFENCE_PATH + "maps/");
                         //qDebug() << imagePath;
                         if(!tileSet.img.load(imagePath))
                         {
@@ -1233,7 +1235,7 @@ void GameWidget::loadMap(QString mapName)
                 QString imagePath = xmlReader.attributes().value("source").toString();
                 //qDebug() << "imagepath: " << imagePath;
 
-                imagePath.prepend("../../QtProjects/TowerDefence/maps/");
+                imagePath.prepend(TOWER_DEFENCE_PATH + "maps/");
                 //qDebug() << imagePath;
                 if(!tileSet.img.load(imagePath))
                 {

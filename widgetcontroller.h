@@ -24,6 +24,8 @@ private:
 
     void loadMap(GameWidget *gameWidget);
 
+    QString TOWER_DEFENCE_PATH;
+
 private slots:
     void showMainMenu();
 

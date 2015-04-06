@@ -19,6 +19,8 @@ public:
 private:
     Ui::MainMenu *ui;
 
+    QString TOWER_DEFENCE_PATH;
+
 private slots:
     void on_playButton_clicked();
     void on_optionsButton_clicked();

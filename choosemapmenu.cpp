@@ -7,10 +7,11 @@ ChooseMapMenu::ChooseMapMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ChooseMapMenu)
 {
+    TOWER_DEFENCE_PATH = "../../TowerDefence/";
     ui->setupUi(this);
-    ui->loadMap1Button->setIcon(QIcon("../../QtProjects/TowerDefence/images/button1v2.png"));
-    ui->loadMap2Button->setIcon(QIcon("../../QtProjects/TowerDefence/images/button2v2.png"));
-    ui->loadMap3Button->setIcon(QIcon("../../QtProjects/TowerDefence/images/button3v2.png"));
+    ui->loadMap1Button->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/button1v2.png"));
+    ui->loadMap2Button->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/button2v2.png"));
+    ui->loadMap3Button->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/button3v2.png"));
 
 //    qDebug() << "ChooseMapMenu: X: " << width() << " Y: " << height();
 }

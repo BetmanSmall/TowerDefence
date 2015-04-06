@@ -112,6 +112,8 @@ public:
 private:
     Ui::GameWidget *ui;
 
+    QString TOWER_DEFENCE_PATH;
+
 private slots:
     void on_loadMaps_clicked();
 

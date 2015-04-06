@@ -5,6 +5,7 @@
 WidgetController::WidgetController(QWidget *parent) :
     QWidget(parent)
 {
+    TOWER_DEFENCE_PATH = "../../TowerDefence/";
 //    this->setMaximumWidth(640);
 //    this->setMaximumHeight(480);
 //    this->setMinimumWidth(640);
@@ -12,7 +13,7 @@ WidgetController::WidgetController(QWidget *parent) :
 
 //    this->setWindowTitle("xyu");
 //    QPalette palette;
-//    palette.setBrush(this->backgroundRole(), QBrush(QImage("..\\..\\QtProjects\\TowerDefence\\images\\mainmenu.jpg")));
+//    palette.setBrush(this->backgroundRole(), QBrush(QImage(TOWER_DEFENCE_PATH + "images/mainmenu.jpg")));
 //    palette.setBrush(this->backgroundRole(), QBrush(QColor(0, 0, 0)));
 //    this->setPalette(palette);
 
@@ -36,7 +37,7 @@ void WidgetController::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
 
-    p.drawPixmap(0, 0, width(), height(), QPixmap("..\\..\\QtProjects\\TowerDefence\\images\\mainmenu.jpg"));
+    p.drawPixmap(0, 0, width(), height(), QPixmap(TOWER_DEFENCE_PATH + "images/mainmenu.jpg"));
 }
 
 void WidgetController::showMainMenu()
@@ -98,7 +99,7 @@ void WidgetController::loadMap1()
 
     loadMap(gameWidget);
 
-    gameWidget->loadMap("../../QtProjects/TowerDefence/maps/arctic.tmx");
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/arctic.tmx");
 }
 
 
@@ -110,7 +111,7 @@ void WidgetController::loadMap2()
 
     loadMap(gameWidget);
 
-    gameWidget->loadMap("../../QtProjects/TowerDefence/maps/forest.tmx");
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/forest.tmx");
 }
 
 void WidgetController::loadMap3()
@@ -121,7 +122,7 @@ void WidgetController::loadMap3()
 
     loadMap(gameWidget);
 
-    gameWidget->loadMap("../../QtProjects/TowerDefence/maps/desert.tmx");
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/desert.tmx");
 }
 
 void WidgetController::closeWidget()

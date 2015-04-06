@@ -8,11 +8,12 @@ MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainMenu)
 {
+    TOWER_DEFENCE_PATH = "../../TowerDefence/";
     ui->setupUi(this);
 
-    ui->playButton->setIcon(QIcon("../../QtProjects/TowerDefence/images/Play.png"));
-    ui->optionsButton->setIcon(QIcon("../../QtProjects/TowerDefence/images/Options.png"));
-    ui->exitButton->setIcon(QIcon("../../QtProjects/TowerDefence/images/Exit.png"));
+    ui->playButton->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/Play.png"));
+    ui->optionsButton->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/Options.png"));
+    ui->exitButton->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/Exit.png"));
 
 //    qDebug() << "MainMenu: X: " << width() << " Y: " << height();
 }
