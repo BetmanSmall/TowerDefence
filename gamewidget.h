@@ -7,6 +7,8 @@
 
 #include <QDebug>
 #include <QWidget>
+#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QString>

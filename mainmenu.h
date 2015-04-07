@@ -2,6 +2,8 @@
 #define MAINMENU_H
 
 #include <QWidget>
+#include <QGLWidget>
+#include <QOpenGLWidget>
 
 namespace Ui {
 class MainMenu;

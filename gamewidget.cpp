@@ -5,15 +5,15 @@ GameWidget::GameWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameWidget)
 {
-    TOWER_DEFENCE_PATH = "../../TowerDefence/";
     ui->setupUi(this);
+
+    TOWER_DEFENCE_PATH = "../../TowerDefence/";
 
     srand(time(0));
 
     gameStart = true;
     gamePause = false;
     mapLoad = false;
-
 
 //    qDebug() << "towerUnderConstruction: " << towerUnderConstruction;
 //    qDebug() << "&towerUnderConstruction: " << &towerUnderConstruction;
@@ -81,7 +81,7 @@ GameWidget::GameWidget(QWidget *parent) :
 //    field.createSpawnPoint(defaultNumCreateCreeps, 0, 0);
 //    field.createExitPoint(field.getSizeX()-1, field.getSizeY()-1);
 
-    loadMap(TOWER_DEFENCE_PATH + "maps/arcticv1.tmx");
+//    loadMap(TOWER_DEFENCE_PATH + "maps/arcticv1.tmx");
 }
 
 GameWidget::~GameWidget()

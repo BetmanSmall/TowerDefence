@@ -6,6 +6,7 @@ WidgetController::WidgetController(QWidget *parent) :
     QWidget(parent)
 {
     TOWER_DEFENCE_PATH = "../../TowerDefence/";
+
 //    this->setMaximumWidth(640);
 //    this->setMaximumHeight(480);
 //    this->setMinimumWidth(640);
@@ -25,6 +26,7 @@ WidgetController::WidgetController(QWidget *parent) :
     layout->setMargin(0);
     layout->addWidget(stackedWidget);
     setLayout(layout);
+
 //    show();
 //    move(100,100);
 
@@ -37,7 +39,10 @@ void WidgetController::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
 
-    p.drawPixmap(0, 0, width(), height(), QPixmap(TOWER_DEFENCE_PATH + "images/mainmenu.jpg"));
+    QPixmap pix = QPixmap(TOWER_DEFENCE_PATH + "images/mainmenu.jpg");
+//    qDebug() << pix;
+
+    p.drawPixmap(0, 0, width(), height(), pix);
 }
 
 void WidgetController::showMainMenu()

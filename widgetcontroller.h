@@ -2,6 +2,8 @@
 #define WIDGETCONTROLLER_H
 
 #include <QWidget>
+#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QPaintEvent>
@@ -14,6 +16,7 @@
 class WidgetController : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit WidgetController(QWidget *parent = 0);
 
