@@ -11,6 +11,7 @@ class Faction
 {
     vector<DefaultTower> towers;
     vector<DefaultUnit> units;
+
 public:
     Faction();
 
