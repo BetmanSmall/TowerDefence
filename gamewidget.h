@@ -26,9 +26,12 @@ namespace Ui {
     class GameWidget;
 }
 
+/**
+ * @brief Данная структура отвечает за набор Tilов
+ */
 struct TileSet
 {
-    int firstTileID;
+    int firstTileID; ///< jdfklsdjfsdjf
     QString name;
     int spacing;
     int margin;
@@ -38,6 +41,11 @@ struct TileSet
     vector< QRect > subRects;
 };
 
+/**
+ * @brief Класс отвечает за игровую сессию
+ *
+ *
+ */
 class GameWidget : public QWidget
 {
     Q_OBJECT
@@ -45,6 +53,10 @@ class GameWidget : public QWidget
 public:
     explicit GameWidget(QWidget *parent = 0);
     ~GameWidget();
+    /**
+     * @brief timerEvent
+     * @param event
+     */
     void timerEvent(QTimerEvent* event);
     void keyPressEvent(QKeyEvent* event);
 
@@ -59,7 +71,7 @@ public:
     void drawStepsAndMouse();
     void drawTowerUnderConstruction();
 
-    bool whichCell(int *mouseX, int *mouseY);
+    bool whichCell(int &mouseX, int &mouseY);
 
     void startTimer_CreepsMoveAndTowerAttack();
     void stopTimer_CreepsMoveAndTowerAttack();

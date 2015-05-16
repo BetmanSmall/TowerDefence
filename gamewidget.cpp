@@ -31,7 +31,7 @@ GameWidget::GameWidget(QWidget *parent) :
 
     defaultNumCreateCreeps = 10;
 
-    creepsMove_TimerMilliSec = 100;
+    creepsMove_TimerMilliSec = 10;
     towersAttack_TimerMilliSec = 1000;
     scanMouseMove_TimerMilliSec = 100;
 
@@ -99,8 +99,8 @@ void GameWidget::timerEvent(QTimerEvent *event)
     if(timerId == creepsMove_TimerId)
     {
         if(test == 0)
-            field.setCreep();
-        test = test<4 ? test+1 : 0;
+            field.setCreepInSpawnPoint();
+        test = test<8 ? test+1 : 0;
 
         if(int result = field.stepAllCreeps())
         {
@@ -163,7 +163,7 @@ void GameWidget::timerEvent(QTimerEvent *event)
             mainCoorMapX = (mainCoorMapX + sizeCell*field.getSizeX() < width()) ? width()-sizeCell*field.getSizeX() : mainCoorMapX;
             mainCoorMapY = (mainCoorMapY + sizeCell*field.getSizeY() < height()) ? height()-sizeCell*field.getSizeY() : mainCoorMapY;
         }
-        if(whichCell(&curX, &curY))
+        if(whichCell(curX, curY))
         {
             towerUnderConstructionX = curX;
             towerUnderConstructionY = curY;
@@ -243,7 +243,7 @@ void GameWidget::paintEvent(QPaintEvent *)
 //            drawTowersByField();
             drawTowersByTowers();
             drawCreeps();
-//            drawGrid();
+            drawGrid();
 //            drawStepsAndMouse();
             drawTowerUnderConstruction();
 
@@ -488,16 +488,16 @@ void GameWidget::drawTowerUnderConstruction()
     }
 }
 
-bool GameWidget::whichCell(int *mouseX, int *mouseY)
+bool GameWidget::whichCell(int &mouseX, int &mouseY)
 {
     int tmpX, tmpY;
-    tmpX = ((*mouseX+sizeCell - spaceWidget - mainCoorMapX)/sizeCell);
-    tmpY = ((*mouseY+sizeCell - spaceWidget - mainCoorMapY)/sizeCell);
+    tmpX = ( (mouseX+sizeCell - spaceWidget - mainCoorMapX) / sizeCell);
+    tmpY = ( (mouseY+sizeCell - spaceWidget - mainCoorMapY) / sizeCell);
     if(tmpX > 0 && tmpX < field.getSizeX()+1)
         if(tmpY > 0 && tmpY < field.getSizeY()+1)
         {
-            *mouseX = tmpX-1;
-            *mouseY = tmpY-1;
+            mouseX = tmpX-1;
+            mouseY = tmpY-1;
             return true;
         }
 
@@ -595,7 +595,7 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
     QString text = QString("%1/%2").arg(mouseX).arg(mouseY);
     global_text = text.toStdString().c_str();
 
-    if(whichCell(&mouseX,&mouseY))
+    if(whichCell(mouseX,mouseY))
     {
         text = QString("%1/%2").arg(mouseX).arg(mouseY);
         global_text2 = text.toStdString().c_str();

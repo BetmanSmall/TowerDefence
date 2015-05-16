@@ -1,7 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-#define CIRCLET8
+//#define CIRCLET8
 #include <iostream>
 
 #include <QPixmap>
@@ -113,7 +113,8 @@ public:
     bool setBusy(int x, int y, QPixmap pixmap);
     bool setTower(int x, int y);//, int type = 0);
     bool setTower(int x, int y, DefaultTower* defTower);
-    bool setCreep(int x = -1, int y = -1, Creep* creep = NULL);//, int type = 0);
+    bool setCreepInSpawnPoint();//Creep* creep = NULL);//, int type = 0);
+    bool setCreep(int x, int y, Creep* creep = NULL);//, int type = 0);
 
     bool clearBusy(int x, int y);
     bool clearTower(int x, int y);

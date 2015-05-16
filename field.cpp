@@ -12,7 +12,7 @@ void Field::createField(int newSizeX, int newSizeY)
 
         creepSet = true;
 
-        gameOverLimitCreeps = 3;
+        gameOverLimitCreeps = 10;
         currentFinishedCreeps = 0;
 
         sizeX = newSizeX;
@@ -108,7 +108,7 @@ bool Field::towersAttack()
 
         int defaultHp = 100;
 
-        int exitX = x, exitY = y;
+        int attackX = x, attackY = y;
 
         for(int tmpY = (0-radius); tmpY <= radius; tmpY++)
         {
@@ -119,21 +119,22 @@ bool Field::towersAttack()
                     int hp = getCreepHpInCell(x + tmpX, y + tmpY);
                     if(hp <= defaultHp && hp != 0)
                     {
-                        exitX = x + tmpX;
-                        exitY = y + tmpY;
+                        attackX = x + tmpX;
+                        attackY = y + tmpY;
                         defaultHp = hp;
                     }
                 }
             }
         }
 
-        if(exitX != x || exitY != y)
+        if(attackX != x || attackY != y)
         {
 //            if(type == 1)
             Creep* creep;
-            if(creeps.attackCreep(exitX, exitY, tmpTower->attack, creep))
+            if(creeps.attackCreep(attackX, attackY, tmpTower->attack, creep))
             {
-//                qDebug() << "Kill: " << clearCreep(exitX, exitY);//, creep);
+                if(clearCreep(attackX, attackY, creep))
+                    qDebug() << "Dead!";
             }
         }
     }
@@ -574,10 +575,15 @@ bool Field::setTower(int x, int y, DefaultTower* defTower)
     return false;
 }
 
+bool Field::setCreepInSpawnPoint()//Creep* creep)//, int type)
+{
+    return setCreep(spawnPointX, spawnPointY);//, creep);//, type);
+}
+
 bool Field::setCreep(int x, int y, Creep* creep)//, int type)
 {
-    if(x == -1 && y == -1)
-        return setCreep(spawnPointX, spawnPointY, creep);//, type);
+//    if(x == -1 && y == -1)
+//        return setCreep(spawnPointX, spawnPointY, creep);//, type);
 
     if(field[sizeX*y + x].empty || !field[sizeX*y + x].creeps.empty())
     {
@@ -663,12 +669,16 @@ bool Field::deleteTower(int x, int y)
 
     if(tower != NULL)
     {
+        int towerX = tower->currX;
+        int towerY = tower->currY;
         int size = tower->defTower->size;
-        towers.deleteTower(tower->currX, tower->currY);
+        towers.deleteTower(towerX, towerY);
 
         for(int tmpX = 0; tmpX < size; tmpX++)
             for(int tmpY = 0; tmpY < size; tmpY++)
-                clearTower(tmpX+x, tmpY+y);
+                clearTower(tmpX+towerX, tmpY+towerY);
+
+        return true;
     }
 
     return false;
