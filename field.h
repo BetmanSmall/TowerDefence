@@ -102,6 +102,7 @@ public:
     Creep* getCreep(int x, int y);
     std::vector<Creep *> getCreeps(int x, int y);
     int getCreepHpInCell(int x, int y);
+    Creep* getCreepWithLowHP(int x, int y);
 
     std::vector<Tower*> getAllTowers();
 

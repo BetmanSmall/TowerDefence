@@ -106,6 +106,7 @@ bool Field::towersAttack()
 //        int type = tmpTower->type;
         int radius = tmpTower->radius; // 1 // 5
 
+        Creep* creep = NULL;
         int defaultHp = 100;
 
         int attackX = x, attackY = y;
@@ -116,23 +117,35 @@ bool Field::towersAttack()
             {
                 if(!(tmpX == 0 && tmpY == 0))
                 {
-                    int hp = getCreepHpInCell(x + tmpX, y + tmpY);
-                    if(hp <= defaultHp && hp != 0)
+                    Creep* tmpCreep = getCreepWithLowHP(x + tmpX, y + tmpY);
+                    if(tmpCreep != NULL)
                     {
-                        attackX = x + tmpX;
-                        attackY = y + tmpY;
-                        defaultHp = hp;
+                        int hp = tmpCreep->hp;//getCreepHpInCell(x + tmpX, y + tmpY);
+                        if(hp <= defaultHp && hp != 0)
+                        {
+                            creep = tmpCreep;
+                            defaultHp = hp;
+                            attackX = x + tmpX;
+                            attackY = y + tmpY;
+                        }
                     }
                 }
             }
         }
 
-        if(attackX != x || attackY != y)
+//        if(attackX != x || attackY != y)
+        if(creep != NULL)
         {
 //            if(type == 1)
-            Creep* creep;
-            if(creeps.attackCreep(attackX, attackY, tmpTower->attack, creep))
+//            Creep* creep = NULL;
+//            qDebug() << "creep: " << creep;
+//            if(creeps.attackCreep(attackX, attackY, tmpTower->attack, creep))
+            if(creep->takeDamage(tmpTower->attack))
             {
+//                qDebug() << "creep: " << creep;
+//                if(creep != NULL)
+//                    qDebug() << "creep->hp: " << creep->hp;
+
                 if(clearCreep(attackX, attackY, creep))
                     qDebug() << "Dead!";
             }
@@ -469,6 +482,29 @@ int Field::getCreepHpInCell(int x, int y)
                 return creeps.getHP(x, y);
 
     return 0;
+}
+
+Creep* Field::getCreepWithLowHP(int x, int y)
+{
+//    if(x >= 0 && x < getSizeX())
+//        if(y >= 0 && y < getSizeY())
+    if(!field[sizeX*y + x].creeps.empty())
+    {
+        Creep* creep = field[sizeX*y + x].creeps.front();
+        int localHp = creep->hp;
+        int size = field[sizeX*y + x].creeps.size();
+        for(int k = 1; k < size; k++)
+        {
+            int hp = field[sizeX*y + x].creeps[k]->hp;
+            if(hp < localHp)
+            {
+                creep = field[sizeX*y + x].creeps[k];
+                localHp = creep->hp;
+            }
+        }
+        return creep;
+    }
+    return NULL;
 }
 
 std::vector<Tower*> Field::getAllTowers()

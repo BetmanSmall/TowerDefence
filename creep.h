@@ -42,6 +42,7 @@ public:
     Creep();
 
     QPixmap getAnimationInformation(int *lastX, int *lastY, int *animationCurrIter, int *animationMaxIter);
+    bool takeDamage(int damage);
 };
 
 #endif // CREEP_H

@@ -31,7 +31,7 @@ GameWidget::GameWidget(QWidget *parent) :
 
     defaultNumCreateCreeps = 10;
 
-    creepsMove_TimerMilliSec = 10;
+    creepsMove_TimerMilliSec = 100;
     towersAttack_TimerMilliSec = 1000;
     scanMouseMove_TimerMilliSec = 100;
 
@@ -385,8 +385,8 @@ void GameWidget::drawCreeps()
                 int localSizeCell = sizeCell;//-1;
                 int localSpaceCell = sizeCell/3;
 
-//                QColor color = QColor(num*10, num*10, num*10);
-//                p.fillRect(pxlsX+1 + localSpaceCell, pxlsY+1 + localSpaceCell, localSizeCell-1 - 2*(localSpaceCell), localSizeCell-1 - 2*(localSpaceCell), color);
+                QColor color = QColor(num*10, num*10, num*10);
+                p.fillRect(pxlsX+1 + localSpaceCell, pxlsY+1 + localSpaceCell, localSizeCell-1 - 2*(localSpaceCell), localSizeCell-1 - 2*(localSpaceCell), color);
 
                 std::vector<Creep*> creeps = field.getCreeps(x, y);
                 int size = creeps.size();
