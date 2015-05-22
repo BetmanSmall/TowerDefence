@@ -5,7 +5,7 @@
  </tileset>
  <tileset firstgid="385" name="tower1_scout" tilewidth="64" tileheight="64">
   <properties>
-   <property name="attack" value="10"/>
+   <property name="attack" value="1"/>
    <property name="name" value="Scout"/>
    <property name="radius" value="1"/>
    <property name="size" value="2"/>

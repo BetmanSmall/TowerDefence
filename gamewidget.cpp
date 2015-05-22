@@ -412,6 +412,15 @@ void GameWidget::drawCreeps()
 
                         p.drawPixmap(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2, pixmap);
     //                    p.drawRect(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2);
+
+                        int maxHP = 100;
+                        int hp = creeps[k]->hp;
+                        float hpWidth = localSizeCell-5;
+                        hpWidth = hpWidth/maxHP*hp;
+//                        qDebug() << "hpWidth: " << hpWidth;
+
+                        p.drawRect(pxlsX + localSpaceCell+2, pxlsY, localSizeCell-4, 10);
+                        p.fillRect(pxlsX + localSpaceCell+3, pxlsY+1, hpWidth, 9, QColor(Qt::green));
                     }
                 }
             }
