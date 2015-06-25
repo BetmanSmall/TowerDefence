@@ -105,15 +105,16 @@ bool Field::towersAttack()
         int y = tmpTower->currY;
 //        int type = tmpTower->type;
         int radius = tmpTower->radius; // 1 // 5
+        int size = tmpTower->size;
 
         Creep* creep = NULL;
         int defaultHp = 100;
 
         int attackX = x, attackY = y;
 
-        for(int tmpY = (0-radius); tmpY <= radius; tmpY++)
+        for(int tmpY = (0-radius); tmpY < radius+size; tmpY++)
         {
-            for(int tmpX = (0-radius); tmpX <= radius; tmpX++)
+            for(int tmpX = (0-radius); tmpX < radius+size; tmpX++)
             {
                 if(!(tmpX == 0 && tmpY == 0))
                 {

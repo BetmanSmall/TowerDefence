@@ -243,7 +243,7 @@ void GameWidget::paintEvent(QPaintEvent *)
 //            drawTowersByField();
             drawTowersByTowers();
             drawCreeps();
-            drawGrid();
+//            drawGrid();
 //            drawStepsAndMouse();
             drawTowerUnderConstruction();
 
@@ -385,8 +385,8 @@ void GameWidget::drawCreeps()
                 int localSizeCell = sizeCell;//-1;
                 int localSpaceCell = sizeCell/3;
 
-                QColor color = QColor(num*10, num*10, num*10);
-                p.fillRect(pxlsX+1 + localSpaceCell, pxlsY+1 + localSpaceCell, localSizeCell-1 - 2*(localSpaceCell), localSizeCell-1 - 2*(localSpaceCell), color);
+//                QColor color = QColor(num*10, num*10, num*10);
+//                p.fillRect(pxlsX+1 + localSpaceCell, pxlsY+1 + localSpaceCell, localSizeCell-1 - 2*(localSpaceCell), localSizeCell-1 - 2*(localSpaceCell), color);
 
                 std::vector<Creep*> creeps = field.getCreeps(x, y);
                 int size = creeps.size();
