@@ -365,6 +365,15 @@ void GameWidget::drawTowersByTowers()
             p.fillRect(pxlsX+1, pxlsY+1, localSizeCell-1, localSizeCell-1, QColor(127, 255, 0));
         else
             p.drawPixmap(pxlsX, pxlsY, localSizeCell/* + sizeCell*/, localSizeCell/* + sizeCell*/, towers[k]->pixmap);
+
+        int attackX = towers[k]->attackX;
+        int attackY = towers[k]->attackY;
+        if(attackX != -1 && attackY != -1)
+        {
+            attackX = mainCoorMapX + spaceWidget + attackX*sizeCell;
+            attackY = mainCoorMapY + spaceWidget + attackY*sizeCell;
+            p.drawLine(pxlsX+localSizeCell/2, pxlsY+localSizeCell/2, attackX, attackY);
+        }
     }
 }
 

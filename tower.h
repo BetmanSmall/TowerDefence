@@ -16,6 +16,7 @@ public:
     int type;
 
     int currX, currY;
+    int attackX, attackY;
 
     QPixmap pixmap;
 

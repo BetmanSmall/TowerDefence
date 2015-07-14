@@ -107,6 +107,9 @@ bool Field::towersAttack()
         int radius = tmpTower->radius; // 1 // 5
         int size = tmpTower->size;
 
+        tmpTower->attackX = -1;
+        tmpTower->attackY = -1;
+
         Creep* creep = NULL;
         int defaultHp = 100;
 
@@ -149,6 +152,11 @@ bool Field::towersAttack()
 
                 if(clearCreep(attackX, attackY, creep))
                     qDebug() << "Dead!";
+            }
+            else
+            {
+                tmpTower->attackX = attackX;
+                tmpTower->attackY = attackY;
             }
         }
     }

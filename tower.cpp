@@ -2,6 +2,8 @@
 
 Tower::Tower()
 {
+    this->attackX = -1;
+    this->attackY = -1;
 }
 
 //Tower::Tower(int type, int radius, int attack, QPixmap pixmap)
