@@ -43,21 +43,28 @@ struct TileSet
 
 /**
  * @brief Класс отвечает за игровую сессию
- *
- *
+ * @detailed Полностью вся игра проходит в этом классе
  */
 class GameWidget : public QWidget
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief Конструктор GameWidget
+     * @param parent - родительский QWidget
+     */
     explicit GameWidget(QWidget *parent = 0);
     ~GameWidget();
     /**
-     * @brief timerEvent
-     * @param event
+     * @brief Обработчик всех таймеров
+     * @param Евент таймера
      */
     void timerEvent(QTimerEvent* event);
+    /**
+     * @brief Обработчик нажатия клавиш на клавиатуре
+     * @param Евент нажатия клавиши
+     */
     void keyPressEvent(QKeyEvent* event);
 
     QPainter p;
@@ -71,6 +78,13 @@ public:
     void drawStepsAndMouse();
     void drawTowerUnderConstruction();
 
+    /**
+     * @brief Переводит графические координаты в игровые
+     * @param mouseX
+     * @param mouseY
+     * @return False - не смогли перевести. Возможно за пределами игрового поля.
+     * @
+     */
     bool whichCell(int &mouseX, int &mouseY);
 
     void startTimer_CreepsMoveAndTowerAttack();
@@ -84,6 +98,10 @@ public:
 //    void mouseMoveEvent(QMouseEvent* event);
 //    void leaveEvent(QEvent* event);
 
+    /**
+     * @brief Загрузка карты
+     * @param mapName
+     */
     void loadMap(QString mapName);
 
     bool gameStart;
