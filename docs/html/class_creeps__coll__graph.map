@@ -1,0 +1,4 @@
+<map id="Creeps" name="Creeps">
+<area shape="rect" id="node4" href="$class_creep.html" title="Creep" alt="" coords="399,436,455,463"/>
+<area shape="rect" id="node7" href="$class_default_unit.html" title="DefaultUnit" alt="" coords="326,287,410,313"/>
+</map>

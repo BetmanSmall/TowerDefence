@@ -1,0 +1,14 @@
+<map id="C:/QtProjects/TowerDefence/widgetcontroller.h" name="C:/QtProjects/TowerDefence/widgetcontroller.h">
+<area shape="rect" id="node6" href="$mainmenu_8h.html" title="mainmenu.h" alt="" coords="284,95,378,121"/>
+<area shape="rect" id="node7" href="$choosemapmenu_8h.html" title="choosemapmenu.h" alt="" coords="402,95,532,121"/>
+<area shape="rect" id="node8" href="$optionmenu_8h.html" title="optionmenu.h" alt="" coords="557,95,657,121"/>
+<area shape="rect" id="node9" href="$gamewidget_8h.html" title="gamewidget.h" alt="" coords="868,95,970,121"/>
+<area shape="rect" id="node18" href="$field_8h.html" title="field.h" alt="" coords="1278,169,1336,196"/>
+<area shape="rect" id="node28" href="$faction_8h.html" title="faction.h" alt="" coords="1446,244,1517,271"/>
+<area shape="rect" id="node21" href="$creeps_8h.html" title="creeps.h" alt="" coords="1077,244,1148,271"/>
+<area shape="rect" id="node25" href="$towers_8h.html" title="towers.h" alt="" coords="1172,244,1244,271"/>
+<area shape="rect" id="node23" href="$creep_8h.html" title="creep.h" alt="" coords="1080,319,1145,345"/>
+<area shape="rect" id="node24" href="$defaultunit_8h.html" title="defaultunit.h" alt="" coords="1139,393,1232,420"/>
+<area shape="rect" id="node26" href="$tower_8h.html" title="tower.h" alt="" coords="1448,319,1515,345"/>
+<area shape="rect" id="node27" href="$defaulttower_8h.html" title="defaulttower.h" alt="" coords="1429,393,1534,420"/>
+</map>
