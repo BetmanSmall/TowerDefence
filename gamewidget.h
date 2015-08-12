@@ -43,7 +43,7 @@ struct TileSet
 
 /**
  * @brief Класс отвечает за игровую сессию
- * @detailed Полностью вся игра проходит в этом классе
+ * Вся игра проходит, полностью в этом классе
  */
 class GameWidget : public QWidget
 {
@@ -83,7 +83,6 @@ public:
      * @param mouseX
      * @param mouseY
      * @return False - не смогли перевести. Возможно за пределами игрового поля.
-     * @
      */
     bool whichCell(int &mouseX, int &mouseY);
 

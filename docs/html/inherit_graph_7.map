@@ -1,8 +1,0 @@
-<map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
-<area shape="rect" id="node1" href="$class_q_widget.html" title="QWidget" alt="" coords="5,107,76,133"/>
-<area shape="rect" id="node2" href="$class_choose_map_menu.html" title="ChooseMapMenu" alt="" coords="124,5,243,32"/>
-<area shape="rect" id="node3" href="$class_game_widget.html" title="Класс отвечает за игровую сессию &#160;&#160;" alt="" coords="136,56,231,83"/>
-<area shape="rect" id="node4" href="$class_main_menu.html" title="MainMenu" alt="" coords="143,107,223,133"/>
-<area shape="rect" id="node5" href="$class_option_menu.html" title="OptionMenu" alt="" coords="138,157,229,184"/>
-<area shape="rect" id="node6" href="$class_widget_controller.html" title="WidgetController" alt="" coords="124,208,243,235"/>
-</map>

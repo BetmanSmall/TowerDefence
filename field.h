@@ -93,22 +93,22 @@ public:
 
     /**
      * @brief Временная функция, устанавливает Фракцию
-     * @param Фракция
+     * @param faction - Указатель на фракцию
      */
     void setFaction(Faction* faction);
 
     /**
      * @brief Устанавливает точку спавна на поле
-     * @param Колличество крипов, которые будут созданы из этой точки
-     * @param Координаты по X
-     * @param Координаты по Y
-     * @return True - успешно; False - не получилось
+     * @param num - Колличество крипов, которые будут созданы из этой точки
+     * @param x - Координаты по X
+     * @param y - Координаты по Y
+     * @return True - Успешно; False - Не получилось (True/False)
      */
     bool createSpawnPoint(int num, int x = -1, int y = -1);
     /**
      * @brief Устанавливает точку куда криппы должны идти
-     * @param Координаты по X
-     * @param Координаты по Y
+     * @param x - Координаты по X
+     * @param y - Координаты по Y
      */
     void createExitPoint(int x, int y);
 
@@ -130,14 +130,14 @@ public:
     bool towersAttack();
     /**
      * @brief Применяет Волновой Алгоритм на поле из ячееки по данным кординатам
-     * @param Координаты по X
-     * @param Координаты по Y
+     * @param x - Координаты по X
+     * @param y - Координаты по Y
      */
     void waveAlgorithm(int x = -1, int y = -1);
     /**
      * @brief Рекурсивная функция для волнового алгоритма
-     * @param Координаты по X
-     * @param Координаты по Y
+     * @param x - Координаты по X
+     * @param y - Координаты по Y
      * @param Число для данной ячейки
      */
     void waveStep(int x, int y, int step);
@@ -152,36 +152,36 @@ public:
      * @brief getMousePress
      * @param x
      * @param y
-     * @return
+     * @return True - Установленно; False - Нет (True/False)
      */
     bool getMousePress(int x = -1, int y = -1);
     /**
      * @brief Проверяет установленная ли Спавн точка
      * @param x
      * @param y
-     * @return 1 - Созданная. 0 - не создана.
+     * @return True - Созданная; False - Не создана (True/False)
      */
     bool isSetSpawnPoint(int x = -1, int y = -1);
     /**
      * @brief Проверяет установленная ли точка выхода
      * @param x
      * @param y
-     * @return 1 - Созданная. 0 - не создана.
+     * @return True - Созданная; False - Не создана (True/False)
      */
     bool isSetExitPoint(int x = -1, int y = -1);
 
     /**
      * @brief Говорит всем криппам ходить
-     * @return 2 - все криппы мертвы
-     * @return 1 - если колличество криппов в точке @exitPoint превышено @gameOverLimitCreeps
-     * @return 0 - все криппы сходили успешно
-     * @return -1 - какому-либо криппу перекрыли путь до @exitPoint
+     * @return 2 - Все криппы мертвы
+     * @return 1 - Усли колличество криппов в точке @exitPoint превышено $gameOverLimitCreeps
+     * @return 0 - Все криппы сходили успешно
+     * @return -1 - Какому-либо криппу перекрыли путь до $exitPoint
      */
     int stepAllCreeps();
     /**
-     * @brief stepOneCreep
-     * @param num
-     * @return
+     * @brief Должен сходить крипп под номером
+     * @param num - Номер криппа
+     * @return Какие-то ошибки, смотри выше!
      */
     int stepOneCreep(int num);
 
@@ -203,7 +203,7 @@ public:
      * @brief Устнавливает номер шага в ячейки из расчета волнового алгоритма
      * @param x
      * @param y
-     * @param Номер шага волнового алгоритма
+     * @param step - Номер шага волнового алгоритма
      * @return True/False установли/не установил по определеным причинам
      */
     bool setNumOfCell(int x, int y, int step);
@@ -251,7 +251,7 @@ public:
     Creep* getCreepWithLowHP(int x, int y);
 
     /**
-     * @brief Возвращает вектор указателей всех башен созданных в объекте класса @Towers
+     * @brief Возвращает вектор указателей всех башен созданных в объекте класса $Towers
      * @return Вектор указателей на объекты башен
      */
     std::vector<Tower*> getAllTowers();
@@ -260,6 +260,7 @@ public:
      * @brief Проверяет пустая ли ячейка
      * @param x
      * @param y
+     * @return True - Свободна; False - Занята (True/False)
      * @return True/False свободна/занята
      */
     bool containEmpty(int x, int y);
@@ -267,6 +268,7 @@ public:
      * @brief Проверяет занята ли клетка рельефом
      * @param x
      * @param y
+     * @return True - Занята; False - Свободна (True/False)
      * @return True/False занята/свободна
      */
     bool containBusy(int x, int y);
@@ -274,6 +276,7 @@ public:
      * @brief Проверяет занята ли клетка башней
      * @param x
      * @param y
+     * @return True - Занята; False - Свободна (True/False)
      * @return True/False занята/свободна
      */
     bool containTower(int x, int y);
@@ -281,8 +284,9 @@ public:
      * @brief Возвращает индекс криппа в данной клетке (с учетом того что в данной клектке могут находится несколько криппов)
      * @param x
      * @param y
+     * @param creep - Указатель на криппа
      * @return 0 - Нет крипов, либо нет данного криппа.
-     * @return {int} - индекс криппа, либо количество криппов
+     * @return {int} - Индекс криппа, либо количество криппов
      */
     int containCreep(int x, int y, Creep* creep = NULL);
 
@@ -290,7 +294,8 @@ public:
      * @brief Устанавливает занятость клетки и соответсвующую картинку
      * @param x
      * @param y
-     * @param Картинка рельефа
+     * @param pixmap - Картинка рельефа
+     * @return True - Установил; False - Не установил (True/False)
      * @return True/False установил/не установил
      */
     bool setBusy(int x, int y, QPixmap pixmap);
@@ -298,19 +303,21 @@ public:
      * @brief Устаревшая
      * @param x
      * @param y
-     * @return
+     * @return Шнягу какую-то...
      */
     bool setTower(int x, int y);//, int type = 0);
     /**
      * @brief Устанавливает башню на основе Стандартной Башни из фракции
      * @param x
      * @param y
-     * @param Стандартная башня
+     * @param defTower - Указатель на стандартную(дефолтную) башню
+     * @return True - Установил; False - Не установил (True/False)
      * @return True/False установил/не установил
      */
     bool setTower(int x, int y, DefaultTower* defTower);
     /**
      * @brief Создать криппа в spawnPoint'e
+     * @return True - Создал; False - Не создал (True/False)
      * @return True/False создал/не создал
      */
     bool setCreepInSpawnPoint();//Creep* creep = NULL);//, int type = 0);
@@ -318,38 +325,89 @@ public:
      * @brief Устанавливает криппа в данную клетку
      * @param x
      * @param y
-     * @param Крипп
+     * @param creep - Указатель на криппа
+     * @return True - Установил; False - Не установил (True/False)
      * @return True/False установил/не установил
      */
     bool setCreep(int x, int y, Creep* creep = NULL);//, int type = 0);
 
-//    /**
+    /**
+     * @brief Очищяет 'занятость' / Убирает рельеф
+     * @param x
+     * @param y
+     * @return True - Очистил; False - Не очистил (True/False)
+     */
     bool clearBusy(int x, int y);
-//    /**
+    /**
+     * @brief Удаляет с !клетки! башню
+     * @param x
+     * @param y
+     * @return True - Удалил; False - Не удалил (True/False)
+     */
     bool clearTower(int x, int y);
-//    /**
+    /**
+     * @brief Удаляет с клетки конкретного криппа (если он там есть есть) / если криппа не передали - удаляем последнего пришедшего?
+     * @param x
+     * @param y
+     * @param creep - Указатель на криппа
+     * @return True - Удалил; False - Не удалил (True/False)
+     */
     bool clearCreep(int x, int y, Creep* creep = NULL);
 
-//    /**
+    /**
+     * @brief Удаляет из $towerS по координатам
+     * @param x
+     * @param y
+     * @return True - Удалил; False - Не удалил (True/False)
+     */
     bool deleteTower(int x = -1, int y = -1);
 
-//    /**
+    /**
+     * @brief Устарело
+     * @param x
+     * @param y
+     * @param pixmap
+     */
     void setPixmapInCell(int x, int y, QPixmap pixmap);
-//    /**
+    /**
+     * @brief Устарело
+     * @param pixmap
+     */
     void setPixmapForCreep(QPixmap pixmap);
-//    /**
+    /**
+     * @brief Устарело
+     * @param pixmap
+     */
     void setPixmapForTower(QPixmap pixmap);
-//    /**
 
-//    /**
+    /**
+     * @brief Устарело
+     * @param x
+     * @param y
+     * @return
+     */
     QPixmap getBusyPixmapOfCell(int x, int y);
-//    /**
+    /**
+     * @brief Устарело
+     * @param x
+     * @param y
+     * @return
+     */
     QPixmap getPixmapOfCell(int x, int y);
-//    /**
+    /**
+     * @brief Устарело
+     * @param x
+     * @param y
+     * @return
+     */
     QPixmap getCreepPixmap(int x, int y);
-//    /**
+    /**
+     * @brief Устарело
+     * @param x
+     * @param y
+     * @return
+     */
     QPixmap getTowerPixmap(int x, int y);
-//    /**
 };
 
 #endif // FIELD_H
