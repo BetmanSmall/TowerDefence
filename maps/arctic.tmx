@@ -7,7 +7,7 @@
   <properties>
    <property name="attack" value="1"/>
    <property name="name" value="Scout"/>
-   <property name="radius" value="10"/>
+   <property name="radius" value="1"/>
    <property name="size" value="2"/>
    <property name="type" value="1"/>
   </properties>
