@@ -189,6 +189,9 @@
    <terrain name="death3_down" tile="59"/>
   </terraintypes>
  </tileset>
+ <tileset firstgid="509" name="ballista_bolt" tilewidth="64" tileheight="64">
+  <image source="textures/warcraft2/missiles/ballista_bolt.png" trans="ff00ff" width="320" height="64"/>
+ </tileset>
  <layer name="background" width="36" height="25">
   <data>
    <tile gid="350"/>

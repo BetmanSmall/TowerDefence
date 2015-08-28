@@ -13,6 +13,7 @@ public:
     int type;
 
     QPixmap pixmap;
+    std::vector<QPixmap> bullets;
 
 //    QPixmap idle_up;
 //    QPixmap idle_up_right;
