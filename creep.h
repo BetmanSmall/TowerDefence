@@ -17,6 +17,9 @@ enum Direction
     DirectionUpLeft
 };
 
+/**
+ * @brief The Creep class - класс, описывающий общие характеристики крипа.
+ */
 class Creep
 {
 public:
