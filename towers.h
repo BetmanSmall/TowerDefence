@@ -35,7 +35,7 @@ class Towers
      */
     int size;
     /**
-     * @brief amount -Количество созданных башен
+     * @brief amount - Количество созданных башен
      */
     int amount;
 

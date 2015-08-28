@@ -3,6 +3,9 @@
 
 #include <QPixmap>
 
+/**
+ * @brief The DefaultTower class - класс, описывающий все реализации определенного типа Башни.
+ */
 class DefaultTower
 {
 public:

@@ -47,7 +47,7 @@ int Creeps::getHP(int x, int y)
     return 0;
 }
 
-bool Creeps::attackCreep(int x, int y, int hp, Creep *creep)
+bool Creeps::attackCreep(int x, int y, int damage, Creep *creep)
 {
     for(int k = 0; k < amount; k++)
     {
@@ -60,7 +60,7 @@ bool Creeps::attackCreep(int x, int y, int hp, Creep *creep)
         if(localX == x && localY == y)
         {
             int localHP = creeps[k].hp;
-            localHP = localHP - hp;
+            localHP = localHP - damage;
 
             if(localHP <= 0)
             {
