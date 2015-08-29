@@ -11,13 +11,17 @@
    <property name="size" value="2"/>
    <property name="type" value="1"/>
   </properties>
-  <image source="textures/warcraft2/tilesets/winter/human/buildings/scout_tower.png" trans="ff00ff" width="64" height="128"/>
+  <image source="textures/warcraft2/tilesets/winter/human/buildings/scout_tower.png" trans="ff00ff" width="128" height="192"/>
   <terraintypes>
    <terrain name="idle_up" tile="0"/>
-   <terrain name="idle_down" tile="1"/>
+   <terrain name="bullet_fly_up" tile="1"/>
+   <terrain name="bullet_fly_up_right" tile="2"/>
+   <terrain name="bullet_fly_right" tile="3"/>
+   <terrain name="bullet_fly_down_right" tile="4"/>
+   <terrain name="bullet_fly_down" tile="5"/>
   </terraintypes>
  </tileset>
- <tileset firstgid="387" name="tower2_mage" tilewidth="96" tileheight="96">
+ <tileset firstgid="391" name="tower2_mage" tilewidth="96" tileheight="96">
   <properties>
    <property name="attack" value="25"/>
    <property name="name" value="Mage"/>
@@ -31,7 +35,7 @@
    <terrain name="idle_down" tile="1"/>
   </terraintypes>
  </tileset>
- <tileset firstgid="389" name="creep1_grunt" tilewidth="72" tileheight="72">
+ <tileset firstgid="393" name="creep1_grunt" tilewidth="72" tileheight="72">
   <properties>
    <property name="health_point" value="100"/>
    <property name="name" value="Grunt"/>
@@ -110,7 +114,7 @@
    <terrain name="death3_down" tile="59"/>
   </terraintypes>
  </tileset>
- <tileset firstgid="449" name="creep2_troll_axethrower" tilewidth="72" tileheight="72">
+ <tileset firstgid="453" name="creep2_troll_axethrower" tilewidth="72" tileheight="72">
   <properties>
    <property name="health_point" value="100"/>
    <property name="name" value="Troll"/>
@@ -188,9 +192,6 @@
    <terrain name="death2_down" tile="54"/>
    <terrain name="death3_down" tile="59"/>
   </terraintypes>
- </tileset>
- <tileset firstgid="509" name="ballista_bolt" tilewidth="64" tileheight="64">
-  <image source="textures/warcraft2/missiles/ballista_bolt.png" trans="ff00ff" width="320" height="64"/>
  </tileset>
  <layer name="background" width="36" height="25">
   <data>
