@@ -4,8 +4,7 @@
 #include <QPixmap>
 
 /**
- * @brief The DefaultUnit class - класс, описывающий базового крипа, его количство жизней,
- * тип, картинки позиций (шаг, атака, смерть).
+ * @brief The DefaultUnit class - класс, описывающий все реализации определенного типа Юнита.
  */
 class DefaultUnit
 {

@@ -374,6 +374,24 @@ void GameWidget::drawTowersByTowers()
             attackY = mainCoorMapY + spaceWidget + attackY*sizeCell;
             p.drawLine(pxlsX+localSizeCell/2, pxlsY+localSizeCell/2, attackX, attackY);
         }
+
+        QPixmap bullet_fly_up = towers[k]->defTower->bullet_fly_up;
+        QPixmap bullet_fly_up_right = towers[k]->defTower->bullet_fly_up_right;
+        QPixmap bullet_fly_right = towers[k]->defTower->bullet_fly_right;
+        QPixmap bullet_fly_down_right = towers[k]->defTower->bullet_fly_down_right;
+        QPixmap bullet_fly_down = towers[k]->defTower->bullet_fly_down;
+        QPixmap bullet_fly_down_left = towers[k]->defTower->bullet_fly_down_left;
+        QPixmap bullet_fly_left = towers[k]->defTower->bullet_fly_left;
+        QPixmap bullet_fly_up_left = towers[k]->defTower->bullet_fly_up_left;
+
+        p.drawPixmap(pxlsX, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up);
+        p.drawPixmap(pxlsX + localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_right);
+        p.drawPixmap(pxlsX + localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_right);
+        p.drawPixmap(pxlsX + localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_right);
+        p.drawPixmap(pxlsX, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down);
+        p.drawPixmap(pxlsX - localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_left);
+        p.drawPixmap(pxlsX - localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_left);
+        p.drawPixmap(pxlsX - localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_left);
     }
 }
 
@@ -931,117 +949,136 @@ void GameWidget::loadMap(QString mapName)
 
                         if(name == "idle_up")
                             tower.pixmap = pixmap;
-//                            tower.idle_up = pixmap;
-//                        else if(name == "idle_up_right")
-//                        {
-//                            tower.idle_up_right = pixmap;
-//                            tower.idle_up_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
-//                        }
-//                        else if(name == "idle_right")
-//                        {
-//                            tower.idle_right = pixmap;
-//                            tower.idle_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
-//                        }
-//                        else if(name == "idle_down_right")
-//                        {
-//                            tower.idle_down_right = pixmap;
-//                            tower.idle_down_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
-//                        }
-//                        else if(name == "idle_down")
-//                            tower.idle_down = pixmap;
-//                        else if(name.contains("walk"))
-//                        {
-//                            if(name.contains("up"))
-//                            {
-//                                if(!name.contains("right"))
-//                                    tower.walk_up.push_back(pixmap);
-//                                else
-//                                {
-//                                    tower.walk_up_right.push_back(pixmap);
-//                                    tower.walk_up_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                            }
-//                            else if(name.contains("right"))
-//                            {
-//                                if(!name.contains("down"))
-//                                {
-//                                    tower.walk_right.push_back(pixmap);
-//                                    tower.walk_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                                else
-//                                {
-//                                    tower.walk_down_right.push_back(pixmap);
-//                                    tower.walk_down_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                            }
-//                            else if(name.contains("down"))
-//                            {
-//                                if(!name.contains("right"))
-//                                    tower.walk_down.push_back(pixmap);
-//                            }
-//                        }
-//                        else if(name.contains("attack"))
-//                        {
-//                            if(name.contains("up"))
-//                            {
-//                                if(!name.contains("right"))
-//                                    tower.attack_up.push_back(pixmap);
-//                                else
-//                                {
-//                                    tower.attack_up_right.push_back(pixmap);
-//                                    tower.attack_up_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                            }
-//                            else if(name.contains("right"))
-//                            {
-//                                if(!name.contains("down"))
-//                                {
-//                                    tower.attack_right.push_back(pixmap);
-//                                    tower.attack_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                                else
-//                                {
-//                                    tower.attack_down_right.push_back(pixmap);
-//                                    tower.attack_down_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                            }
-//                            else if(name.contains("down"))
-//                            {
-//                                if(!name.contains("right"))
-//                                    tower.attack_down.push_back(pixmap);
-//                            }
-//                        }
-//                        else if(name.contains("death"))
-//                        {
-//                            if(name.contains("up"))
-//                            {
-//                                if(!name.contains("right"))
-//                                    tower.death_up.push_back(pixmap);
-//                                else
-//                                {
-//                                    tower.death_up_right.push_back(pixmap);
-//                                    tower.death_up_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                            }
-//                            else if(name.contains("right"))
-//                            {
-//                                if(!name.contains("down"))
-//                                {
-//                                    tower.death_right.push_back(pixmap);
-//                                    tower.death_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                                else
-//                                {
-//                                    tower.death_down_right.push_back(pixmap);
-//                                    tower.death_down_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
-//                                }
-//                            }
-//                            else if(name.contains("down"))
-//                            {
-//                                if(!name.contains("right"))
-//                                    tower.death_down.push_back(pixmap);
-//                            }
-//                        }
+                        else if(name == "bullet_fly_up")
+                            tower.bullet_fly_up = pixmap;
+                        else if(name == "bullet_fly_up_right") {
+                            tower.bullet_fly_up_right = pixmap;
+                            tower.bullet_fly_up_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
+                        }
+                        else if(name == "bullet_fly_right") {
+                            tower.bullet_fly_right = pixmap;
+                            tower.bullet_fly_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
+                        }
+                        else if(name == "bullet_fly_down_right") {
+                            tower.bullet_fly_down_right = pixmap;
+                            tower.bullet_fly_down_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
+                        }
+                        else if(name == "bullet_fly_down")
+                            tower.bullet_fly_down = pixmap;
+
+/*//                        IN DEVELOPING..
+                            tower.idle_up = pixmap;
+                        else if(name == "idle_up_right")
+                        {
+                            tower.idle_up_right = pixmap;
+                            tower.idle_up_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
+                        }
+                        else if(name == "idle_right")
+                        {
+                            tower.idle_right = pixmap;
+                            tower.idle_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
+                        }
+                        else if(name == "idle_down_right")
+                        {
+                            tower.idle_down_right = pixmap;
+                            tower.idle_down_left = QPixmap::fromImage(pixmap.toImage().mirrored(true, false));
+                        }
+                        else if(name == "idle_down")
+                            tower.idle_down = pixmap;
+                        else if(name.contains("walk"))
+                        {
+                            if(name.contains("up"))
+                            {
+                                if(!name.contains("right"))
+                                    tower.walk_up.push_back(pixmap);
+                                else
+                                {
+                                    tower.walk_up_right.push_back(pixmap);
+                                    tower.walk_up_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                            }
+                            else if(name.contains("right"))
+                            {
+                                if(!name.contains("down"))
+                                {
+                                    tower.walk_right.push_back(pixmap);
+                                    tower.walk_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                                else
+                                {
+                                    tower.walk_down_right.push_back(pixmap);
+                                    tower.walk_down_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                            }
+                            else if(name.contains("down"))
+                            {
+                                if(!name.contains("right"))
+                                    tower.walk_down.push_back(pixmap);
+                            }
+                        }
+                        else if(name.contains("attack"))
+                        {
+                            if(name.contains("up"))
+                            {
+                                if(!name.contains("right"))
+                                    tower.attack_up.push_back(pixmap);
+                                else
+                                {
+                                    tower.attack_up_right.push_back(pixmap);
+                                    tower.attack_up_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                            }
+                            else if(name.contains("right"))
+                            {
+                                if(!name.contains("down"))
+                                {
+                                    tower.attack_right.push_back(pixmap);
+                                    tower.attack_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                                else
+                                {
+                                    tower.attack_down_right.push_back(pixmap);
+                                    tower.attack_down_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                            }
+                            else if(name.contains("down"))
+                            {
+                                if(!name.contains("right"))
+                                    tower.attack_down.push_back(pixmap);
+                            }
+                        }
+                        else if(name.contains("death"))
+                        {
+                            if(name.contains("up"))
+                            {
+                                if(!name.contains("right"))
+                                    tower.death_up.push_back(pixmap);
+                                else
+                                {
+                                    tower.death_up_right.push_back(pixmap);
+                                    tower.death_up_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                            }
+                            else if(name.contains("right"))
+                            {
+                                if(!name.contains("down"))
+                                {
+                                    tower.death_right.push_back(pixmap);
+                                    tower.death_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                                else
+                                {
+                                    tower.death_down_right.push_back(pixmap);
+                                    tower.death_down_left.push_back(QPixmap::fromImage(pixmap.toImage().mirrored(true, false)));
+                                }
+                            }
+                            else if(name.contains("down"))
+                            {
+                                if(!name.contains("right"))
+                                    tower.death_down.push_back(pixmap);
+                            }
+                        }*/
+
                         xmlReader.readNext(); // </terrain>
                         xmlReader.readNext(); // </terrain "empty">
                         xmlReader.readNext(); // <terrain> - </terraintypes>

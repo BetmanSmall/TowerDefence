@@ -16,7 +16,15 @@ public:
     int type;
 
     QPixmap pixmap;
-    std::vector<QPixmap> bullets;
+
+    QPixmap bullet_fly_up;
+    QPixmap bullet_fly_up_right;
+    QPixmap bullet_fly_right;
+    QPixmap bullet_fly_down_right;
+    QPixmap bullet_fly_down;
+    QPixmap bullet_fly_down_left;
+    QPixmap bullet_fly_left;
+    QPixmap bullet_fly_up_left;
 
 //    QPixmap idle_up;
 //    QPixmap idle_up_right;
