@@ -29,7 +29,7 @@ GameWidget::GameWidget(QWidget *parent) :
     zoomMaxSizeCell = 256;
     zoomMinSizeCell = 48;
 
-    defaultNumCreateCreeps = 10;
+    defaultNumCreateCreeps = 1;
 
     creepsMove_TimerMilliSec = 100;
     towersAttack_TimerMilliSec = 1000;
@@ -375,23 +375,30 @@ void GameWidget::drawTowersByTowers()
             p.drawLine(pxlsX+localSizeCell/2, pxlsY+localSizeCell/2, attackX, attackY);
         }
 
-        QPixmap bullet_fly_up = towers[k]->defTower->bullet_fly_up;
-        QPixmap bullet_fly_up_right = towers[k]->defTower->bullet_fly_up_right;
-        QPixmap bullet_fly_right = towers[k]->defTower->bullet_fly_right;
-        QPixmap bullet_fly_down_right = towers[k]->defTower->bullet_fly_down_right;
-        QPixmap bullet_fly_down = towers[k]->defTower->bullet_fly_down;
-        QPixmap bullet_fly_down_left = towers[k]->defTower->bullet_fly_down_left;
-        QPixmap bullet_fly_left = towers[k]->defTower->bullet_fly_left;
-        QPixmap bullet_fly_up_left = towers[k]->defTower->bullet_fly_up_left;
+        for(int iBullet = 0; iBullet < towers[k]->bullets.size(); iBullet++) {
+            int bulletX = mainCoorMapX + spaceWidget + towers[k]->bullets[iBullet].getCurrX()*sizeCell;
+            int bulletY = mainCoorMapY + spaceWidget + towers[k]->bullets[iBullet].getCurrY()*sizeCell;
 
-        p.drawPixmap(pxlsX, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up);
-        p.drawPixmap(pxlsX + localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_right);
-        p.drawPixmap(pxlsX + localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_right);
-        p.drawPixmap(pxlsX + localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_right);
-        p.drawPixmap(pxlsX, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down);
-        p.drawPixmap(pxlsX - localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_left);
-        p.drawPixmap(pxlsX - localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_left);
-        p.drawPixmap(pxlsX - localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_left);
+            p.drawPixmap(bulletX, bulletY, sizeCell, sizeCell, towers[k]->bullets[iBullet].getPixmap());
+        }
+
+//        QPixmap bullet_fly_up = towers[k]->defTower->bullet_fly_up;
+//        QPixmap bullet_fly_up_right = towers[k]->defTower->bullet_fly_up_right;
+//        QPixmap bullet_fly_right = towers[k]->defTower->bullet_fly_right;
+//        QPixmap bullet_fly_down_right = towers[k]->defTower->bullet_fly_down_right;
+//        QPixmap bullet_fly_down = towers[k]->defTower->bullet_fly_down;
+//        QPixmap bullet_fly_down_left = towers[k]->defTower->bullet_fly_down_left;
+//        QPixmap bullet_fly_left = towers[k]->defTower->bullet_fly_left;
+//        QPixmap bullet_fly_up_left = towers[k]->defTower->bullet_fly_up_left;
+
+//        p.drawPixmap(pxlsX, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up);
+//        p.drawPixmap(pxlsX + localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_right);
+//        p.drawPixmap(pxlsX + localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_right);
+//        p.drawPixmap(pxlsX + localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_right);
+//        p.drawPixmap(pxlsX, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down);
+//        p.drawPixmap(pxlsX - localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_left);
+//        p.drawPixmap(pxlsX - localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_left);
+//        p.drawPixmap(pxlsX - localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_left);
     }
 }
 

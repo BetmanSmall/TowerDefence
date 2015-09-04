@@ -1,4 +1,5 @@
 #include "field.h"
+#include "bullet.h"
 
 using namespace std;
 
@@ -101,6 +102,14 @@ bool Field::towersAttack()
     for(int k = 0; k < towers.getAmount(); k++)
     {
         Tower* tmpTower = towers.getTowerById(k);
+
+        // DIBILOID CODE
+        for(int iBullet = 0; iBullet < tmpTower->bullets.size(); iBullet++) {
+            qDebug() << "k: " << k << " iBullet: " << iBullet;
+            tmpTower->bullets[iBullet].move();
+        }
+        // !!DIBILOID CODE!!
+
         int x = tmpTower->currX;
         int y = tmpTower->currY;
 //        int type = tmpTower->type;
@@ -144,6 +153,12 @@ bool Field::towersAttack()
 //            Creep* creep = NULL;
 //            qDebug() << "creep: " << creep;
 //            if(creeps.attackCreep(attackX, attackY, tmpTower->attack, creep))
+
+            if(tmpTower->bullets.size() == 0) {
+                qDebug() << "createBulletAndShot(" << attackX << ", " << attackY << ");";
+                tmpTower->createBulletAndShot(creep);
+            }
+
             if(creep->takeDamage(tmpTower->attack))
             {
 //                qDebug() << "creep: " << creep;

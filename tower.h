@@ -4,7 +4,10 @@
 #include <QPixmap>
 
 #include "defaulttower.h"
+#include "creep.h"
+#include "bullet.h"
 
+using namespace std;
 /**
  * @brief The Tower class - класс, описывающий общие характеристики башни.
  */
@@ -25,7 +28,13 @@ public:
 
     DefaultTower* defTower;
 
+    vector<Bullet> bullets;
+
     Tower();
+
+//    void createBulletAndShot(int attackX, int attackY);
+    void createBulletAndShot(Creep* creep);
+
 //    Tower(int type, int radius, int attack, QPixmap pixmap);
 };
 
