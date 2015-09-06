@@ -29,7 +29,7 @@ GameWidget::GameWidget(QWidget *parent) :
     zoomMaxSizeCell = 256;
     zoomMinSizeCell = 48;
 
-    defaultNumCreateCreeps = 1;
+    defaultNumCreateCreeps = 10;
 
     creepsMove_TimerMilliSec = 100;
     towersAttack_TimerMilliSec = 1000;
@@ -128,8 +128,10 @@ void GameWidget::timerEvent(QTimerEvent *event)
                     stopTimer_CreepsMoveAndTowerAttack();
             }
         }
-        else
+        else {
+            field.setMainCoorMapAndSizeCell(mainCoorMapX, mainCoorMapY, sizeCell);
             field.towersAttack();
+        }
     }
     else if(timerId == scanMouseMove_TimerId)
     {
@@ -376,8 +378,10 @@ void GameWidget::drawTowersByTowers()
         }
 
         for(int iBullet = 0; iBullet < towers[k]->bullets.size(); iBullet++) {
-            int bulletX = mainCoorMapX + spaceWidget + towers[k]->bullets[iBullet].getCurrX()*sizeCell;
-            int bulletY = mainCoorMapY + spaceWidget + towers[k]->bullets[iBullet].getCurrY()*sizeCell;
+//            int bulletX = mainCoorMapX + spaceWidget + towers[k]->bullets[iBullet].getCurrX()*sizeCell;
+//            int bulletY = mainCoorMapY + spaceWidget + towers[k]->bullets[iBullet].getCurrY()*sizeCell;
+            int bulletX = towers[k]->bullets[iBullet].getCurrX() - mainCoorMapX;
+            int bulletY = towers[k]->bullets[iBullet].getCurrY() - mainCoorMapY;
 
             p.drawPixmap(bulletX, bulletY, sizeCell, sizeCell, towers[k]->bullets[iBullet].getPixmap());
         }

@@ -33,7 +33,7 @@ public:
     Tower();
 
 //    void createBulletAndShot(int attackX, int attackY);
-    void createBulletAndShot(Creep* creep);
+    void createBulletAndShot(Creep* creep, int bullet_grafCoorX, int bullet_grafCoorY);
 
 //    Tower(int type, int radius, int attack, QPixmap pixmap);
 };

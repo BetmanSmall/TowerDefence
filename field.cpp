@@ -97,6 +97,12 @@ int Field::getSizeY()
     return sizeY;
 }
 
+void Field::setMainCoorMapAndSizeCell(int mainCoorMapX_FromGameWidget, int mainCoorMapY_FromGameWidget, int sizeCell_FromGameWidget) {
+    this->mainCoorMapX_FromGameWidget = mainCoorMapX_FromGameWidget;
+    this->mainCoorMapY_FromGameWidget = mainCoorMapY_FromGameWidget;
+    this->sizeCell_FromGameWidget = sizeCell_FromGameWidget;
+}
+
 bool Field::towersAttack()
 {
     for(int k = 0; k < towers.getAmount(); k++)
@@ -156,7 +162,10 @@ bool Field::towersAttack()
 
             if(tmpTower->bullets.size() == 0) {
                 qDebug() << "createBulletAndShot(" << attackX << ", " << attackY << ");";
-                tmpTower->createBulletAndShot(creep);
+
+                int bullet_grafCoorX = tmpTower->currX*sizeCell_FromGameWidget + (sizeCell_FromGameWidget/3) + abs(mainCoorMapX_FromGameWidget);
+                int bullet_grafCoorY = tmpTower->currY*sizeCell_FromGameWidget + (sizeCell_FromGameWidget/3) + abs(mainCoorMapY_FromGameWidget);
+                tmpTower->createBulletAndShot(creep, bullet_grafCoorX, bullet_grafCoorY);
             }
 
             if(creep->takeDamage(tmpTower->attack))

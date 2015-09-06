@@ -60,13 +60,24 @@ bool Bullet::move() {
             } else if (currY > destY) {
                 currY -= speed;
             }
-        }
-        if(currY == destY) {
+        } else if(currY == destY) {
             if(currX < destX) {
                 currX += speed;
             } else if(currX > destX) {
                 currX -= speed;
             }
+        } else if(currX < destX && currY > destY) {
+            currX += speed/2;
+            currY -= speed/2;
+        } else if(currX > destX && currY > destY) {
+            currX -= speed/2;
+            currY -= speed/2;
+        } else if(currX < destX && currY < destY) {
+            currX += speed/2;
+            currY += speed/2;
+        } else if(currX > destX && currY < destY) {
+            currX -= speed/2;
+            currY += speed/2;
         }
         return true;
     }

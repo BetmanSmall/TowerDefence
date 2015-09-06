@@ -31,7 +31,7 @@ namespace Ui {
  */
 struct TileSet
 {
-    int firstTileID; ///< jdfklsdjfsdjf
+    int firstTileID; /// jdfklsdjfsdjf
     QString name;
     int spacing;
     int margin;
@@ -113,7 +113,7 @@ public:
 
     int mainCoorMapX, mainCoorMapY;
     int pixelsShiftMap;
-    int spaceWidget;
+    int spaceWidget; /// Исправить, всегда равно 0. возможно будут проблемы с пулей
     int sizeCell;
     int zoomSizeCell;
     int zoomMaxSizeCell;
