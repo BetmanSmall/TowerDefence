@@ -125,7 +125,9 @@ public:
     int creepsMove_TimerMilliSec;
     int towersAttack_TimerMilliSec;
     int scanMouseMove_TimerMilliSec;
+    int bulletsFly_TimerMilliSec;
 
+    int bulletsFly_TimerId;
     int creepsMove_TimerId;
     int towersAttack_TimerId;
     int scanMouseMove_TimerId;

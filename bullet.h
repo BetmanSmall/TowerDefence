@@ -11,6 +11,9 @@ public:
     int speed;
     bool flying;
 
+//    int bulletFly_TimerMilliSec;
+//    std::thread bulletFly_TimerId;
+
     int currX, currY;
     int destX, destY;
     Creep* creep;
@@ -39,7 +42,8 @@ public:
 
     QPixmap getPixmap();
 
-    bool move();
+public slots:
+    void move();
 };
 
 #endif // BULLET_H

@@ -109,12 +109,14 @@ public:
     Creep* getCreep(int x, int y);
     /**
      * @brief createCreep - Если переменная size позволяет создать ещё крипа, то инициализирует нового крипа.
-     * @param x - координаты, где нужно создать крипа по оси x
-     * @param y - координаты, где нужно создать крипа по оси y
+     * @param coorByCellX - координаты, где нужно создать крипа по оси x << Trouble
+     * @param coorByCellY - координаты, где нужно создать крипа по оси y << Trouble
+     * @param coorByMapX - координаты, где нужно создать крипа по оси x << Trouble
+     * @param coorByMapX - координаты, где нужно создать крипа по оси y << Trouble
      * @param unit - реализация крипа по-умолчанию (уровень модификации, тип, и т. д.)
      * @return - возвращает указатель на созданного крипа [и увеличивает количесвто созданных крипов на 1].
      */
-    Creep* createCreep(int x, int y, DefaultUnit* unit);
+    Creep* createCreep(int coorByCellX, int coorByCellY, int coorByMapX, int coorByMapY, DefaultUnit* unit);
 
     /**
      * @brief setDefaulPixmapForCreep - устанавливает картинку крипа по-умолчанию.

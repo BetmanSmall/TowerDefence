@@ -148,6 +148,12 @@ public:
      * @return
      */
     int getMainCoorMapY();
+
+    /**
+     * @brief getSpaceWidget
+     * @return
+     */
+    int getSpaceWidget();
     /**
      * @brief getSizeCell
      * @return
@@ -157,6 +163,7 @@ public:
      * @brief Функция которая заставляет атаковать все башни, когда в радиусе обзора есть крипп
      * @return Пока что всегда тру
      */
+
     bool towersAttack();
     /**
      * @brief Применяет Волновой Алгоритм на поле из ячееки по данным кординатам

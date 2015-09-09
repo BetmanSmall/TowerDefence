@@ -1,7 +1,8 @@
 #include "bullet.h"
 
 Bullet::Bullet() {
-    this->flying = false;
+    flying = true;
+//    bulletFly_TimerMilliSec = 100;
 }
 
 void Bullet::setSpeed(int speed) {
@@ -49,9 +50,9 @@ QPixmap Bullet::getPixmap() {
     return pixmap;
 }
 
-bool Bullet::move() {
-    int destX = creep->currX;
-    int destY = creep->currY;
+void Bullet::move() {
+    int destX = creep->coorByMapX;
+    int destY = creep->coorByMapY;
 
     if(currX != destX || currY != destY) {
         if(currX == destX) {
@@ -79,7 +80,9 @@ bool Bullet::move() {
             currX -= speed/2;
             currY += speed/2;
         }
-        return true;
+//        return true;
+    } else {
+        flying = false;
     }
-    return false;
+//    return false;
 }

@@ -119,6 +119,10 @@ int Field::getMainCoorMapY() {
     return mainCoorMapY;
 }
 
+int Field::getSpaceWidget() {
+    return spaceWidget;
+}
+
 int Field::getSizeCell() {
     return sizeCell;
 }
@@ -130,10 +134,10 @@ bool Field::towersAttack()
         Tower* tmpTower = towers.getTowerById(k);
 
         // DIBILOID CODE
-        for(int iBullet = 0; iBullet < tmpTower->bullets.size(); iBullet++) {
-            qDebug() << "k: " << k << " iBullet: " << iBullet;
-            tmpTower->bullets[iBullet].move();
-        }
+//        for(int iBullet = 0; iBullet < tmpTower->bullets.size(); iBullet++) {
+//            qDebug() << "k: " << k << " iBullet: " << iBullet;
+//            tmpTower->bullets[iBullet].move();
+//        }
         // !!DIBILOID CODE!!
 
         int x = tmpTower->currX;
@@ -186,6 +190,10 @@ bool Field::towersAttack()
                 int bullet_grafCoorX = tmpTower->currX*sizeCell + (sizeCell/3) + abs(mainCoorMapX);
                 int bullet_grafCoorY = tmpTower->currY*sizeCell + (sizeCell/3) + abs(mainCoorMapY);
                 tmpTower->createBulletAndShot(creep, bullet_grafCoorX, bullet_grafCoorY);
+            } else {
+                if(!tmpTower->bullets[0].flying) {
+                    tmpTower->bullets.clear();
+                }
             }
 
             if(creep->takeDamage(tmpTower->attack))
@@ -674,11 +682,14 @@ bool Field::setCreep(int x, int y, Creep* creep)//, int type)
     {
         if(creep == NULL)
         {
+            int coorByMapX = mainCoorMapX + spaceWidget + x*sizeCell;
+            int coorByMapY = mainCoorMapY + spaceWidget + y*sizeCell;
+
             Creep* creep;
             if(creepSet)
-                creep = creeps.createCreep(x, y, faction1->getDefaultUnitById(0));
+                creep = creeps.createCreep(x, y, coorByMapX, coorByMapY, faction1->getDefaultUnitById(0));
             else
-                creep = creeps.createCreep(x, y, faction1->getDefaultUnitById(1));
+                creep = creeps.createCreep(x, y, coorByMapX, coorByMapY, faction1->getDefaultUnitById(1));
             creepSet = !creepSet;
 
             if(creep == NULL)

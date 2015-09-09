@@ -150,7 +150,7 @@ Creep* Creeps::getCreep(int x, int y)
     return NULL;
 }
 
-Creep* Creeps::createCreep(int x, int y, DefaultUnit* unit)
+Creep* Creeps::createCreep(int coorByCellX, int coorByCellY, int coorByMapX, int coorByMapY, DefaultUnit* unit)
 {
 //    if(amount == size)
 //    {
@@ -172,10 +172,12 @@ Creep* Creeps::createCreep(int x, int y, DefaultUnit* unit)
         creeps[amount].alive = true;
         creeps[amount].preDeath = false;
         creeps[amount].number = amount+1;
-        creeps[amount].coorByCellX = x;
-        creeps[amount].coorByCellY = y;
-        creeps[amount].lastX = x;
-        creeps[amount].lastY = y;
+        creeps[amount].coorByCellX = coorByCellX;
+        creeps[amount].coorByCellY = coorByCellY;
+        creeps[amount].coorByMapX = coorByMapX;
+        creeps[amount].coorByMapY = coorByMapY;
+        creeps[amount].lastX = coorByCellX;
+        creeps[amount].lastY = coorByCellY;
 
 //        creeps[amount].speed = speed;
 //        creeps[amount].type = type;

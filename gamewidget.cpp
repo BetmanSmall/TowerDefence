@@ -32,12 +32,18 @@ GameWidget::GameWidget(QWidget *parent) :
     creepsMove_TimerMilliSec = 100;
     towersAttack_TimerMilliSec = 1000;
     scanMouseMove_TimerMilliSec = 100;
+    bulletsFly_TimerMilliSec = 100;
 
+    bulletsFly_TimerId = 0;
     creepsMove_TimerId = 0;
     towersAttack_TimerId = 0;
     scanMouseMove_TimerId = 0;
 
     scanMouseMove_TimerId = startTimer(scanMouseMove_TimerMilliSec);
+
+    // ПЕРЕПИСАТЬ!
+    bulletsFly_TimerId = startTimer(bulletsFly_TimerMilliSec);
+    // ----------
 
     test = 0;
 
@@ -144,6 +150,13 @@ void GameWidget::timerEvent(QTimerEvent *event)
 
         if(curX == 0 || curY == 0 || curX == width()-1 || curY == height()-1)
         {
+            int mainCoorMapX = field.getMainCoorMapX();
+            int mainCoorMapY = field.getMainCoorMapY();
+            int sizeCell = field.getSizeCell();
+
+            int sizeX = field.getSizeX();
+            int sizeY = field.getSizeY();
+
             if(curX == 0)
                 if(mainCoorMapX < 0)
                     mainCoorMapX += pixelsShiftMap;
@@ -151,23 +164,37 @@ void GameWidget::timerEvent(QTimerEvent *event)
                 if(mainCoorMapY < 0)
                     mainCoorMapY += pixelsShiftMap;
             if(curX == width()-1)
-                if(mainCoorMapX+field.getSizeX()*sizeCell > width())
+                if(mainCoorMapX+sizeX*sizeCell > width())
                     mainCoorMapX -= pixelsShiftMap;
             if(curY == height()-1)
-                if(mainCoorMapY+field.getSizeY()*sizeCell > height())
+                if(mainCoorMapY+sizeY*sizeCell > height())
                     mainCoorMapY -= pixelsShiftMap;
 
             mainCoorMapX = (mainCoorMapX > 0) ? 0 : mainCoorMapX;
             mainCoorMapY = (mainCoorMapY > 0) ? 0 : mainCoorMapY;
 
-            mainCoorMapX = (mainCoorMapX + sizeCell*field.getSizeX() < width()) ? width()-sizeCell*field.getSizeX() : mainCoorMapX;
-            mainCoorMapY = (mainCoorMapY + sizeCell*field.getSizeY() < height()) ? height()-sizeCell*field.getSizeY() : mainCoorMapY;
+            mainCoorMapX = (mainCoorMapX + sizeCell*sizeX < width()) ? width()-sizeCell*sizeX : mainCoorMapX;
+            mainCoorMapY = (mainCoorMapY + sizeCell*sizeY < height()) ? height()-sizeCell*sizeY : mainCoorMapY;
         }
         if(whichCell(curX, curY))
         {
             towerUnderConstructionX = curX;
             towerUnderConstructionY = curY;
         }
+    } else if (timerId == bulletsFly_TimerId) {
+        // ПЕРЕПИСАТЬ!
+        std::vector<Tower*> towers = field.getAllTowers();
+
+        for(int k = 0; k < towers.size(); k++)
+        {
+            Tower* tmpTower = towers[k];
+
+            for(int iBullet = 0; iBullet < tmpTower->bullets.size(); iBullet++) {
+                qDebug() << "k: " << k << " iBullet: " << iBullet;
+                tmpTower->bullets[iBullet].move();
+            }
+        }
+        // --------------------
     }
 
     update();
@@ -175,8 +202,14 @@ void GameWidget::timerEvent(QTimerEvent *event)
 
 void GameWidget::keyPressEvent(QKeyEvent * event)
 {
-    int key = event->key();
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int sizeCell = field.getSizeCell();
 
+    int sizeX = field.getSizeX();
+    int sizeY = field.getSizeY();
+
+    int key = event->key();
     if(key == Qt::Key_0)
     {
 //        qDebug
@@ -195,12 +228,12 @@ void GameWidget::keyPressEvent(QKeyEvent * event)
     }
     else if(key == Qt::Key_Right)
     {
-        if(mainCoorMapX+field.getSizeX()*sizeCell > width())
+        if(mainCoorMapX+sizeX*sizeCell > width())
             mainCoorMapX -= pixelsShiftMap;
     }
     else if(key == Qt::Key_Down)
     {
-        if(mainCoorMapY+field.getSizeY()*sizeCell > height())
+        if(mainCoorMapY+sizeY*sizeCell > height())
             mainCoorMapY -= pixelsShiftMap;
     }
     else if(key == Qt::Key_B)
@@ -256,8 +289,8 @@ void GameWidget::paintEvent(QPaintEvent *)
 //            p.drawText(width()-width()/4, height()-height()/10+20, QString("%1").arg(mainCoorMapY));
             p.drawText(10, 20, QString(global_text.c_str()));
             p.drawText(10, 40, QString(global_text2.c_str()));
-            p.drawText(10, 60, QString("%1").arg(mainCoorMapX));
-            p.drawText(10, 80, QString("%1").arg(mainCoorMapY));
+            p.drawText(10, 60, QString("%1").arg(field.getMainCoorMapX()));
+            p.drawText(10, 80, QString("%1").arg(field.getMainCoorMapY()));
             p.drawText(10, 100, QString("%1").arg(towerUnderConstructionX));
             p.drawText(10, 120, QString("%1").arg(towerUnderConstructionY));
 //        }
@@ -267,10 +300,15 @@ void GameWidget::paintEvent(QPaintEvent *)
 
 void GameWidget::drawGrid()
 {
-    p.setPen(QColor(100,60,21));
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
 
     int fieldX = field.getSizeX();
     int fieldY = field.getSizeY();
+
+    p.setPen(QColor(100,60,21));
 
     for(int k = 0; k < fieldX+1; k++)
         p.drawLine(mainCoorMapX + spaceWidget + k*sizeCell, mainCoorMapY + spaceWidget, mainCoorMapX + spaceWidget + k*sizeCell, mainCoorMapY + spaceWidget + sizeCell*fieldY);
@@ -288,6 +326,11 @@ void GameWidget::drawField()
     {
         for(int x = 0; x < fieldX; x++)
         {
+            int mainCoorMapX = field.getMainCoorMapX();
+            int mainCoorMapY = field.getMainCoorMapY();
+            int spaceWidget = field.getSpaceWidget();
+            int sizeCell = field.getSizeCell();
+
             int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;
             int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;
             int localSizeCell = sizeCell;
@@ -307,6 +350,11 @@ void GameWidget::drawRelief()
     {
         for(int x = 0; x < fieldX; x++)
         {
+            int mainCoorMapX = field.getMainCoorMapX();
+            int mainCoorMapY = field.getMainCoorMapY();
+            int spaceWidget = field.getSpaceWidget();
+            int sizeCell = field.getSizeCell();
+
             int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
             int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;//+1;
             int localSizeCell = sizeCell;//-1;
@@ -331,6 +379,11 @@ void GameWidget::drawTowersByField()
     {
         for(int x = 0; x < fieldX; x++)
         {
+            int mainCoorMapX = field.getMainCoorMapX();
+            int mainCoorMapY = field.getMainCoorMapY();
+            int spaceWidget = field.getSpaceWidget();
+            int sizeCell = field.getSizeCell();
+
             int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
             int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;// - sizeCell;//+1;
             int localSizeCell = sizeCell*2;//-1; // NOT GOOD WORK!!!!!!!!!!
@@ -348,6 +401,11 @@ void GameWidget::drawTowersByField()
 
 void GameWidget::drawTowersByTowers()
 {
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
+
     std::vector<Tower*> towers = field.getAllTowers();
 
     int size = towers.size();
@@ -366,14 +424,14 @@ void GameWidget::drawTowersByTowers()
         else
             p.drawPixmap(pxlsX, pxlsY, localSizeCell/* + sizeCell*/, localSizeCell/* + sizeCell*/, towers[k]->pixmap);
 
-        int attackX = towers[k]->attackX;
-        int attackY = towers[k]->attackY;
-        if(attackX != -1 && attackY != -1)
-        {
-            attackX = mainCoorMapX + spaceWidget + attackX*sizeCell;
-            attackY = mainCoorMapY + spaceWidget + attackY*sizeCell;
-            p.drawLine(pxlsX+localSizeCell/2, pxlsY+localSizeCell/2, attackX, attackY);
-        }
+//        int attackX = towers[k]->attackX;
+//        int attackY = towers[k]->attackY;
+//        if(attackX != -1 && attackY != -1)
+//        {
+//            attackX = mainCoorMapX + spaceWidget + attackX*sizeCell;
+//            attackY = mainCoorMapY + spaceWidget + attackY*sizeCell;
+//            p.drawLine(pxlsX+localSizeCell/2, pxlsY+localSizeCell/2, attackX, attackY);
+//        }
 
         for(int iBullet = 0; iBullet < towers[k]->bullets.size(); iBullet++) {
 //            int bulletX = mainCoorMapX + spaceWidget + towers[k]->bullets[iBullet].getCurrX()*sizeCell;
@@ -406,6 +464,11 @@ void GameWidget::drawTowersByTowers()
 
 void GameWidget::drawCreeps()
 {
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
+
     int fieldX = field.getSizeX();
     int fieldY = field.getSizeY();
 
@@ -457,6 +520,11 @@ void GameWidget::drawCreeps()
 
                         p.drawRect(pxlsX + localSpaceCell+2, pxlsY, localSizeCell-4, 10);
                         p.fillRect(pxlsX + localSpaceCell+3, pxlsY+1, hpWidth, 9, QColor(Qt::green));
+
+                        // IT's NOT GOOD!!! Fixed!
+                        creeps[k]->coorByMapX = pxlsX;
+                        creeps[k]->coorByMapY = pxlsY;
+                        // -----------------------
                     }
                 }
             }
@@ -466,6 +534,11 @@ void GameWidget::drawCreeps()
 
 void GameWidget::drawStepsAndMouse()
 {
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
+
     p.setPen(QColor(255,150,150));
 
     int fieldX = field.getSizeX();
@@ -496,6 +569,11 @@ void GameWidget::drawStepsAndMouse()
 
 void GameWidget::drawTowerUnderConstruction()
 {
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
+
     if(towerUnderConstruction != NULL)
     {
         QPixmap towerPix = towerUnderConstruction->pixmap;
@@ -535,6 +613,11 @@ void GameWidget::drawTowerUnderConstruction()
 
 bool GameWidget::whichCell(int &mouseX, int &mouseY)
 {
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
+
     int tmpX, tmpY;
     tmpX = ( (mouseX+sizeCell - spaceWidget - mainCoorMapX) / sizeCell);
     tmpY = ( (mouseY+sizeCell - spaceWidget - mainCoorMapY) / sizeCell);
@@ -696,6 +779,10 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
 
 void GameWidget::wheelEvent(QWheelEvent * event)
 {
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int sizeCell = field.getSizeCell();
+
     QPoint numPixels = event->pixelDelta();
     QPoint numDegrees = event->angleDelta() / 8;
 

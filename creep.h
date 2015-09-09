@@ -32,7 +32,9 @@ public:
 
     int coorByCellX, coorByCellY;
     int coorByMapX, coorByMapY;
+
     int lastX, lastY;
+
     Direction direction;
 
     int animationCurrIter;
