@@ -21,10 +21,8 @@ GameWidget::GameWidget(QWidget *parent) :
 //    qDebug() << "towerUnderConstruction: N: " << towerUnderConstruction;
 //    qDebug() << "&towerUnderConstruction: N: " << &towerUnderConstruction;
 
-    mainCoorMapX = 0, mainCoorMapY = 0;
     pixelsShiftMap = 32;
-    spaceWidget = 0; // fix this. 16 and launch
-    sizeCell = 64;
+
     zoomSizeCell = 8;
     zoomMaxSizeCell = 256;
     zoomMinSizeCell = 48;

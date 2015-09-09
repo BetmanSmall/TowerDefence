@@ -18,6 +18,11 @@ void Field::createField(int newSizeX, int newSizeY)
 
         sizeX = newSizeX;
         sizeY = newSizeY;
+
+        mainCoorMapX = 0, mainCoorMapY = 0;
+        spaceWidget = 0; // fix this. 16 and launch
+        sizeCell = 64;
+
         mouseX = -1;
         mouseY = -1;
         spawnPointX = -1;
@@ -53,8 +58,8 @@ bool Field::createSpawnPoint(int num, int x, int y)
     for(int k = 0; k < creeps.getAmount(); k++)
     {
         Creep* creep = creeps.getCreep(k);
-        int creepX = creep->currX;
-        int creepY = creep->currY;
+        int creepX = creep->coorByCellX;
+        int creepY = creep->coorByCellY;
         clearCreep(creepX, creepY);
     }
 
@@ -97,10 +102,25 @@ int Field::getSizeY()
     return sizeY;
 }
 
-void Field::setMainCoorMapAndSizeCell(int mainCoorMapX_FromGameWidget, int mainCoorMapY_FromGameWidget, int sizeCell_FromGameWidget) {
-    this->mainCoorMapX_FromGameWidget = mainCoorMapX_FromGameWidget;
-    this->mainCoorMapY_FromGameWidget = mainCoorMapY_FromGameWidget;
-    this->sizeCell_FromGameWidget = sizeCell_FromGameWidget;
+void Field::setMainCoorMap(int mainCoorMapX, int mainCoorMapY) {
+    this->mainCoorMapX = mainCoorMapX;
+    this->mainCoorMapY = mainCoorMapY;
+}
+
+void Field::setSizeCell(int sizeCell) {
+    this->sizeCell = sizeCell;
+}
+
+int Field::getMainCoorMapX() {
+    return mainCoorMapX;
+}
+
+int Field::getMainCoorMapY() {
+    return mainCoorMapY;
+}
+
+int Field::getSizeCell() {
+    return sizeCell;
 }
 
 bool Field::towersAttack()

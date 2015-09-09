@@ -68,8 +68,9 @@ class Field
 
     int sizeX, sizeY;
 
-    int sizeCell_FromGameWidget;
-    int mainCoorMapX_FromGameWidget, mainCoorMapY_FromGameWidget;
+    int mainCoorMapX, mainCoorMapY;
+    int spaceWidget; // fix this. 16 and launch
+    int sizeCell;
 
     int mouseX, mouseY;
     int spawnPointX, spawnPointY;
@@ -131,7 +132,27 @@ public:
      * @param mainCoorMapX_FromGameWidget
      * @param mainCoorMapY_FromGameWidget
      */
-    void setMainCoorMapAndSizeCell(int mainCoorMapX_FromGameWidget, int mainCoorMapY_FromGameWidget, int sizeCell_FromGameWidget);
+    void setMainCoorMap(int mainCoorMapX, int mainCoorMapY);
+    /**
+     * @brief setSizeCell
+     * @param sizeCell_FromGameWidget
+     */
+    void setSizeCell(int sizeCell);
+    /**
+     * @brief getMainCoorMapX
+     * @return
+     */
+    int getMainCoorMapX();
+    /**
+     * @brief getMainCoorMapY
+     * @return
+     */
+    int getMainCoorMapY();
+    /**
+     * @brief getSizeCell
+     * @return
+     */
+    int getSizeCell();
     /**
      * @brief Функция которая заставляет атаковать все башни, когда в радиусе обзора есть крипп
      * @return Пока что всегда тру

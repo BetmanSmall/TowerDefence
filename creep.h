@@ -30,7 +30,8 @@ public:
 //    int speed;
 //    int type;
 
-    int currX, currY;
+    int coorByCellX, coorByCellY;
+    int coorByMapX, coorByMapY;
     int lastX, lastY;
     Direction direction;
 

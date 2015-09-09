@@ -108,13 +108,13 @@ public:
     bool mapLoad;
 
 //    bool setUpBuildTower;
+
     DefaultTower* towerUnderConstruction;
+
     int towerUnderConstructionX, towerUnderConstructionY;
 
-    int mainCoorMapX, mainCoorMapY;
     int pixelsShiftMap;
-    int spaceWidget; /// Исправить, всегда равно 0. возможно будут проблемы с пулей
-    int sizeCell;
+
     int zoomSizeCell;
     int zoomMaxSizeCell;
     int zoomMinSizeCell;
