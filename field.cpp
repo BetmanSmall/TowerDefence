@@ -183,8 +183,8 @@ bool Field::towersAttack()
             if(tmpTower->bullets.size() == 0) {
                 qDebug() << "createBulletAndShot(" << attackX << ", " << attackY << ");";
 
-                int bullet_grafCoorX = tmpTower->currX*sizeCell_FromGameWidget + (sizeCell_FromGameWidget/3) + abs(mainCoorMapX_FromGameWidget);
-                int bullet_grafCoorY = tmpTower->currY*sizeCell_FromGameWidget + (sizeCell_FromGameWidget/3) + abs(mainCoorMapY_FromGameWidget);
+                int bullet_grafCoorX = tmpTower->currX*sizeCell + (sizeCell/3) + abs(mainCoorMapX);
+                int bullet_grafCoorY = tmpTower->currY*sizeCell + (sizeCell/3) + abs(mainCoorMapY);
                 tmpTower->createBulletAndShot(creep, bullet_grafCoorX, bullet_grafCoorY);
             }
 
@@ -339,8 +339,8 @@ int Field::stepOneCreep(int num)
         }
         else
         {
-            int currX = tmpCreep->currX;
-            int currY = tmpCreep->currY;
+            int currX = tmpCreep->coorByCellX;
+            int currY = tmpCreep->coorByCellY;
 
             int exitX = currX, exitY = currY;
 
@@ -384,8 +384,8 @@ int Field::stepOneCreep(int num)
                 clearCreep(currX, currY, tmpCreep);
                 tmpCreep->lastX = currX;
                 tmpCreep->lastY = currY;
-                tmpCreep->currX = exitX;
-                tmpCreep->currY = exitY;
+                tmpCreep->coorByCellX = exitX;
+                tmpCreep->coorByCellY = exitY;
                 tmpCreep->number = min;
                 tmpCreep->animationCurrIter = 0;
 

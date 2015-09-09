@@ -127,7 +127,7 @@ void GameWidget::timerEvent(QTimerEvent *event)
             }
         }
         else {
-            field.setMainCoorMapAndSizeCell(mainCoorMapX, mainCoorMapY, sizeCell);
+//            field.setMainCoorMapAndSizeCell(mainCoorMapX, mainCoorMapY, sizeCell);
             field.towersAttack();
         }
     }

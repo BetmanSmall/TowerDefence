@@ -38,8 +38,8 @@ int Creeps::getHP(int x, int y)
 {
     for(int k = 0; k < amount; k++)
     {
-        int localX = creeps[k].currX;
-        int localY = creeps[k].currY;
+        int localX = creeps[k].coorByCellX;
+        int localY = creeps[k].coorByCellY;
 
         if(localX == x && localY == y)
             return creeps[k].hp;
@@ -54,8 +54,8 @@ bool Creeps::attackCreep(int x, int y, int damage, Creep *creep)
         if(!creeps[k].alive)
             continue;
 
-        int localX = creeps[k].currX;
-        int localY = creeps[k].currY;
+        int localX = creeps[k].coorByCellX;
+        int localY = creeps[k].coorByCellY;
 
         if(localX == x && localY == y)
         {
@@ -65,8 +65,8 @@ bool Creeps::attackCreep(int x, int y, int damage, Creep *creep)
             if(localHP <= 0)
             {
                 creeps[k].hp = 0;
-//                creeps[k].currX = -1;
-//                creeps[k].currY = -1;
+//                creeps[k].coorByCellX = -1;
+//                creeps[k].coorByCellY = -1;
                 creeps[k].alive = false;
                 creeps[k].preDeath = true;
 
@@ -139,8 +139,8 @@ Creep* Creeps::getCreep(int x, int y)
 {
     for(int k = 0; k < amount; k++)
     {
-        int localX = creeps[k].currX;
-        int localY = creeps[k].currY;
+        int localX = creeps[k].coorByCellX;
+        int localY = creeps[k].coorByCellY;
 
         if(localX == x && localY == y)
         {
@@ -172,8 +172,8 @@ Creep* Creeps::createCreep(int x, int y, DefaultUnit* unit)
         creeps[amount].alive = true;
         creeps[amount].preDeath = false;
         creeps[amount].number = amount+1;
-        creeps[amount].currX = x;
-        creeps[amount].currY = y;
+        creeps[amount].coorByCellX = x;
+        creeps[amount].coorByCellY = y;
         creeps[amount].lastX = x;
         creeps[amount].lastY = y;
 
@@ -201,8 +201,8 @@ QPixmap Creeps::getCreepPixmap(int x, int y)
 {
     for(int k = 0; k < amount; k++)
     {
-        int localX = creeps[k].currX;
-        int localY = creeps[k].currY;
+        int localX = creeps[k].coorByCellX;
+        int localY = creeps[k].coorByCellY;
 
         if(localX == x && localY == y)
         {
