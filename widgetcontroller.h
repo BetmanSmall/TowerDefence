@@ -4,6 +4,7 @@
 #include <QWidget>
 //#include <QGLWidget>
 //#include <QOpenGLWidget>
+#include <QMediaPlayer>
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QPaintEvent>
@@ -21,6 +22,7 @@ public:
     explicit WidgetController(QWidget *parent = 0);
 
 private:
+    QMediaPlayer* mediaPlayer;
     QStackedWidget* stackedWidget;
 
     void paintEvent(QPaintEvent* );

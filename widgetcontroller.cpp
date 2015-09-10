@@ -20,6 +20,11 @@ WidgetController::WidgetController(QWidget *parent) :
 
 //    qDebug() << "WidgetController: X: " << width() << " Y: " << height();
 
+    mediaPlayer = new QMediaPlayer();
+    mediaPlayer->setMedia(QUrl::fromLocalFile(TOWER_DEFENCE_PATH + "music/mainmenu.mp3"));
+    mediaPlayer->setVolume(1000);
+    mediaPlayer->play();
+
     stackedWidget = new QStackedWidget;
 
     QVBoxLayout* layout = new QVBoxLayout;
@@ -30,7 +35,7 @@ WidgetController::WidgetController(QWidget *parent) :
 //    show();
 //    move(100,100);
 
-    setWindowState(Qt::WindowFullScreen);
+//    setWindowState(Qt::WindowFullScreen);
 
     showMainMenu();
 }
@@ -79,6 +84,7 @@ void WidgetController::showOptionMenu()
     qDebug() << "showOptionMenu()";
 
     OptionMenu* optionMenu = new OptionMenu();
+    optionMenu->setMediaPlayer(mediaPlayer);
 
     connect(optionMenu, SIGNAL(signal_closeWidget()), this, SLOT(closeWidget()));
 

@@ -175,6 +175,8 @@ void GameWidget::timerEvent(QTimerEvent *event)
 
             mainCoorMapX = (mainCoorMapX + sizeCell*sizeX < width()) ? width()-sizeCell*sizeX : mainCoorMapX;
             mainCoorMapY = (mainCoorMapY + sizeCell*sizeY < height()) ? height()-sizeCell*sizeY : mainCoorMapY;
+
+            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
         if(whichCell(curX, curY))
         {
@@ -218,23 +220,31 @@ void GameWidget::keyPressEvent(QKeyEvent * event)
     }
     else if(key == Qt::Key_Left)
     {
-        if(mainCoorMapX < 0)
+        if(mainCoorMapX < 0) {
             mainCoorMapX += pixelsShiftMap;
+            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
+        }
     }
     else if(key == Qt::Key_Up)
     {
-        if(mainCoorMapY < 0)
+        if(mainCoorMapY < 0) {
             mainCoorMapY += pixelsShiftMap;
+            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
+        }
     }
     else if(key == Qt::Key_Right)
     {
-        if(mainCoorMapX+sizeX*sizeCell > width())
+        if(mainCoorMapX+sizeX*sizeCell > width()) {
             mainCoorMapX -= pixelsShiftMap;
+            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
+        }
     }
     else if(key == Qt::Key_Down)
     {
-        if(mainCoorMapY+sizeY*sizeCell > height())
+        if(mainCoorMapY+sizeY*sizeCell > height()) {
             mainCoorMapY -= pixelsShiftMap;
+            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
+        }
     }
     else if(key == Qt::Key_B)
     {
@@ -271,14 +281,21 @@ void GameWidget::paintEvent(QPaintEvent *)
     {
 //        if(!gamePause)
 //        {
-            drawField();
-            drawRelief();
+            if(ui->drawField_checkBox->isChecked())
+                drawField();
+            if(ui->drawRelief_checkBox->isChecked())
+                drawRelief();
 //            drawTowersByField();
-            drawTowersByTowers();
-            drawCreeps();
-//            drawGrid();
-//            drawStepsAndMouse();
-            drawTowerUnderConstruction();
+            if(ui->drawTowersByTowers_checkBox->isChecked())
+                drawTowersByTowers();
+            if(ui->drawCreeps_checkBox->isChecked())
+                drawCreeps();
+            if(ui->drawGrid_checkBox->isChecked())
+                drawGrid();
+            if(ui->drawStepsAndMouse_checkBox->isChecked())
+                drawStepsAndMouse();
+            if(ui->drawTowerUnderConstruction_checkBox->isChecked())
+                drawTowerUnderConstruction();
 
             p.setPen(QColor(255,0,0));
             p.drawLine(width()/2-5, height()/2-5, width()/2+5, height()/2+5);
@@ -838,6 +855,9 @@ void GameWidget::wheelEvent(QWheelEvent * event)
 
             mainCoorMapX = (mainCoorMapX + sizeCell*field.getSizeX() < width()) ? width()-sizeCell*field.getSizeX() : mainCoorMapX;
             mainCoorMapY = (mainCoorMapY + sizeCell*field.getSizeY() < height()) ? height()-sizeCell*field.getSizeY() : mainCoorMapY;
+
+            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
+            field.setSizeCell(sizeCell);
         }
     }
 //    event->accept();
