@@ -15,11 +15,7 @@ GameWidget::GameWidget(QWidget *parent) :
     gamePause = false;
     mapLoad = false;
 
-//    qDebug() << "towerUnderConstruction: " << towerUnderConstruction;
-//    qDebug() << "&towerUnderConstruction: " << &towerUnderConstruction;
-    towersUnderConstruction = NULL;
-//    qDebug() << "towerUnderConstruction: N: " << towerUnderConstruction;
-//    qDebug() << "&towerUnderConstruction: N: " << &towerUnderConstruction;
+    underConstruction = NULL;
 
     pixelsShiftMap = 32;
 
@@ -307,8 +303,8 @@ void GameWidget::paintEvent(QPaintEvent *)
             p.drawText(10, 40, QString(global_text2.c_str()));
             p.drawText(10, 60, QString("%1").arg(field.getMainCoorMapX()));
             p.drawText(10, 80, QString("%1").arg(field.getMainCoorMapY()));
-            p.drawText(10, 100, QString("%1").arg(towersStartUnderConstructionX));
-            p.drawText(10, 120, QString("%1").arg(towersStartUnderConstructionY));
+//            p.drawText(10, 100, QString("%1").arg(underConstruction->startX));
+//            p.drawText(10, 120, QString("%1").arg(underConstruction->startY));
 //        }
     }
     p.end();
@@ -585,36 +581,36 @@ void GameWidget::drawStepsAndMouse()
 
 void GameWidget::drawTowersUnderConstruction()
 {
-    if(towersUnderConstruction != NULL)
+    if(underConstruction != NULL)
     {
-        int towerSize = towersUnderConstruction->size;
-        int bStartX = this->towersStartUnderConstructionX;
-        int bStartY = this->towersStartUnderConstructionY;
+        int towerSize = underConstruction->tower->size;
+        int bStartX = underConstruction->startX;
+        int bStartY = underConstruction->startY;
         int bEndX = cursor().pos().x();
         int bEndY = cursor().pos().y();
 
-        drawTowerUnderConstruction(bStartX, bStartY, towersUnderConstruction);
+        drawTowerUnderConstruction(bStartX, bStartY, underConstruction->tower);
 
         if(whichCell(bEndX, bEndY)) {
             qDebug() << "GameWidget::drawTowerUnderConstruction() -- whichCell";
             if(bStartX == bEndX) {
                 if(bStartY > bEndY) {
                     for(int bCurrY = bStartX; bCurrY >= bEndY-towerSize; bCurrY-=towerSize) {
-                        drawTowerUnderConstruction(bStartX, bCurrY, towersUnderConstruction);
+                        drawTowerUnderConstruction(bStartX, bCurrY, underConstruction->tower);
                     }
                 } else if(bStartY < bEndY) {
                     for(int bCurrY = bStartX; bCurrY <= bEndY-towerSize; bCurrY+=towerSize) {
-                        drawTowerUnderConstruction(bStartX, bCurrY, towersUnderConstruction);
+                        drawTowerUnderConstruction(bStartX, bCurrY, underConstruction->tower);
                     }
                 }
             } else if(bStartY == bEndY) {
                 if(bStartX > bEndX) {
                     for(int bCurrX = bStartX; bCurrX >= bEndY-towerSize; bCurrX-=towerSize) {
-                        drawTowerUnderConstruction(bCurrX, bStartY, towersUnderConstruction);
+                        drawTowerUnderConstruction(bCurrX, bStartY, underConstruction->tower);
                     }
                 } else if(bStartX < bEndX) {
                     for(int bCurrX = bStartX; bCurrX <= bEndY-towerSize; bCurrX+=towerSize) {
-                        drawTowerUnderConstruction(bCurrX, bStartY, towersUnderConstruction);
+                        drawTowerUnderConstruction(bCurrX, bStartY, underConstruction->tower);
                     }
                 }
             }
@@ -727,17 +723,25 @@ void GameWidget::buildTower(int x, int y)
         int ret = msgBox.exec();
 //        qDebug() << "ret: " << ret;
 
-        towersStartUnderConstructionX = cursor().pos().x();
-        towersStartUnderConstructionY = cursor().pos().y();
-        towersUnderConstruction = towers[ret];
+        if(underConstruction)
+            delete underConstruction;
+
+        underConstruction = new UnderConstruction();
+        underConstruction->startX = cursor().pos().x();
+        underConstruction->startY = cursor().pos().y();
+        underConstruction->tower = towers[ret];
 //        qDebug() << "buildTower(-1, -1) level 3";
 
 //        field.setTower(mouseX, mouseY, towers[ret]);
     }
     else
     {
-        towersStartUnderConstructionX = x;
-        towersStartUnderConstructionY = y;
+        if(underConstruction)
+            delete underConstruction;
+
+        underConstruction = new UnderConstruction();
+        underConstruction->startX = x;
+        underConstruction->startY = y;
 //        if(towerUnderConstruction == NULL)
 //        {
 //            qDebug() << "buildTower2(" << x << "," << y << ");";

@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     creep.cpp \
     defaultunit.cpp \
     defaulttower.cpp \
-    bullet.cpp
+    bullet.cpp \
+    underconstruction.cpp
 
 HEADERS  += \
     towers.h \
@@ -42,7 +43,8 @@ HEADERS  += \
     creep.h \
     defaultunit.h \
     defaulttower.h \
-    bullet.h
+    bullet.h \
+    underconstruction.h
 
 FORMS    += \
     mainmenu.ui \

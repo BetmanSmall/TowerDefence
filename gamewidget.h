@@ -19,6 +19,7 @@
 
 #include "field.h"
 #include "faction.h"
+#include "underconstruction.h"
 
 using namespace std;
 
@@ -111,8 +112,9 @@ public:
 
 //    bool setUpBuildTower;
 
-    DefaultTower* towersUnderConstruction;
-    int towersStartUnderConstructionX, towersStartUnderConstructionY;
+    UnderConstruction* underConstruction;
+//    DefaultTower* towersUnderConstruction;
+//    int towersStartUnderConstructionX, towersStartUnderConstructionY;
 
     int pixelsShiftMap;
 
