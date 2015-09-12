@@ -543,24 +543,24 @@ int Field::getCreepHpInCell(int x, int y)
 
 Creep* Field::getCreepWithLowHP(int x, int y)
 {
-//    if(x >= 0 && x < getSizeX())
-//        if(y >= 0 && y < getSizeY())
-    if(!field[sizeX*y + x].creeps.empty())
-    {
-        Creep* creep = field[sizeX*y + x].creeps.front();
-        int localHp = creep->hp;
-        int size = field[sizeX*y + x].creeps.size();
-        for(int k = 1; k < size; k++)
-        {
-            int hp = field[sizeX*y + x].creeps[k]->hp;
-            if(hp < localHp)
+    if(x >= 0 && x < getSizeX())
+        if(y >= 0 && y < getSizeY())
+            if(!field[sizeX*y + x].creeps.empty())
             {
-                creep = field[sizeX*y + x].creeps[k];
-                localHp = creep->hp;
+                Creep* creep = field[sizeX*y + x].creeps.front();
+                int localHp = creep->hp;
+                int size = field[sizeX*y + x].creeps.size();
+                for(int k = 1; k < size; k++)
+                {
+                    int hp = field[sizeX*y + x].creeps[k]->hp;
+                    if(hp < localHp)
+                    {
+                        creep = field[sizeX*y + x].creeps[k];
+                        localHp = creep->hp;
+                    }
+                }
+                return creep;
             }
-        }
-        return creep;
-    }
     return NULL;
 }
 

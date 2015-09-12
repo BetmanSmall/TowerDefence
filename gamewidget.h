@@ -76,7 +76,8 @@ public:
     void drawTowersByTowers();
     void drawCreeps();
     void drawStepsAndMouse();
-    void drawTowerUnderConstruction();
+    void drawTowersUnderConstruction();
+    void drawTowerUnderConstruction(int buildX, int buildY, DefaultTower* tower);
 
     /**
      * @brief Переводит графические координаты в игровые
@@ -91,6 +92,7 @@ public:
 
     void buildTower(int x = -1, int y = -1);
     void mousePressEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
     void wheelEvent(QWheelEvent* event);
 
 //    void mouseReleaseEvent(QMouseEvent* event);
@@ -109,9 +111,8 @@ public:
 
 //    bool setUpBuildTower;
 
-    DefaultTower* towerUnderConstruction;
-
-    int towerUnderConstructionX, towerUnderConstructionY;
+    DefaultTower* towersUnderConstruction;
+    int towersStartUnderConstructionX, towersStartUnderConstructionY;
 
     int pixelsShiftMap;
 

@@ -17,7 +17,7 @@ GameWidget::GameWidget(QWidget *parent) :
 
 //    qDebug() << "towerUnderConstruction: " << towerUnderConstruction;
 //    qDebug() << "&towerUnderConstruction: " << &towerUnderConstruction;
-    towerUnderConstruction = NULL;
+    towersUnderConstruction = NULL;
 //    qDebug() << "towerUnderConstruction: N: " << towerUnderConstruction;
 //    qDebug() << "&towerUnderConstruction: N: " << &towerUnderConstruction;
 
@@ -178,11 +178,11 @@ void GameWidget::timerEvent(QTimerEvent *event)
 
             field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
-        if(whichCell(curX, curY))
-        {
-            towerUnderConstructionX = curX;
-            towerUnderConstructionY = curY;
-        }
+//        if(whichCell(curX, curY))
+//        {
+//            towersStartUnderConstructionX = curX;
+//            towersStartUnderConstructionY = curY;
+//        }
     } else if (timerId == bulletsFly_TimerId) {
         // ПЕРЕПИСАТЬ!
         std::vector<Tower*> towers = field.getAllTowers();
@@ -212,6 +212,8 @@ void GameWidget::keyPressEvent(QKeyEvent * event)
     int sizeY = field.getSizeY();
 
     int key = event->key();
+//    qDebug() << "GameWidget::keyPressEvent() -- key: " << key;
+
     if(key == Qt::Key_0)
     {
 //        qDebug
@@ -222,28 +224,24 @@ void GameWidget::keyPressEvent(QKeyEvent * event)
     {
         if(mainCoorMapX < 0) {
             mainCoorMapX += pixelsShiftMap;
-            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
     }
     else if(key == Qt::Key_Up)
     {
         if(mainCoorMapY < 0) {
             mainCoorMapY += pixelsShiftMap;
-            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
     }
     else if(key == Qt::Key_Right)
     {
         if(mainCoorMapX+sizeX*sizeCell > width()) {
             mainCoorMapX -= pixelsShiftMap;
-            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
     }
     else if(key == Qt::Key_Down)
     {
         if(mainCoorMapY+sizeY*sizeCell > height()) {
             mainCoorMapY -= pixelsShiftMap;
-            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
     }
     else if(key == Qt::Key_B)
@@ -252,6 +250,7 @@ void GameWidget::keyPressEvent(QKeyEvent * event)
 
         buildTower();
     }
+    field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
 //    if(key == Qt::Key_0)
 //    {
 //        if(waveAlgorithm(mouseX, mouseY) == 1)
@@ -295,7 +294,7 @@ void GameWidget::paintEvent(QPaintEvent *)
             if(ui->drawStepsAndMouse_checkBox->isChecked())
                 drawStepsAndMouse();
             if(ui->drawTowerUnderConstruction_checkBox->isChecked())
-                drawTowerUnderConstruction();
+                drawTowersUnderConstruction();
 
             p.setPen(QColor(255,0,0));
             p.drawLine(width()/2-5, height()/2-5, width()/2+5, height()/2+5);
@@ -308,8 +307,8 @@ void GameWidget::paintEvent(QPaintEvent *)
             p.drawText(10, 40, QString(global_text2.c_str()));
             p.drawText(10, 60, QString("%1").arg(field.getMainCoorMapX()));
             p.drawText(10, 80, QString("%1").arg(field.getMainCoorMapY()));
-            p.drawText(10, 100, QString("%1").arg(towerUnderConstructionX));
-            p.drawText(10, 120, QString("%1").arg(towerUnderConstructionY));
+            p.drawText(10, 100, QString("%1").arg(towersStartUnderConstructionX));
+            p.drawText(10, 120, QString("%1").arg(towersStartUnderConstructionY));
 //        }
     }
     p.end();
@@ -584,46 +583,81 @@ void GameWidget::drawStepsAndMouse()
     }
 }
 
-void GameWidget::drawTowerUnderConstruction()
+void GameWidget::drawTowersUnderConstruction()
 {
+    if(towersUnderConstruction != NULL)
+    {
+        int towerSize = towersUnderConstruction->size;
+        int bStartX = this->towersStartUnderConstructionX;
+        int bStartY = this->towersStartUnderConstructionY;
+        int bEndX = cursor().pos().x();
+        int bEndY = cursor().pos().y();
+
+        drawTowerUnderConstruction(bStartX, bStartY, towersUnderConstruction);
+
+        if(whichCell(bEndX, bEndY)) {
+            qDebug() << "GameWidget::drawTowerUnderConstruction() -- whichCell";
+            if(bStartX == bEndX) {
+                if(bStartY > bEndY) {
+                    for(int bCurrY = bStartX; bCurrY >= bEndY-towerSize; bCurrY-=towerSize) {
+                        drawTowerUnderConstruction(bStartX, bCurrY, towersUnderConstruction);
+                    }
+                } else if(bStartY < bEndY) {
+                    for(int bCurrY = bStartX; bCurrY <= bEndY-towerSize; bCurrY+=towerSize) {
+                        drawTowerUnderConstruction(bStartX, bCurrY, towersUnderConstruction);
+                    }
+                }
+            } else if(bStartY == bEndY) {
+                if(bStartX > bEndX) {
+                    for(int bCurrX = bStartX; bCurrX >= bEndY-towerSize; bCurrX-=towerSize) {
+                        drawTowerUnderConstruction(bCurrX, bStartY, towersUnderConstruction);
+                    }
+                } else if(bStartX < bEndX) {
+                    for(int bCurrX = bStartX; bCurrX <= bEndY-towerSize; bCurrX+=towerSize) {
+                        drawTowerUnderConstruction(bCurrX, bStartY, towersUnderConstruction);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void GameWidget::drawTowerUnderConstruction(int buildX, int buildY, DefaultTower *tower) {
+    qDebug() << "GameWidget::drawTowerUnderConstruction(" << buildX << "," << buildY << "," << tower << ");";
     int mainCoorMapX = field.getMainCoorMapX();
     int mainCoorMapY = field.getMainCoorMapY();
     int spaceWidget = field.getSpaceWidget();
     int sizeCell = field.getSizeCell();
 
-    if(towerUnderConstruction != NULL)
+    QPixmap towerPix = tower->pixmap;
+    int towerSize = tower->size;
+    int pixSizeCell = towerPix.width() / towerSize;
+
+    QColor cGreen(0, 255, 0, 80);
+    QColor cRed(255, 0, 0, 80);
+
+/*    vector<QPixmap> pixmaps;
+    qDebug() << "towerPix: " << towerPix;
+    qDebug() << "towerSize: " << towerSize;
+    qDebug() << "pixSizeCell: " << pixSizeCell;
+    int columns = towerPix.width() / towerSize;
+    int rows = towerPix.height() / towerSize;*/
+
+    for(int x = 0; x < towerSize; x++)
     {
-        QPixmap towerPix = towerUnderConstruction->pixmap;
-        int towerSize = towerUnderConstruction->size;
-        int pixSizeCell = towerPix.width() / towerSize;
-
-        QColor cGreen(0, 255, 0, 80);
-        QColor cRed(255, 0, 0, 80);
-    //    vector<QPixmap> pixmaps;
-
-//        qDebug() << "towerPix: " << towerPix;
-//        qDebug() << "towerSize: " << towerSize;
-//        qDebug() << "pixSizeCell: " << pixSizeCell;
-
-    //    int columns = towerPix.width() / towerUnderConstruction->size;
-    //    int rows = towerPix.height() / towerUnderConstruction->size;
-
-        for(int x = 0; x < towerSize; x++)
+        for(int y = 0; y < towerSize; y++)
         {
-            for(int y = 0; y < towerSize; y++)
-            {
-                QPixmap pix = towerPix.copy(x*pixSizeCell, y*pixSizeCell, pixSizeCell, pixSizeCell);
+            QPixmap pix = towerPix.copy(x*pixSizeCell, y*pixSizeCell, pixSizeCell, pixSizeCell);
 
-                int pxlsX = mainCoorMapX + spaceWidget + (towerUnderConstructionX+x)*sizeCell;//+1;
-                int pxlsY = mainCoorMapY + spaceWidget + (towerUnderConstructionY+y)*sizeCell;//+1;
+            int pxlsX = mainCoorMapX + spaceWidget + (buildX+x)*sizeCell;//+1;
+            int pxlsY = mainCoorMapY + spaceWidget + (buildY+y)*sizeCell;//+1;
 
-                p.drawPixmap(pxlsX, pxlsY, sizeCell, sizeCell, pix);
+            p.drawPixmap(pxlsX, pxlsY, sizeCell, sizeCell, pix);
 
-                if(field.containEmpty(towerUnderConstructionX+x, towerUnderConstructionY+y))
-                    p.fillRect(pxlsX, pxlsY, sizeCell, sizeCell, cGreen);
-                else
-                    p.fillRect(pxlsX, pxlsY, sizeCell, sizeCell, cRed);
-            }
+            if(field.containEmpty(buildX+x, buildY+y))
+                p.fillRect(pxlsX, pxlsY, sizeCell, sizeCell, cGreen);
+            else
+                p.fillRect(pxlsX, pxlsY, sizeCell, sizeCell, cRed);
         }
     }
 }
@@ -693,42 +727,46 @@ void GameWidget::buildTower(int x, int y)
         int ret = msgBox.exec();
 //        qDebug() << "ret: " << ret;
 
-        towerUnderConstruction = towers[ret];
+        towersStartUnderConstructionX = cursor().pos().x();
+        towersStartUnderConstructionY = cursor().pos().y();
+        towersUnderConstruction = towers[ret];
 //        qDebug() << "buildTower(-1, -1) level 3";
 
 //        field.setTower(mouseX, mouseY, towers[ret]);
     }
     else
     {
-        if(towerUnderConstruction == NULL)
-        {
-            qDebug() << "buildTower2(" << x << "," << y << ");";
+        towersStartUnderConstructionX = x;
+        towersStartUnderConstructionY = y;
+//        if(towerUnderConstruction == NULL)
+//        {
+//            qDebug() << "buildTower2(" << x << "," << y << ");";
 
-            vector<DefaultTower*> towers = faction.getFirstTowers();
-            int size = towers.size();
-//            qDebug() << "towers.size(): " << size;
+//            vector<DefaultTower*> towers = faction.getFirstTowers();
+//            int size = towers.size();
+////            qDebug() << "towers.size(): " << size;
 
-            QMessageBox msgBox;
-            msgBox.setText("Какую башню ты хочешь построить?");
+//            QMessageBox msgBox;
+//            msgBox.setText("Какую башню ты хочешь построить?");
 
-            for(int k = 0; k < size; k++)
-            {
-                QPushButton* b1 = new QPushButton(QIcon(towers[k]->pixmap), QString());
-                msgBox.addButton(b1, QMessageBox::AcceptRole);
-            }
-//            qDebug() << "buildTower(" << x << "," << y << "); level2";
+//            for(int k = 0; k < size; k++)
+//            {
+//                QPushButton* b1 = new QPushButton(QIcon(towers[k]->pixmap), QString());
+//                msgBox.addButton(b1, QMessageBox::AcceptRole);
+//            }
+////            qDebug() << "buildTower(" << x << "," << y << "); level2";
 
-            int ret = msgBox.exec();
-//            qDebug() << "ret: " << ret;
+//            int ret = msgBox.exec();
+////            qDebug() << "ret: " << ret;
 
-            field.setTower(x, y, towers[ret]);
-//            qDebug() << "buildTower(" << x << "," << y << "); level3";
-        }
-        else
-        {
-            if(field.setTower(x, y, towerUnderConstruction))
-                towerUnderConstruction = NULL;
-        }
+//            field.setTower(x, y, towers[ret]);
+////            qDebug() << "buildTower(" << x << "," << y << "); level3";
+//        }
+//        else
+//        {
+//            if(field.setTower(x, y, towerUnderConstruction))
+//                towerUnderConstruction = NULL;
+//        }
     }
 }
 
@@ -792,6 +830,11 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
         }
     }
     update();
+}
+
+void GameWidget::mouseReleaseEvent(QMouseEvent* event) {
+    qDebug() << "x: " << event->x();
+    qDebug() << "y: " << event->y();
 }
 
 void GameWidget::wheelEvent(QWheelEvent * event)
