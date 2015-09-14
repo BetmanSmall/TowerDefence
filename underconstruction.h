@@ -3,11 +3,19 @@
 
 #include "defaulttower.h"
 
+#include <QDebug>
+
 class UnderConstruction
 {
 public:
     UnderConstruction();
+    UnderConstruction(DefaultTower* tower);
+    UnderConstruction(int startX, int startY, DefaultTower* tower);
 
+    bool setStartCoors(int startX, int startY);
+    bool setEndCoors(int endX, int endY);
+
+    bool isStartSet;
     int startX, startY;
     int endX, endY;
 

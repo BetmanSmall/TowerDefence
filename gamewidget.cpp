@@ -174,11 +174,14 @@ void GameWidget::timerEvent(QTimerEvent *event)
 
             field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
-//        if(whichCell(curX, curY))
-//        {
+        if(whichCell(curX, curY))
+        {
+            if(underConstruction) {
+                underConstruction->setEndCoors(curX, curY);
+            }
 //            towersStartUnderConstructionX = curX;
 //            towersStartUnderConstructionY = curY;
-//        }
+        }
     } else if (timerId == bulletsFly_TimerId) {
         // ПЕРЕПИСАТЬ!
         std::vector<Tower*> towers = field.getAllTowers();
@@ -581,7 +584,7 @@ void GameWidget::drawStepsAndMouse()
 
 void GameWidget::drawTowersUnderConstruction()
 {
-    if(underConstruction != NULL)
+    if(underConstruction && underConstruction->isStartSet)
     {
         int towerSize = underConstruction->tower->size;
         int bStartX = underConstruction->startX;
@@ -591,30 +594,33 @@ void GameWidget::drawTowersUnderConstruction()
 
         drawTowerUnderConstruction(bStartX, bStartY, underConstruction->tower);
 
-        if(whichCell(bEndX, bEndY)) {
-            qDebug() << "GameWidget::drawTowerUnderConstruction() -- whichCell";
-            if(bStartX == bEndX) {
-                if(bStartY > bEndY) {
-                    for(int bCurrY = bStartX; bCurrY >= bEndY-towerSize; bCurrY-=towerSize) {
-                        drawTowerUnderConstruction(bStartX, bCurrY, underConstruction->tower);
-                    }
-                } else if(bStartY < bEndY) {
-                    for(int bCurrY = bStartX; bCurrY <= bEndY-towerSize; bCurrY+=towerSize) {
-                        drawTowerUnderConstruction(bStartX, bCurrY, underConstruction->tower);
-                    }
-                }
-            } else if(bStartY == bEndY) {
-                if(bStartX > bEndX) {
-                    for(int bCurrX = bStartX; bCurrX >= bEndY-towerSize; bCurrX-=towerSize) {
-                        drawTowerUnderConstruction(bCurrX, bStartY, underConstruction->tower);
-                    }
-                } else if(bStartX < bEndX) {
-                    for(int bCurrX = bStartX; bCurrX <= bEndY-towerSize; bCurrX+=towerSize) {
-                        drawTowerUnderConstruction(bCurrX, bStartY, underConstruction->tower);
-                    }
-                }
-            }
+        for(int k = 0; k < underConstruction->coorsX.size(); k++) {
+            drawTowerUnderConstruction(underConstruction->coorsX[k], underConstruction->coorsY[k], underConstruction->tower);
         }
+//        if(whichCell(bEndX, bEndY)) {
+//            qDebug() << "GameWidget::drawTowerUnderConstruction() -- whichCell";
+//            if(bStartX == bEndX) {
+//                if(bStartY > bEndY) {
+//                    for(int bCurrY = bStartX; bCurrY >= bEndY-towerSize; bCurrY-=towerSize) {
+//                        drawTowerUnderConstruction(bStartX, bCurrY, underConstruction->tower);
+//                    }
+//                } else if(bStartY < bEndY) {
+//                    for(int bCurrY = bStartX; bCurrY <= bEndY-towerSize; bCurrY+=towerSize) {
+//                        drawTowerUnderConstruction(bStartX, bCurrY, underConstruction->tower);
+//                    }
+//                }
+//            } else if(bStartY == bEndY) {
+//                if(bStartX > bEndX) {
+//                    for(int bCurrX = bStartX; bCurrX >= bEndY-towerSize; bCurrX-=towerSize) {
+//                        drawTowerUnderConstruction(bCurrX, bStartY, underConstruction->tower);
+//                    }
+//                } else if(bStartX < bEndX) {
+//                    for(int bCurrX = bStartX; bCurrX <= bEndY-towerSize; bCurrX+=towerSize) {
+//                        drawTowerUnderConstruction(bCurrX, bStartY, underConstruction->tower);
+//                    }
+//                }
+//            }
+//        }
     }
 }
 
@@ -725,23 +731,33 @@ void GameWidget::buildTower(int x, int y)
 
         if(underConstruction)
             delete underConstruction;
+        underConstruction = new UnderConstruction(towers[ret]);
 
-        underConstruction = new UnderConstruction();
-        underConstruction->startX = cursor().pos().x();
-        underConstruction->startY = cursor().pos().y();
-        underConstruction->tower = towers[ret];
+//        int currX = cursor().pos().x();
+//        int currY = cursor().pos().y();
+//        if(whichCell(currX, currY)) {
+//            underConstruction = new UnderConstruction(currX, currY, towers[ret]);
+//        }
+
 //        qDebug() << "buildTower(-1, -1) level 3";
-
 //        field.setTower(mouseX, mouseY, towers[ret]);
     }
     else
     {
-        if(underConstruction)
-            delete underConstruction;
+        qDebug() << "buildTower2(" << x << "," << y << ");";
+        if(underConstruction && !underConstruction->isStartSet) {
+            int currX = cursor().pos().x();
+            int currY = cursor().pos().y();
+            if(whichCell(currX, currY)) {
+                underConstruction->setStartCoors(currX, currY);
+            }
+        }
+//        if(underConstruction)
+//            delete underConstruction;
 
-        underConstruction = new UnderConstruction();
-        underConstruction->startX = x;
-        underConstruction->startY = y;
+//        underConstruction = new UnderConstruction();
+//        underConstruction->startX = x;
+//        underConstruction->startY = y;
 //        if(towerUnderConstruction == NULL)
 //        {
 //            qDebug() << "buildTower2(" << x << "," << y << ");";
@@ -837,8 +853,16 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
 }
 
 void GameWidget::mouseReleaseEvent(QMouseEvent* event) {
-    qDebug() << "x: " << event->x();
-    qDebug() << "y: " << event->y();
+    qDebug() << "GameWidget::mouseReleaseEvent() -- x: " << event->x() << " y: " << event->y();
+
+    if(underConstruction) {
+        field.setTower(underConstruction->startX, underConstruction->startY, underConstruction->tower);
+        for(int k = 0; k < underConstruction->coorsX.size(); k++) {
+            field.setTower(underConstruction->coorsX[k], underConstruction->coorsY[k], underConstruction->tower);
+        }
+        delete underConstruction;
+        underConstruction = NULL;
+    }
 }
 
 void GameWidget::wheelEvent(QWheelEvent * event)
