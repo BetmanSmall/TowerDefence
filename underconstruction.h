@@ -8,14 +8,15 @@
 class UnderConstruction
 {
 public:
-    UnderConstruction();
+//    UnderConstruction();
     UnderConstruction(DefaultTower* tower);
     UnderConstruction(int startX, int startY, DefaultTower* tower);
 
     bool setStartCoors(int startX, int startY);
     bool setEndCoors(int endX, int endY);
+    bool clearStartCoors();
 
-    bool isStartSet;
+    int state;
     int startX, startY;
     int endX, endY;
 

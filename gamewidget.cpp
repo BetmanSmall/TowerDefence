@@ -179,8 +179,6 @@ void GameWidget::timerEvent(QTimerEvent *event)
             if(underConstruction) {
                 underConstruction->setEndCoors(curX, curY);
             }
-//            towersStartUnderConstructionX = curX;
-//            towersStartUnderConstructionY = curY;
         }
     } else if (timerId == bulletsFly_TimerId) {
         // ПЕРЕПИСАТЬ!
@@ -243,11 +241,13 @@ void GameWidget::keyPressEvent(QKeyEvent * event)
             mainCoorMapY -= pixelsShiftMap;
         }
     }
-    else if(key == Qt::Key_B)
-    {
-        qDebug() << "keyPressEvent::B";
-
+    else if(key == Qt::Key_B) {
         buildTower();
+    } else if(key == Qt::Key_N) {
+        if(underConstruction) {
+            delete underConstruction;
+            underConstruction = NULL;
+        }
     }
     field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
 //    if(key == Qt::Key_0)
@@ -554,7 +554,7 @@ void GameWidget::drawStepsAndMouse()
     int spaceWidget = field.getSpaceWidget();
     int sizeCell = field.getSizeCell();
 
-    p.setPen(QColor(255,150,150));
+    p.setPen(QColor(255,0,0));
 
     int fieldX = field.getSizeX();
     int fieldY = field.getSizeY();
@@ -584,18 +584,16 @@ void GameWidget::drawStepsAndMouse()
 
 void GameWidget::drawTowersUnderConstruction()
 {
-    if(underConstruction && underConstruction->isStartSet)
+    if(underConstruction)
     {
-        int towerSize = underConstruction->tower->size;
-        int bStartX = underConstruction->startX;
-        int bStartY = underConstruction->startY;
-        int bEndX = cursor().pos().x();
-        int bEndY = cursor().pos().y();
+        if(underConstruction->state == 0) {
+            drawTowerUnderConstruction(underConstruction->endX, underConstruction->endY, underConstruction->tower);
+        } else if(underConstruction->state == 1) {
+            drawTowerUnderConstruction(underConstruction->startX, underConstruction->startY, underConstruction->tower);
 
-        drawTowerUnderConstruction(bStartX, bStartY, underConstruction->tower);
-
-        for(int k = 0; k < underConstruction->coorsX.size(); k++) {
-            drawTowerUnderConstruction(underConstruction->coorsX[k], underConstruction->coorsY[k], underConstruction->tower);
+            for(int k = 0; k < underConstruction->coorsX.size(); k++) {
+                drawTowerUnderConstruction(underConstruction->coorsX[k], underConstruction->coorsY[k], underConstruction->tower);
+            }
         }
 //        if(whichCell(bEndX, bEndY)) {
 //            qDebug() << "GameWidget::drawTowerUnderConstruction() -- whichCell";
@@ -745,12 +743,8 @@ void GameWidget::buildTower(int x, int y)
     else
     {
         qDebug() << "buildTower2(" << x << "," << y << ");";
-        if(underConstruction && !underConstruction->isStartSet) {
-            int currX = cursor().pos().x();
-            int currY = cursor().pos().y();
-            if(whichCell(currX, currY)) {
-                underConstruction->setStartCoors(currX, currY);
-            }
+        if(underConstruction) {
+            underConstruction->setStartCoors(x, y);
         }
 //        if(underConstruction)
 //            delete underConstruction;
@@ -812,8 +806,8 @@ void GameWidget::mousePressEvent(QMouseEvent * event)
             else if(field.containTower(mouseX, mouseY))
                 field.deleteTower(mouseX, mouseY);
 
-            if(!field.containBusy(mouseX, mouseY))
-                field.waveAlgorithm();
+//            if(!field.containBusy(mouseX, mouseY))
+//                field.waveAlgorithm();
         }
         else if(event->button() == Qt::XButton1)
         {
@@ -860,8 +854,8 @@ void GameWidget::mouseReleaseEvent(QMouseEvent* event) {
         for(int k = 0; k < underConstruction->coorsX.size(); k++) {
             field.setTower(underConstruction->coorsX[k], underConstruction->coorsY[k], underConstruction->tower);
         }
-        delete underConstruction;
-        underConstruction = NULL;
+        underConstruction->clearStartCoors();
+        field.waveAlgorithm();
     }
 }
 

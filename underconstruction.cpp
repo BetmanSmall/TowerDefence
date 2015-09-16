@@ -1,16 +1,16 @@
 #include "underconstruction.h"
 
-UnderConstruction::UnderConstruction() {
-    this->isStartSet = false;
-}
+//UnderConstruction::UnderConstruction() {
+//    this->state = 0;
+//}
 
 UnderConstruction::UnderConstruction(DefaultTower *tower) {
-    this->isStartSet = false;
+    this->state = -1;
     this->tower = tower;
 }
 
 UnderConstruction::UnderConstruction(int startX, int startY, DefaultTower *tower) {
-    this->isStartSet = true;
+    this->state = 1;
     this->startX = startX;
     this->startY = startY;
     this->tower = tower;
@@ -18,7 +18,7 @@ UnderConstruction::UnderConstruction(int startX, int startY, DefaultTower *tower
 
 bool UnderConstruction::setStartCoors(int startX, int startY) {
     qDebug() << "UnderConstruction::setStartCoors(" << startX << "," << startY << ");";
-    this->isStartSet = true;
+    this->state = 1;
     this->startX = startX;
     this->startY = startY;
 }
@@ -28,7 +28,11 @@ bool UnderConstruction::setEndCoors(int endX, int endY) {
     this->endX = endX;
     this->endY = endY;
 
-    if(tower != NULL) {
+    if(state == -1) {
+        state = 0;
+    }
+
+    if(state == 1 && tower != NULL) {
         coorsX.clear();
         coorsY.clear();
         if(endY == startY || (endY < (startY+tower->size) && endY > startY)) {
@@ -61,3 +65,8 @@ bool UnderConstruction::setEndCoors(int endX, int endY) {
     return false;
 }
 
+bool UnderConstruction::clearStartCoors() {
+    this->state = 0;
+    this->coorsX.clear();
+    this->coorsY.clear();
+}
