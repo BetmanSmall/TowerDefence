@@ -28,12 +28,14 @@ private slots:
     void on_loadMap1Button_clicked();
     void on_loadMap2Button_clicked();
     void on_loadMap3Button_clicked();
+    void on_loadMap4Button_clicked();
 
 signals:
     void signal_closeWidget();
     void signal_loadMap1();
     void signal_loadMap2();
     void signal_loadMap3();
+    void signal_loadMap4();
 };
 
 #endif // CHOOSEMAPMENU_H

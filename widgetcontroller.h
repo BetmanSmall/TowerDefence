@@ -40,6 +40,7 @@ private slots:
     void loadMap1();
     void loadMap2();
     void loadMap3();
+    void loadMap4();
     void closeWidget();
 };
 

@@ -161,6 +161,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QPushButton" name="loadMap4Button">
+     <property name="text">
+      <string>Swamp Map</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <spacer name="horizontalSpacer">

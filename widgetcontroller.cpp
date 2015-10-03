@@ -73,6 +73,7 @@ void WidgetController::showChooseMapMenu()
     connect(chooseMapMenu, SIGNAL(signal_loadMap1()), this, SLOT(loadMap1()));
     connect(chooseMapMenu, SIGNAL(signal_loadMap2()), this, SLOT(loadMap2()));
     connect(chooseMapMenu, SIGNAL(signal_loadMap3()), this, SLOT(loadMap3()));
+    connect(chooseMapMenu, SIGNAL(signal_loadMap4()), this, SLOT(loadMap4()));
     connect(chooseMapMenu, SIGNAL(signal_closeWidget()), this, SLOT(closeWidget()));
 
     stackedWidget->addWidget(chooseMapMenu);
@@ -134,6 +135,17 @@ void WidgetController::loadMap3()
     loadMap(gameWidget);
 
     gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/desert.tmx");
+}
+
+void WidgetController::loadMap4()
+{
+    qDebug() << "loadMap4()";
+
+    GameWidget* gameWidget = new GameWidget();
+
+    loadMap(gameWidget);
+
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/swamp.tmx");
 }
 
 void WidgetController::closeWidget()

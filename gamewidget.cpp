@@ -81,7 +81,7 @@ GameWidget::GameWidget(QWidget *parent) :
 //    field.createSpawnPoint(defaultNumCreateCreeps, 0, 0);
 //    field.createExitPoint(field.getSizeX()-1, field.getSizeY()-1);
 
-//    loadMap(TOWER_DEFENCE_PATH + "maps/arcticv1.tmx");
+//    loadMap(TOWER_DEFENCE_PATH + "maps/swamp.tmx");
 }
 
 GameWidget::~GameWidget()
