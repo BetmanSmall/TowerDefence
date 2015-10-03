@@ -161,11 +161,29 @@
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="loadMap4Button">
-     <property name="text">
-      <string>Swamp Map</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="loadMap4Button">
+       <property name="text">
+        <string>Swamp Map</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loadMap5Button">
+       <property name="text">
+        <string>Isometric Map</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loadMap6Button">
+       <property name="text">
+        <string>Isometric Test Map</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">

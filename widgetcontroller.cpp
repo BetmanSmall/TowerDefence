@@ -74,6 +74,8 @@ void WidgetController::showChooseMapMenu()
     connect(chooseMapMenu, SIGNAL(signal_loadMap2()), this, SLOT(loadMap2()));
     connect(chooseMapMenu, SIGNAL(signal_loadMap3()), this, SLOT(loadMap3()));
     connect(chooseMapMenu, SIGNAL(signal_loadMap4()), this, SLOT(loadMap4()));
+    connect(chooseMapMenu, SIGNAL(signal_loadMap5()), this, SLOT(loadMap5()));
+    connect(chooseMapMenu, SIGNAL(signal_loadMap6()), this, SLOT(loadMap6()));
     connect(chooseMapMenu, SIGNAL(signal_closeWidget()), this, SLOT(closeWidget()));
 
     stackedWidget->addWidget(chooseMapMenu);
@@ -146,6 +148,28 @@ void WidgetController::loadMap4()
     loadMap(gameWidget);
 
     gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/swamp.tmx");
+}
+
+void WidgetController::loadMap5()
+{
+    qDebug() << "loadMap5()";
+
+    GameWidget* gameWidget = new GameWidget();
+
+    loadMap(gameWidget);
+
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/isometric_summer.tmx");
+}
+
+void WidgetController::loadMap6()
+{
+    qDebug() << "loadMap6()";
+
+    GameWidget* gameWidget = new GameWidget();
+
+    loadMap(gameWidget);
+
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/isometric_testMap.tmx");
 }
 
 void WidgetController::closeWidget()

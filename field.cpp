@@ -11,6 +11,7 @@ void Field::createField(int newSizeX, int newSizeY)
         towers.createField(newSizeX*newSizeY);
         creeps.createMass(30);
 
+        isometric = false;
         creepSet = true;
 
         gameOverLimitCreeps = 10;
@@ -125,6 +126,27 @@ int Field::getSpaceWidget() {
 
 int Field::getSizeCell() {
     return sizeCell;
+}
+
+void Field::setIsometric(bool isometric) {
+    this->isometric = isometric;
+}
+
+void Field::setTileMapSize(int tileMapWidth, int tileMapHeight) {
+    this->tileMapWidth = tileMapWidth;
+    this->tileMapHeight = tileMapHeight;
+}
+
+bool Field::getIsometric() {
+    return isometric;
+}
+
+int Field::getTileMapWidth() {
+    return tileMapWidth;
+}
+
+int Field::getTileMapHeight() {
+    return tileMapHeight;
 }
 
 bool Field::towersAttack()

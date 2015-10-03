@@ -72,6 +72,10 @@ class Field
     int spaceWidget; // fix this. 16 and launch
     int sizeCell;
 
+    bool isometric;
+    int tileMapWidth, tileMapHeight;
+//    int tileMapWidth, tileMapHeight;
+
     int mouseX, mouseY;
     int spawnPointX, spawnPointY;
     int exitPointX, exitPointY;
@@ -163,6 +167,34 @@ public:
      * @brief Функция которая заставляет атаковать все башни, когда в радиусе обзора есть крипп
      * @return Пока что всегда тру
      */
+
+    /**
+     * @brief Устанавливает изометрическая ли карта
+     * @param isometric
+     */
+    void setIsometric(bool isometric);
+    /**
+     * @brief setTileMapSize
+     * @param tileMapWidth
+     * @param tileMapHeight
+     */
+    void setTileMapSize(int tileMapWidth, int tileMapHeight);
+
+    /**
+     * @brief getIsometric
+     * @return
+     */
+    bool getIsometric();
+    /**
+     * @brief getTileMapWidth
+     * @return
+     */
+    int getTileMapWidth();
+    /**
+     * @brief getTileMapHeight
+     * @return
+     */
+    int getTileMapHeight();
 
     bool towersAttack();
     /**

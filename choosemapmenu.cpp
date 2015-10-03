@@ -47,3 +47,13 @@ void ChooseMapMenu::on_loadMap4Button_clicked()
 {
     signal_loadMap4();
 }
+
+void ChooseMapMenu::on_loadMap5Button_clicked()
+{
+    signal_loadMap5();
+}
+
+void ChooseMapMenu::on_loadMap6Button_clicked()
+{
+    signal_loadMap6();
+}

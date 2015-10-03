@@ -323,13 +323,36 @@ void GameWidget::drawGrid()
     int fieldX = field.getSizeX();
     int fieldY = field.getSizeY();
 
-    p.setPen(QColor(100,60,21));
+    p.setPen(QColor(100, 60, 21));
 
-    for(int k = 0; k < fieldX+1; k++)
-        p.drawLine(mainCoorMapX + spaceWidget + k*sizeCell, mainCoorMapY + spaceWidget, mainCoorMapX + spaceWidget + k*sizeCell, mainCoorMapY + spaceWidget + sizeCell*fieldY);
+    if(field.getIsometric()) {
+        int sizeCellX = field.getTileMapWidth()/2;
+        int sizeCellY = field.getTileMapHeight()/2;
+        int isometricSpaceX = sizeCellX*fieldX;
+        int isometricSpaceY = sizeCellY*fieldY;
 
-    for(int k = 0; k < fieldY+1; k++)
-        p.drawLine(mainCoorMapX + spaceWidget, mainCoorMapY + spaceWidget + k*sizeCell, mainCoorMapX + spaceWidget + sizeCell*fieldX, mainCoorMapY + spaceWidget + k*sizeCell);
+        for(int x = 0; x < fieldX+1; x++) {
+            int x1 = mainCoorMapX + isometricSpaceX+spaceWidget + x*sizeCellX;
+            int y1 = mainCoorMapY + spaceWidget + x*sizeCellY;
+            int x2 = mainCoorMapX + spaceWidget + x*sizeCellX;
+            int y2 = mainCoorMapY + isometricSpaceY+spaceWidget + x*sizeCellY;
+            p.drawLine(x1, y1, x2, y2);
+        }
+        for(int y = 0; y < fieldY+1; y++) {
+            int x1 = mainCoorMapX + isometricSpaceX+spaceWidget - y*sizeCellX;
+            int y1 = mainCoorMapY + spaceWidget + y*sizeCellY;
+            int x2 = mainCoorMapX + isometricSpaceX*2+spaceWidget - y*sizeCellX;
+            int y2 = mainCoorMapY + isometricSpaceY+spaceWidget + y*sizeCellY;
+            p.drawLine(x1, y1, x2, y2);
+        }
+    } else {
+        for(int x = 0; x < fieldX+1; x++) {
+            p.drawLine(mainCoorMapX + spaceWidget + x*sizeCell, mainCoorMapY + spaceWidget, mainCoorMapX + spaceWidget + x*sizeCell, mainCoorMapY + spaceWidget + sizeCell*fieldY);
+        }
+        for(int y = 0; y < fieldY+1; y++) {
+            p.drawLine(mainCoorMapX + spaceWidget, mainCoorMapY + spaceWidget + y*sizeCell, mainCoorMapX + spaceWidget + sizeCell*fieldX, mainCoorMapY + spaceWidget + y*sizeCell);
+        }
+    }
 }
 
 void GameWidget::drawField()
@@ -994,7 +1017,7 @@ void GameWidget::loadMap(QString mapName)
 
     //map
     int mapSizeX, mapSizeY;
-    int mapTileWidth;//, mapTileHeight;
+    int tileMapWidth, tileMapHeight;
 
     //tileset
     vector<TileSet> tileSets;
@@ -1017,18 +1040,24 @@ void GameWidget::loadMap(QString mapName)
 
             if(nameElement == "map")
             {
+//                QString version = xmlReader.attributes().value("version");
+                QString orientation = xmlReader.attributes().value("orientation").toString();
                 mapSizeX = xmlReader.attributes().value("width").toInt();
                 mapSizeY = xmlReader.attributes().value("height").toInt();
-                mapTileWidth = xmlReader.attributes().value("tilewidth").toInt();
-//                mapTileHeight = xmlReader.attributes().value("tileheight").toInt();
-                //qDebug() << "mapSizeX: " << mapSizeX;
-                //qDebug() << "mapSizeY: " << mapSizeY;
-                //qDebug() << "mapTileWidth: " << mapTileWidth;
-                //qDebug() << "mapTileHeight: " << mapTileHeight;
+                tileMapWidth = xmlReader.attributes().value("tilewidth").toInt();
+                tileMapHeight = xmlReader.attributes().value("tileheight").toInt();
+                qDebug() << "mapSizeX: " << mapSizeX;
+                qDebug() << "mapSizeY: " << mapSizeY;
+                qDebug() << "tileMapWidth: " << tileMapWidth;
+                qDebug() << "tileMapHeight: " << tileMapHeight;
 
                 field.createField(mapSizeX, mapSizeY);
 //                setMaximumSize(spaceWidget*2 + mapSizeX*sizeCell, spaceWidget*2 + mapSizeY*sizeCell);
 //                setMinimumSize(spaceWidget*2 + mapSizeX*sizeCell, spaceWidget*2 + mapSizeY*sizeCell);
+                if(orientation == "isometric") {
+                    field.setIsometric(true);
+                    field.setTileMapSize(tileMapWidth, tileMapHeight);
+                }
             }
             else if(nameElement == "tileset")
             {
@@ -1620,8 +1649,8 @@ void GameWidget::loadMap(QString mapName)
 //                qDebug() << "tileObjectID: " << tileObjectID;
 //                qDebug() << "x: " << x;
 //                qDebug() << "y: " << y;
-                x = x / mapTileWidth; // В файле кординаты графические. Поэтому преобразуем в игровые.
-                y = (y - mapTileWidth) / mapTileWidth;
+                x = x / tileMapWidth; // В файле кординаты графические. Поэтому преобразуем в игровые.
+                y = (y - tileMapWidth) / tileMapWidth;
 //                qDebug() << "change_x: " << x;
 //                qDebug() << "change_y: " << y;
 
