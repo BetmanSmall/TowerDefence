@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" renderorder="right-down" width="16" height="16" tilewidth="64" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="isom_tiles" tilewidth="64" tileheight="32" tilecount="80">
+  <image source="isom_tiles.png" width="320" height="512"/>
+ </tileset>
+ <tileset firstgid="81" name="isom_tiles" tilewidth="64" tileheight="32" tilecount="80">
+  <image source="isom_tiles.png" width="320" height="512"/>
+ </tileset>
+ <layer name="Слой тайлов 1" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA+YCJTDzKWgmJK9RNrBqX6nYFYDod+WSL0y6LpIVU/yG59IJYBYjUoDcNyRNqvCsUqSGxVEtxPiX45qLuRManuV8GCSQl/mHpywh+fmoHWDwo/5PSADADuxAm3
+  </data>
+ </layer>
+</map>

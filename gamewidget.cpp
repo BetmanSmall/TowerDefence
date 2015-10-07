@@ -172,7 +172,7 @@ void GameWidget::timerEvent(QTimerEvent *event)
             mainCoorMapX = (mainCoorMapX + sizeCell*sizeX < width()) ? width()-sizeCell*sizeX : mainCoorMapX;
             mainCoorMapY = (mainCoorMapY + sizeCell*sizeY < height()) ? height()-sizeCell*sizeY : mainCoorMapY;
 
-            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
+//            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
         if(whichCell(curX, curY))
         {
@@ -326,24 +326,34 @@ void GameWidget::drawGrid()
     p.setPen(QColor(100, 60, 21));
 
     if(field.getIsometric()) {
-        int sizeCellX = field.getTileMapWidth()/2;
-        int sizeCellY = field.getTileMapHeight()/2;
-        int isometricSpaceX = sizeCellX*fieldX;
-        int isometricSpaceY = sizeCellY*fieldY;
+        int halfSizeCellX = field.getSizeCell()/2;
+        int halfSizeCellY = halfSizeCellX/2;
+//        int sizeCellX = field.getTileMapWidth()/2;
+//        int sizeCellY = field.getTileMapHeight()/2;
+        int isometricSpaceX = halfSizeCellX*fieldY;
+        int isometricSpaceY = halfSizeCellY*fieldY;
+
+//        qDebug() << "GameWidget::drawGrid(); -- isometricSpaceX: " << isometricSpaceX;
+//        qDebug() << "GameWidget::drawGrid(); -- isometricSpaceY: " << isometricSpaceY;
+//        qDebug() << "GameWidget::drawGrid(); -- fieldX: " << fieldX;
+//        qDebug() << "GameWidget::drawGrid(); -- fieldY: " << fieldY;
 
         for(int x = 0; x < fieldX+1; x++) {
-            int x1 = mainCoorMapX + isometricSpaceX+spaceWidget + x*sizeCellX;
-            int y1 = mainCoorMapY + spaceWidget + x*sizeCellY;
-            int x2 = mainCoorMapX + spaceWidget + x*sizeCellX;
-            int y2 = mainCoorMapY + isometricSpaceY+spaceWidget + x*sizeCellY;
+            int x1 = mainCoorMapX + isometricSpaceX+spaceWidget + x*halfSizeCellX;
+            int y1 = mainCoorMapY + spaceWidget + x*halfSizeCellY;
+            int x2 = mainCoorMapX + spaceWidget + x*halfSizeCellX;
+            int y2 = mainCoorMapY + isometricSpaceY+spaceWidget + x*halfSizeCellY;
             p.drawLine(x1, y1, x2, y2);
+//            qDebug() << "GameWidget::drawGrid(); -- x1: " << x1 << " y1: " << y1 << " x2: " << x2 << " y2: " << y2;
         }
+//        isometric
         for(int y = 0; y < fieldY+1; y++) {
-            int x1 = mainCoorMapX + isometricSpaceX+spaceWidget - y*sizeCellX;
-            int y1 = mainCoorMapY + spaceWidget + y*sizeCellY;
-            int x2 = mainCoorMapX + isometricSpaceX*2+spaceWidget - y*sizeCellX;
-            int y2 = mainCoorMapY + isometricSpaceY+spaceWidget + y*sizeCellY;
+            int x1 = mainCoorMapX + isometricSpaceX+spaceWidget - y*halfSizeCellX;
+            int y1 = mainCoorMapY + spaceWidget + y*halfSizeCellY;
+            int x2 = mainCoorMapX + isometricSpaceX*2+spaceWidget - (halfSizeCellX*(fieldY-fieldX)) - y*halfSizeCellX;
+            int y2 = mainCoorMapY + isometricSpaceY+spaceWidget - (halfSizeCellY*(fieldY-fieldX)) + y*halfSizeCellY;
             p.drawLine(x1, y1, x2, y2);
+//            qDebug() << "GameWidget::drawGrid(); -- x1: " << x1 << " y1: " << y1 << " x2: " << x2 << " y2: " << y2;
         }
     } else {
         for(int x = 0; x < fieldX+1; x++) {
@@ -360,51 +370,116 @@ void GameWidget::drawField()
     int fieldX = field.getSizeX();
     int fieldY = field.getSizeY();
 
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
+
+    int isometricCoorX = (sizeCell/2) * fieldY;
+    int isometricCoorY = 0;
+
+//    int sizeCellX = field.getTileMapWidth()/2;
+//    int sizeCellY = field.getTileMapHeight()/2;
+    int sizeCellX = field.getSizeCell();
+    int sizeCellY = sizeCellX/2;
+
     for(int y = 0; y < fieldY; y++)
     {
         for(int x = 0; x < fieldX; x++)
         {
-            int mainCoorMapX = field.getMainCoorMapX();
-            int mainCoorMapY = field.getMainCoorMapY();
-            int spaceWidget = field.getSpaceWidget();
-            int sizeCell = field.getSizeCell();
+//            qDebug() << "GameWidget::drawField(); -- x: (" << x << "/" << fieldX << ") -- y: (" << y << "/" << fieldY << ")";
+            if(mapLoad) {
+                QPixmap pix = field.getPixmapOfCell(x, y);
+                if(!field.getIsometric()) {
+//                    qDebug() << "GameWidget::drawField(); -- NO Isometric!";
+                    int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;
+                    int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;
+                    int localSizeCell = sizeCell;
 
-            int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;
-            int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;
-            int localSizeCell = sizeCell;
+                    p.drawPixmap(pxlsX, pxlsY, localSizeCell, localSizeCell, pix);
+                } else {
+//                    qDebug() << "GameWidget::drawField(); -- Isometric!";
+                    int x1 = mainCoorMapX + isometricCoorX - (sizeCellX/2) + x*(sizeCellX/2);
+                    int y1 = mainCoorMapY + isometricCoorY - (sizeCellY) + x*(sizeCellY/2);
 
-            if(mapLoad)
-                p.drawPixmap(pxlsX, pxlsY, localSizeCell, localSizeCell, field.getPixmapOfCell(x, y));
+//                    int x2 = mainCoorMapX + isometricSpaceX*2+spaceWidget - y*sizeCellX; << Android DNO
+//                    int y2 = mainCoorMapY + isometricSpaceY+spaceWidget + y*sizeCellY; << Android DNO -- Dorabotat'
+
+//                    qDebug() << "GameWidget::drawField(); -- sizeCellX: " << sizeCellX;
+//                    qDebug() << "GameWidget::drawField(); -- sizeCellY: " << sizeCellY;
+//                    qDebug() << "GameWidget::drawField(); -- mainCoorMapX: " << mainCoorMapX;
+//                    qDebug() << "GameWidget::drawField(); -- mainCoorMapY: " << mainCoorMapY;
+//                    qDebug() << "GameWidget::drawField(); -- isometricCoorX: " << isometricCoorX;
+//                    qDebug() << "GameWidget::drawField(); -- isometricCoorY: " << isometricCoorY;
+//                    qDebug() << "GameWidget::drawField(); -- x: " << x << " y: " << y << " pix: " << !pix.isNull();
+//                    qDebug() << "GameWidget::drawField(); -- x: " << x;
+//                    qDebug() << "GameWidget::drawField(); -- y: " << y;
+//                    qDebug() << "GameWidget::drawField(); -- x1: " << x1;
+//                    qDebug() << "GameWidget::drawField(); -- y1: " << y1;
+
+                    p.drawPixmap(x1, y1, sizeCellX, sizeCellY*2, pix);
+                }
+            }
         }
+        isometricCoorX = (field.getSizeCell()/2) * (fieldY - (y+1));
+        isometricCoorY = (field.getSizeCell()/4) * (y+1);
     }
 }
 
 void GameWidget::drawRelief()
 {
+//    qDebug() << "GameWidget::drawRelief();";
     int fieldX = field.getSizeX();
     int fieldY = field.getSizeY();
+
+    int mainCoorMapX = field.getMainCoorMapX();
+    int mainCoorMapY = field.getMainCoorMapY();
+    int spaceWidget = field.getSpaceWidget();
+    int sizeCell = field.getSizeCell();
+
+    int isometricCoorX = (sizeCell/2) * fieldY;
+    int isometricCoorY = 0;
+
+//    int sizeCellX = field.getTileMapWidth()/2;
+//    int sizeCellY = field.getTileMapHeight()/2;
+    int sizeCellX = field.getSizeCell();
+    int sizeCellY = sizeCellX/2;
 
     for(int y = 0; y < fieldY; y++)
     {
         for(int x = 0; x < fieldX; x++)
         {
-            int mainCoorMapX = field.getMainCoorMapX();
-            int mainCoorMapY = field.getMainCoorMapY();
-            int spaceWidget = field.getSpaceWidget();
-            int sizeCell = field.getSizeCell();
-
-            int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
-            int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;//+1;
-            int localSizeCell = sizeCell;//-1;
-
             if(field.containBusy(x, y))
             {
-//                if(!mapLoad)
-                    p.fillRect(pxlsX+1, pxlsY+1, localSizeCell-1, localSizeCell-1, QColor(0, 0, 0));
-//                else
-                    p.drawPixmap(pxlsX, pxlsY, localSizeCell, localSizeCell, field.getBusyPixmapOfCell(x, y));
+//            qDebug() << "GameWidget::drawRelief(); -- x: (" << x << "/" << fieldX << ") -- y: (" << y << "/" << fieldY << ")";
+//            if(mapLoad) {
+                    QPixmap pix = field.getBusyPixmapOfCell(x, y);
+                    if(!field.getIsometric()) {
+//                        qDebug() << "GameWidget::drawRelief(); -- NO Isometric!";
+                        int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
+                        int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;//+1;
+                        int localSizeCell = sizeCell;//-1;
+
+//                        if(!mapLoad) {
+                            p.fillRect(pxlsX+1, pxlsY+1, localSizeCell-1, localSizeCell-1, QColor(0, 0, 0));
+//                        } else {
+                            p.drawPixmap(pxlsX, pxlsY, localSizeCell, localSizeCell, pix);
+//                        }
+                    } else {
+//                        qDebug() << "GameWidget::drawRelief(); -- Isometric!";
+                        int x1 = mainCoorMapX + isometricCoorX - (sizeCellX/2) + x*(sizeCellX/2);
+                        int y1 = mainCoorMapY + isometricCoorY - (sizeCellY) + x*(sizeCellY/2);
+//                    qDebug() << "GameWidget::drawRelief(); -- x: " << x << " y: " << y << " pix: " << !pix.isNull();
+//                    qDebug() << "GameWidget::drawRelief(); -- x1: " << x1;
+//                    qDebug() << "GameWidget::drawRelief(); -- y1: " << y1;
+
+                        p.drawPixmap(x1, y1, sizeCellX, sizeCellY*2, pix);
+                    }
+//            }
             }
         }
+        isometricCoorX = (field.getSizeCell()/2) * (fieldY - (y+1));
+        isometricCoorY = (field.getSizeCell()/4) * (y+1);
     }
 }
 
@@ -1055,8 +1130,10 @@ void GameWidget::loadMap(QString mapName)
 //                setMaximumSize(spaceWidget*2 + mapSizeX*sizeCell, spaceWidget*2 + mapSizeY*sizeCell);
 //                setMinimumSize(spaceWidget*2 + mapSizeX*sizeCell, spaceWidget*2 + mapSizeY*sizeCell);
                 if(orientation == "isometric") {
+                    qDebug() << "GameWidget::loadMap(); -- field.setIsometric(true);";
                     field.setIsometric(true);
                     field.setTileMapSize(tileMapWidth, tileMapHeight);
+                    field.setSizeCell(tileMapWidth);
                 }
             }
             else if(nameElement == "tileset")

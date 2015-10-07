@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" width="16" height="16" tilewidth="64" tileheight="32">
+<map version="1.0" orientation="isometric" renderorder="right-down" width="16" height="16" tilewidth="64" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="Iso-64x64-outside" tilewidth="64" tileheight="64">
   <image source="textures/Iso-64x64-outside.png" width="640" height="1024"/>
  </tileset>
@@ -7,7 +7,7 @@
   <data>
    <tile gid="1"/>
    <tile gid="2"/>
-   <tile gid="3"/>
+   <tile gid="1"/>
    <tile gid="4"/>
    <tile gid="5"/>
    <tile gid="6"/>
@@ -23,7 +23,7 @@
    <tile gid="1"/>
    <tile gid="2"/>
    <tile gid="2"/>
-   <tile gid="3"/>
+   <tile gid="2"/>
    <tile gid="4"/>
    <tile gid="5"/>
    <tile gid="6"/>
@@ -265,8 +265,10 @@
  </layer>
  <layer name="ground" width="16" height="16">
   <data>
+   <tile gid="72"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="1"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -280,7 +282,13 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="90"/>
+   <tile gid="87"/>
+   <tile gid="1"/>
+   <tile gid="60"/>
    <tile gid="0"/>
+   <tile gid="126"/>
+   <tile gid="126"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -289,7 +297,12 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="1"/>
+   <tile gid="84"/>
+   <tile gid="81"/>
+   <tile gid="1"/>
    <tile gid="0"/>
+   <tile gid="143"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -300,6 +313,10 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="1"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="1"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -314,8 +331,12 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="70"/>
+   <tile gid="68"/>
    <tile gid="0"/>
+   <tile gid="120"/>
    <tile gid="0"/>
+   <tile gid="153"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -325,6 +346,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="125"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -340,8 +362,10 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="125"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="117"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -373,6 +397,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="144"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -406,32 +431,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="154"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
