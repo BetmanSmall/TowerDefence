@@ -165,7 +165,7 @@
      <item>
       <widget class="QPushButton" name="loadMap4Button">
        <property name="text">
-        <string>Swamp Map</string>
+        <string>Boloto Isometric Map</string>
        </property>
       </widget>
      </item>

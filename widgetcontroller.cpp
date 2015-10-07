@@ -147,7 +147,7 @@ void WidgetController::loadMap4()
 
     loadMap(gameWidget);
 
-    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/swamp.tmx");
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/boloto.tmx");
 }
 
 void WidgetController::loadMap5()

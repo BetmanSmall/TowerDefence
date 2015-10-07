@@ -172,7 +172,7 @@ void GameWidget::timerEvent(QTimerEvent *event)
             mainCoorMapX = (mainCoorMapX + sizeCell*sizeX < width()) ? width()-sizeCell*sizeX : mainCoorMapX;
             mainCoorMapY = (mainCoorMapY + sizeCell*sizeY < height()) ? height()-sizeCell*sizeY : mainCoorMapY;
 
-//            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
+            field.setMainCoorMap(mainCoorMapX, mainCoorMapY);
         }
         if(whichCell(curX, curY))
         {
