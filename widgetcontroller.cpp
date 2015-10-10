@@ -158,7 +158,7 @@ void WidgetController::loadMap5()
 
     loadMap(gameWidget);
 
-    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/isometric_summer.tmx");
+    gameWidget->loadMap(TOWER_DEFENCE_PATH + "maps/isometric_testMap2.tmx");
 }
 
 void WidgetController::loadMap6()

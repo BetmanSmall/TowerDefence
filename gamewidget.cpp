@@ -346,7 +346,6 @@ void GameWidget::drawGrid()
             p.drawLine(x1, y1, x2, y2);
 //            qDebug() << "GameWidget::drawGrid(); -- x1: " << x1 << " y1: " << y1 << " x2: " << x2 << " y2: " << y2;
         }
-//        isometric
         for(int y = 0; y < fieldY+1; y++) {
             int x1 = mainCoorMapX + isometricSpaceX+spaceWidget - y*halfSizeCellX;
             int y1 = mainCoorMapY + spaceWidget + y*halfSizeCellY;
@@ -577,13 +576,21 @@ void GameWidget::drawTowersByTowers()
 
 void GameWidget::drawCreeps()
 {
+    int fieldX = field.getSizeX();
+    int fieldY = field.getSizeY();
+
     int mainCoorMapX = field.getMainCoorMapX();
     int mainCoorMapY = field.getMainCoorMapY();
     int spaceWidget = field.getSpaceWidget();
     int sizeCell = field.getSizeCell();
 
-    int fieldX = field.getSizeX();
-    int fieldY = field.getSizeY();
+    int isometricCoorX = (sizeCell/2) * fieldY;
+    int isometricCoorY = 0;
+
+//    int sizeCellX = field.getTileMapWidth()/2;
+//    int sizeCellY = field.getTileMapHeight()/2;
+    int sizeCellX = field.getSizeCell();
+    int sizeCellY = sizeCellX/2;
 
     for(int y = 0; y < fieldY; y++)
     {
@@ -592,6 +599,7 @@ void GameWidget::drawCreeps()
             int num = field.containCreep(x, y);
             if(num)
             {
+                qDebug() << "GameWidget::drawRelief(); -- Not Isometric!";
                 int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;//+1;
                 int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;// - sizeCell/2;//+1;
                 int localSizeCell = sizeCell;//-1;
@@ -609,74 +617,119 @@ void GameWidget::drawCreeps()
                         int lastX, lastY;
                         int animationCurrIter, animationMaxIter;
                         QPixmap pixmap = creeps[k]->getAnimationInformation(&lastX, &lastY, &animationCurrIter, &animationMaxIter);
+                        if(!field.getIsometric()) {
+                            pxlsX = mainCoorMapX + spaceWidget + x*sizeCell - localSpaceCell;
+                            pxlsY = mainCoorMapY + spaceWidget + y*sizeCell - localSpaceCell;
 
-                        pxlsX = mainCoorMapX + spaceWidget + x*sizeCell - localSpaceCell;
-                        pxlsY = mainCoorMapY + spaceWidget + y*sizeCell - localSpaceCell;
+                            if(lastX < x)
+                                pxlsX -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                            if(lastX > x)
+                                pxlsX += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                            if(lastY < y)
+                                pxlsY -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                            if(lastY > y)
+                                pxlsY += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
 
-                        if(lastX < x)
-                            pxlsX -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
-                        if(lastX > x)
-                            pxlsX += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
-                        if(lastY < y)
-                            pxlsY -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
-                        if(lastY > y)
-                            pxlsY += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+//                            qDebug() << "GameWidget::drawCreeps(); -- Pix: " << !pixmap.isNull();
+                            p.drawPixmap(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2, pixmap);
+                            p.drawRect(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2);
 
-                        p.drawPixmap(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2, pixmap);
-    //                    p.drawRect(pxlsX, pxlsY, localSizeCell + localSpaceCell*2, localSizeCell + localSpaceCell*2);
+                            int maxHP = 100;
+                            int hp = creeps[k]->hp;
+                            float hpWidth = localSizeCell-5;
+                            hpWidth = hpWidth/maxHP*hp;
+//                            qDebug() << "hpWidth: " << hpWidth;
 
-                        int maxHP = 100;
-                        int hp = creeps[k]->hp;
-                        float hpWidth = localSizeCell-5;
-                        hpWidth = hpWidth/maxHP*hp;
-//                        qDebug() << "hpWidth: " << hpWidth;
+                            p.drawRect(pxlsX + localSpaceCell+2, pxlsY, localSizeCell-4, 10);
+                            p.fillRect(pxlsX + localSpaceCell+3, pxlsY+1, hpWidth, 9, QColor(Qt::green));
 
-                        p.drawRect(pxlsX + localSpaceCell+2, pxlsY, localSizeCell-4, 10);
-                        p.fillRect(pxlsX + localSpaceCell+3, pxlsY+1, hpWidth, 9, QColor(Qt::green));
+                            // IT's NOT GOOD!!! Fixed!
+                            creeps[k]->coorByMapX = pxlsX;
+                            creeps[k]->coorByMapY = pxlsY;
+                            // -----------------------
+                        } else {
+                            qDebug() << "GameWidget::drawRelief(); -- Isometric!";
+                            int x1 = mainCoorMapX + isometricCoorX - (sizeCellX/2) + x*(sizeCellX/2);
+                            int y1 = mainCoorMapY + isometricCoorY - (sizeCellY) + x*(sizeCellY/2);
 
-                        // IT's NOT GOOD!!! Fixed!
-                        creeps[k]->coorByMapX = pxlsX;
-                        creeps[k]->coorByMapY = pxlsY;
-                        // -----------------------
+                            if(lastX < x) {
+                                pxlsX -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                            }
+                            if(lastX > x) {
+                                pxlsX += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                            }
+                            if(lastY < y) {
+                                pxlsY -= (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                            }
+                            if(lastY > y) {
+                                pxlsY += (sizeCell/animationMaxIter)*(animationMaxIter-animationCurrIter);
+                            }
+
+                            p.drawPixmap(x1, y1, sizeCellX, sizeCellY*2, pixmap);
+                        }
                     }
                 }
             }
         }
+        isometricCoorX = (field.getSizeCell()/2) * (fieldY - (y+1));
+        isometricCoorY = (field.getSizeCell()/4) * (y+1);
     }
 }
 
 void GameWidget::drawStepsAndMouse()
 {
+//    qDebug() << "GameWidget::drawStepsAndMouse();";
+    int fieldX = field.getSizeX();
+    int fieldY = field.getSizeY();
+
     int mainCoorMapX = field.getMainCoorMapX();
     int mainCoorMapY = field.getMainCoorMapY();
     int spaceWidget = field.getSpaceWidget();
     int sizeCell = field.getSizeCell();
 
-    p.setPen(QColor(255,0,0));
+    int isometricCoorX = (sizeCell/2) * fieldY;
+    int isometricCoorY = 0;
 
-    int fieldX = field.getSizeX();
-    int fieldY = field.getSizeY();
+//    int sizeCellX = field.getTileMapWidth()/2;
+//    int sizeCellY = field.getTileMapHeight()/2;
+    int sizeCellX = field.getSizeCell();
+    int sizeCellY = sizeCellX/2;
+
+    p.setPen(QColor(255,0,0));
 
     for(int y = 0; y < fieldY; y++)
     {
         for(int x = 0; x < fieldX; x++)
         {
-            int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell+1;
-            int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell+1;
-            int localSizeCell = sizeCell-1;
-            int localSpaceCell = sizeCell/4;
+            if(!field.getIsometric()) {
+//                qDebug() << "GameWidget::drawStepsAndMouse(); -- NOT Isometric!";
+                int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell+1;
+                int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell+1;
+                int localSizeCell = sizeCell-1;
+                int localSpaceCell = sizeCell/4;
 
-            p.drawPixmap(sizeCell, 0, global_pixmap.width(), global_pixmap.height(), global_pixmap);
+                p.drawPixmap(sizeCell, 0, global_pixmap.width(), global_pixmap.height(), global_pixmap);
 
-            if(field.getStepCell(x, y))
-                p.drawText(pxlsX + sizeCell/2-5, pxlsY + sizeCell/2+5, QString("%1").arg(field.getStepCell(x, y)));
+                if(field.getStepCell(x, y))
+                    p.drawText(pxlsX + sizeCell/2-5, pxlsY + sizeCell/2+5, QString("%1").arg(field.getStepCell(x, y)));
 
-            if(field.isSetSpawnPoint(x,y))
-                p.fillRect(pxlsX + localSpaceCell, pxlsY + localSpaceCell, localSizeCell - 2*(localSpaceCell), localSizeCell - 2*(localSpaceCell), QColor(255, 162, 0));
+                if(field.isSetSpawnPoint(x,y))
+                    p.fillRect(pxlsX + localSpaceCell, pxlsY + localSpaceCell, localSizeCell - 2*(localSpaceCell), localSizeCell - 2*(localSpaceCell), QColor(255, 162, 0));
 
-            if(field.isSetExitPoint(x,y))
-                p.fillRect(pxlsX + localSpaceCell, pxlsY + localSpaceCell, localSizeCell - 2*(localSpaceCell), localSizeCell - 2*(localSpaceCell), QColor(0, 255, 0));
+                if(field.isSetExitPoint(x,y))
+                    p.fillRect(pxlsX + localSpaceCell, pxlsY + localSpaceCell, localSizeCell - 2*(localSpaceCell), localSizeCell - 2*(localSpaceCell), QColor(0, 255, 0));
+            } else {
+//                qDebug() << "GameWidget::drawStepsAndMouse(); -- Isometric!";
+//                p.drawPixmap(sizeCell, 0, global_pixmap.width(), global_pixmap.height(), global_pixmap);
+                int x1 = mainCoorMapX + isometricCoorX + x*(sizeCellX/2);
+                int y1 = mainCoorMapY + isometricCoorY + (sizeCellY/2) + x*(sizeCellY/2);
+
+                if(field.getStepCell(x, y))
+                    p.drawText(x1 - 5, y1 + 5, QString("%1").arg(field.getStepCell(x, y)));
+            }
         }
+        isometricCoorX = (field.getSizeCell()/2) * (fieldY - (y+1));
+        isometricCoorY = (field.getSizeCell()/4) * (y+1);
     }
 }
 
@@ -767,14 +820,35 @@ bool GameWidget::whichCell(int &mouseX, int &mouseY)
     int spaceWidget = field.getSpaceWidget();
     int sizeCell = field.getSizeCell();
 
-    int tmpX, tmpY;
-    tmpX = ( (mouseX+sizeCell - spaceWidget - mainCoorMapX) / sizeCell);
-    tmpY = ( (mouseY+sizeCell - spaceWidget - mainCoorMapY) / sizeCell);
-    if(tmpX > 0 && tmpX < field.getSizeX()+1)
-        if(tmpY > 0 && tmpY < field.getSizeY()+1)
+    int gameX, gameY;
+    if(!field.getIsometric()) {
+        gameX = ( (mouseX+sizeCell - spaceWidget - mainCoorMapX) / sizeCell);
+        gameY = ( (mouseY+sizeCell - spaceWidget - mainCoorMapY) / sizeCell);
+    } else {
+//        qDebug() << "GameWidget::whichCell(1); -- Isometric!";
+        int fieldX = field.getSizeX();
+        int fieldY = field.getSizeY();
+        int sizeCellX = field.getSizeCell();
+        int sizeCellY = sizeCellX/2;
+
+        int isometricCoorX = (sizeCell/2) * fieldY;
+        int isometricCoorY = 0;
+
+        int localMouseX = -mainCoorMapX + mouseX - isometricCoorX;
+        int localMouseY = -mainCoorMapY + mouseY + sizeCellY;
+        gameX = (localMouseX/2 + localMouseY) / (sizeCell/2);
+        gameY = -(localMouseX/2 - localMouseY) / (sizeCell/2);
+        QString text = QString("%1/%2").arg(gameX).arg(gameY);
+        global_text2 = text.toStdString().c_str();
+        qDebug() << "GameWidget::whichCell(2); -- gameX: " << gameX;
+        qDebug() << "GameWidget::whichCell(2); -- gameY: " << gameY;
+    }
+
+    if(gameX > 0 && gameX < field.getSizeX()+1)
+        if(gameY > 0 && gameY < field.getSizeY()+1)
         {
-            mouseX = tmpX-1;
-            mouseY = tmpY-1;
+            mouseX = gameX-1;
+            mouseY = gameY-1;
             return true;
         }
 
@@ -884,6 +958,7 @@ void GameWidget::buildTower(int x, int y)
 
 void GameWidget::mousePressEvent(QMouseEvent * event)
 {
+    qDebug() << "GameWidget::mousePressEvent();";
     int mouseX = event->x();
     int mouseY = event->y();
 
@@ -1148,8 +1223,8 @@ void GameWidget::loadMap(QString mapName)
                 qDebug() << "tileSet.name: " << tileSet.name;
                 //qDebug() << "tileSet.spacing: " << tileSet.spacing;
                 //qDebug() << "tileSet.margin: " << tileSet.margin;
-//                qDebug() << "tileSet.tileWidth: " << tileSet.tileWidth;
-//                qDebug() << "tileSet.tileHeight: " << tileSet.tileHeight;
+                qDebug() << "tileSet.tileWidth: " << tileSet.tileWidth;
+                qDebug() << "tileSet.tileHeight: " << tileSet.tileHeight;
 
                 if(tileSet.name.contains("tower"))
                 {
@@ -1219,6 +1294,7 @@ void GameWidget::loadMap(QString mapName)
                             {
                                 QRect rect(tileSet.margin + (tileSet.spacing * x) + (x * tileSet.tileWidth), tileSet.margin + (tileSet.spacing * y) + (y * tileSet.tileHeight), tileSet.tileWidth, tileSet.tileHeight);
                                 tileSet.subRects.push_back(rect);
+                                qDebug() << "QRect rect(tower) -- push_back:" << rect;
                             }
                     }
 
@@ -1430,14 +1506,15 @@ void GameWidget::loadMap(QString mapName)
                         int columns = tileSet.img.width() / tileSet.tileWidth;
                         int rows = tileSet.img.height() / tileSet.tileHeight;
 
-//                        qDebug() << "columnsPixmap: " << columns;
-//                        qDebug() << "rowsPixmap: " << rows;
+                        qDebug() << "columnsPixmap: " << columns;
+                        qDebug() << "rowsPixmap: " << rows;
 
                         for(int y = 0; y < rows; y++)
                             for(int x = 0; x < columns; x++)
                             {
                                 QRect rect(tileSet.margin + (tileSet.spacing * x) + (x * tileSet.tileWidth), tileSet.margin + (tileSet.spacing * y) + (y * tileSet.tileHeight), tileSet.tileWidth, tileSet.tileHeight);
                                 tileSet.subRects.push_back(rect);
+                                qDebug() << "QRect rect(Unit) -- push_back:" << rect;
                             }
                     }
 
@@ -1604,9 +1681,8 @@ void GameWidget::loadMap(QString mapName)
 //                        qDebug() << "tileWidth: " << tileWidth;
 //                        qDebug() << "tileHeight: " << tileHeight;
                         QRect rect(tileSet.margin + (tileSet.spacing * x) + (x * tileSet.tileWidth), tileSet.margin + (tileSet.spacing * y) + (y * tileSet.tileHeight), tileSet.tileWidth, tileSet.tileHeight);
-//                        qDebug() << "push_back:" << rect;
-
                         tileSet.subRects.push_back(rect);
+//                        qDebug() << "QRect rect(terrain) -- push_back:" << rect;
                     }
             }
             else if(nameElement == "terrain")
@@ -1622,7 +1698,7 @@ void GameWidget::loadMap(QString mapName)
                 {
                     global_pixmap = pixmap;
                     field.setPixmapForCreep(pixmap);
-//                    qDebug() << "Creep Set!";
+                    qDebug() << "Creep Set!";
                 }
                 if(tileSet.name.contains("creep"))
                 {
