@@ -1,7 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="right-down" width="32" height="32" tilewidth="64" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" name="Iso-64x64-outside" tilewidth="64" tileheight="64" tilecount="160">
+<map version="1.0" orientation="isometric" renderorder="right-down" width="32" height="32" tilewidth="64" tileheight="32" nextobjectid="4">
+ <tileset firstgid="1" name="Iso-64x64-outside" tilewidth="64" tileheight="64">
   <image source="textures/Iso-64x64-outside.png" width="640" height="1024"/>
+ </tileset>
+ <tileset firstgid="161" name="tower1_scout" tilewidth="64" tileheight="64">
+  <properties>
+   <property name="attack" value="1"/>
+   <property name="name" value="Scout"/>
+   <property name="radius" value="5"/>
+   <property name="size" value="2"/>
+   <property name="type" value="1"/>
+  </properties>
+  <image source="textures/warcraft2/tilesets/winter/human/buildings/scout_tower.png" trans="ff00ff" width="128" height="192"/>
+  <terraintypes>
+   <terrain name="idle_up" tile="0"/>
+   <terrain name="bullet_fly_up" tile="1"/>
+   <terrain name="bullet_fly_up_right" tile="2"/>
+   <terrain name="bullet_fly_right" tile="3"/>
+   <terrain name="bullet_fly_down_right" tile="4"/>
+   <terrain name="bullet_fly_down" tile="5"/>
+  </terraintypes>
+ </tileset>
+ <tileset firstgid="167" name="creep" tilewidth="128" tileheight="128">
+  <properties>
+   <property name="health_point" value="100"/>
+   <property name="name" value="Warrior"/>
+  </properties>
+  <image source="textures/warrior.png" trans="ff00ff" width="768" height="1024"/>
+  <terraintypes>
+   <terrain name="idle_up" tile="28"/>
+   <terrain name="idle_up_right" tile="34"/>
+   <terrain name="idle_right" tile="40"/>
+   <terrain name="idle_down_right" tile="46"/>
+   <terrain name="idle_down" tile="4"/>
+   <terrain name="walk1_up" tile="26"/>
+   <terrain name="walk2_up" tile="27"/>
+   <terrain name="walk3_up" tile="26"/>
+   <terrain name="walk4_up" tile="25"/>
+   <terrain name="walk5_up" tile="29"/>
+   <terrain name="walk6_up" tile="24"/>
+   <terrain name="walk7_up" tile="29"/>
+   <terrain name="walk8_up" tile="25"/>
+   <terrain name="walk1_up_right" tile="32"/>
+   <terrain name="walk2_up_right" tile="33"/>
+   <terrain name="walk3_up_right" tile="32"/>
+   <terrain name="walk4_up_right" tile="31"/>
+   <terrain name="walk5_up_right" tile="35"/>
+   <terrain name="walk6_up_right" tile="30"/>
+   <terrain name="walk7_up_right" tile="35"/>
+   <terrain name="walk8_up_right" tile="31"/>
+   <terrain name="walk1_right" tile="38"/>
+   <terrain name="walk2_right" tile="39"/>
+   <terrain name="walk3_right" tile="38"/>
+   <terrain name="walk4_right" tile="37"/>
+   <terrain name="walk5_right" tile="41"/>
+   <terrain name="walk6_right" tile="36"/>
+   <terrain name="walk7_right" tile="41"/>
+   <terrain name="walk8_right" tile="37"/>
+   <terrain name="walk1_down_right" tile="44"/>
+   <terrain name="walk2_down_right" tile="45"/>
+   <terrain name="walk3_down_right" tile="44"/>
+   <terrain name="walk4_down_right" tile="43"/>
+   <terrain name="walk5_down_right" tile="47"/>
+   <terrain name="walk6_down_right" tile="42"/>
+   <terrain name="walk7_down_right" tile="47"/>
+   <terrain name="walk8_down_right" tile="43"/>
+   <terrain name="walk1_down" tile="2"/>
+   <terrain name="walk2_down" tile="3"/>
+   <terrain name="walk3_down" tile="2"/>
+   <terrain name="walk4_down" tile="1"/>
+   <terrain name="walk5_down" tile="5"/>
+   <terrain name="walk6_down" tile="0"/>
+   <terrain name="walk7_down" tile="5"/>
+   <terrain name="walk8_down" tile="1"/>
+  </terraintypes>
+  <tile id="0">
+   <animation>
+    <frame tileid="2" duration="100"/>
+    <frame tileid="3" duration="100"/>
+    <frame tileid="2" duration="100"/>
+    <frame tileid="1" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="0" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="1" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="6">
+   <animation>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="9" duration="100"/>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="7" duration="100"/>
+    <frame tileid="11" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="11" duration="100"/>
+    <frame tileid="7" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="12">
+   <animation>
+    <frame tileid="14" duration="100"/>
+    <frame tileid="15" duration="100"/>
+    <frame tileid="14" duration="100"/>
+    <frame tileid="13" duration="100"/>
+    <frame tileid="17" duration="100"/>
+    <frame tileid="12" duration="100"/>
+    <frame tileid="17" duration="100"/>
+    <frame tileid="13" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="18">
+   <animation>
+    <frame tileid="20" duration="100"/>
+    <frame tileid="21" duration="100"/>
+    <frame tileid="20" duration="100"/>
+    <frame tileid="19" duration="100"/>
+    <frame tileid="23" duration="100"/>
+    <frame tileid="18" duration="100"/>
+    <frame tileid="23" duration="100"/>
+    <frame tileid="19" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="24">
+   <animation>
+    <frame tileid="26" duration="100"/>
+    <frame tileid="27" duration="100"/>
+    <frame tileid="26" duration="100"/>
+    <frame tileid="25" duration="100"/>
+    <frame tileid="29" duration="100"/>
+    <frame tileid="24" duration="100"/>
+    <frame tileid="29" duration="100"/>
+    <frame tileid="25" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="30">
+   <animation>
+    <frame tileid="32" duration="100"/>
+    <frame tileid="33" duration="100"/>
+    <frame tileid="32" duration="100"/>
+    <frame tileid="31" duration="100"/>
+    <frame tileid="35" duration="100"/>
+    <frame tileid="30" duration="100"/>
+    <frame tileid="35" duration="100"/>
+    <frame tileid="31" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="36">
+   <animation>
+    <frame tileid="38" duration="40"/>
+    <frame tileid="39" duration="40"/>
+    <frame tileid="38" duration="40"/>
+    <frame tileid="37" duration="40"/>
+    <frame tileid="41" duration="40"/>
+    <frame tileid="36" duration="40"/>
+    <frame tileid="41" duration="40"/>
+    <frame tileid="37" duration="40"/>
+   </animation>
+  </tile>
+  <tile id="42">
+   <animation>
+    <frame tileid="44" duration="1000"/>
+    <frame tileid="45" duration="1000"/>
+    <frame tileid="44" duration="1000"/>
+    <frame tileid="43" duration="1000"/>
+    <frame tileid="47" duration="1000"/>
+    <frame tileid="42" duration="1000"/>
+    <frame tileid="47" duration="1000"/>
+    <frame tileid="43" duration="1000"/>
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="215" name="creep2_troll_axethrower" tilewidth="72" tileheight="72">
+  <properties>
+   <property name="health_point" value="100"/>
+   <property name="name" value="Troll"/>
+  </properties>
+  <image source="textures/warcraft2/orc/units/troll_axethrower.png" trans="ff00ff" width="360" height="864"/>
+  <terraintypes>
+   <terrain name="idle_up" tile="0"/>
+   <terrain name="idle_up_right" tile="1"/>
+   <terrain name="idle_right" tile="2"/>
+   <terrain name="idle_down_right" tile="3"/>
+   <terrain name="idle_down" tile="4"/>
+   <terrain name="walk1_up" tile="10"/>
+   <terrain name="walk2_up" tile="5"/>
+   <terrain name="walk3_up" tile="10"/>
+   <terrain name="walk4_up" tile="20"/>
+   <terrain name="walk5_up" tile="15"/>
+   <terrain name="walk6_up" tile="20"/>
+   <terrain name="walk1_up_right" tile="11"/>
+   <terrain name="walk2_up_right" tile="6"/>
+   <terrain name="walk3_up_right" tile="11"/>
+   <terrain name="walk4_up_right" tile="21"/>
+   <terrain name="walk5_up_right" tile="16"/>
+   <terrain name="walk6_up_right" tile="21"/>
+   <terrain name="walk1_right" tile="12"/>
+   <terrain name="walk2_right" tile="7"/>
+   <terrain name="walk3_right" tile="12"/>
+   <terrain name="walk4_right" tile="22"/>
+   <terrain name="walk5_right" tile="17"/>
+   <terrain name="walk6_right" tile="22"/>
+   <terrain name="walk1_down_right" tile="13"/>
+   <terrain name="walk2_down_right" tile="8"/>
+   <terrain name="walk3_down_right" tile="13"/>
+   <terrain name="walk4_down_right" tile="23"/>
+   <terrain name="walk5_down_right" tile="18"/>
+   <terrain name="walk6_down_right" tile="23"/>
+   <terrain name="walk1_down" tile="14"/>
+   <terrain name="walk2_down" tile="9"/>
+   <terrain name="walk3_down" tile="14"/>
+   <terrain name="walk4_down" tile="24"/>
+   <terrain name="walk5_down" tile="19"/>
+   <terrain name="walk6_down" tile="24"/>
+   <terrain name="attack1_up" tile="25"/>
+   <terrain name="attack2_up" tile="30"/>
+   <terrain name="attack3_up" tile="35"/>
+   <terrain name="attack4_up" tile="40"/>
+   <terrain name="attack1_up_right" tile="26"/>
+   <terrain name="attack2_up_right" tile="31"/>
+   <terrain name="attack3_up_right" tile="36"/>
+   <terrain name="attack4_up_right" tile="41"/>
+   <terrain name="attack1_right" tile="27"/>
+   <terrain name="attack2_right" tile="32"/>
+   <terrain name="attack3_right" tile="37"/>
+   <terrain name="attack4_right" tile="42"/>
+   <terrain name="attack1_down_right" tile="28"/>
+   <terrain name="attack2_down_right" tile="33"/>
+   <terrain name="attack3_down_right" tile="38"/>
+   <terrain name="attack4_down_right" tile="43"/>
+   <terrain name="attack1_down" tile="29"/>
+   <terrain name="attack2_down" tile="34"/>
+   <terrain name="attack3_down" tile="39"/>
+   <terrain name="attack4_down" tile="44"/>
+   <terrain name="death1_up" tile="45"/>
+   <terrain name="death2_up" tile="50"/>
+   <terrain name="death3_up" tile="55"/>
+   <terrain name="death1_up_right" tile="46"/>
+   <terrain name="death2_up_right" tile="51"/>
+   <terrain name="death3_up_right" tile="56"/>
+   <terrain name="death1_right" tile="47"/>
+   <terrain name="death2_right" tile="52"/>
+   <terrain name="death3_right" tile="57"/>
+   <terrain name="death1_down_right" tile="48"/>
+   <terrain name="death2_down_right" tile="53"/>
+   <terrain name="death3_down_right" tile="58"/>
+   <terrain name="death1_down" tile="49"/>
+   <terrain name="death2_down" tile="54"/>
+   <terrain name="death3_down" tile="59"/>
+  </terraintypes>
+ </tileset>
+ <tileset firstgid="275" name="01" tilewidth="64" tileheight="64">
+  <image source="textures/tower01.png" trans="ff00ff" width="64" height="128"/>
  </tileset>
  <layer name="background" width="32" height="32">
   <data>
@@ -1031,9 +1281,41 @@
    <tile gid="2"/>
   </data>
  </layer>
- <layer name="foreground" width="32" height="32">
+ <layer name="ground" width="32" height="32">
   <data>
+   <tile gid="43"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="31"/>
    <tile gid="0"/>
+   <tile gid="44"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1064,40 +1346,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="56"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1128,13 +1378,13 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="162"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="163"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1160,46 +1410,14 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="55"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="164"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1224,6 +1442,13 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="161"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1234,6 +1459,31 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="275"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="55"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="165"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1256,15 +1506,15 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="166"/>
    <tile gid="144"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1277,7 +1527,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="276"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="52"/>
@@ -1288,8 +1538,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1320,8 +1570,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1352,8 +1602,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1373,7 +1623,7 @@
    <tile gid="111"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="275"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1384,8 +1634,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1416,7 +1666,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1439,7 +1689,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="276"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1448,7 +1698,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1480,7 +1730,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1512,8 +1762,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1544,8 +1794,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1576,8 +1826,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1608,8 +1858,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1640,8 +1890,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="68"/>
@@ -1672,8 +1922,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1704,8 +1954,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1736,8 +1986,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1768,8 +2018,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="140"/>
@@ -1800,8 +2050,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="139"/>
    <tile gid="0"/>
@@ -1832,8 +2082,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="138"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1864,8 +2114,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1896,8 +2146,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="148"/>
@@ -1914,7 +2164,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="123"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1928,8 +2178,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1944,8 +2194,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="124"/>
+   <tile gid="123"/>
    <tile gid="124"/>
    <tile gid="124"/>
    <tile gid="0"/>
@@ -1960,8 +2210,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1976,11 +2226,11 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="143"/>
-   <tile gid="124"/>
-   <tile gid="123"/>
-   <tile gid="124"/>
-   <tile gid="133"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1992,6 +2242,8 @@
    <tile gid="0"/>
    <tile gid="121"/>
    <tile gid="121"/>
+   <tile gid="37"/>
+   <tile gid="33"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -2008,10 +2260,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="134"/>
+   <tile gid="133"/>
    <tile gid="134"/>
    <tile gid="134"/>
    <tile gid="0"/>
@@ -2024,39 +2274,43 @@
    <tile gid="0"/>
    <tile gid="121"/>
    <tile gid="122"/>
-   <tile gid="122"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="153"/>
-   <tile gid="134"/>
-   <tile gid="133"/>
-   <tile gid="134"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="54"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="122"/>
-   <tile gid="122"/>
+   <tile gid="37"/>
+   <tile gid="42"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="38"/>
+   <tile gid="41"/>
   </data>
  </layer>
+ <objectgroup name="points">
+  <object id="1" name="spawnPoint" gid="113" x="0" y="13"/>
+  <object id="3" name="exitPoint" gid="113" x="30" y="0"/>
+ </objectgroup>
 </map>

@@ -314,6 +314,7 @@ bool Field::getMousePress(int x, int y)
 
 bool Field::isSetSpawnPoint(int x, int y)
 {
+//    qDebug() << "Field::isSetSpawnPoint(" << x << ", " << y << "); -- spawnPointX: " << spawnPointX << " spawnPointY: " << spawnPointY;
     if(spawnPointX != -1 && spawnPointY != -1)
         if((x == spawnPointX && y == spawnPointY) || (x == -1 && y == -1))
             return true;
@@ -419,53 +420,98 @@ int Field::stepOneCreep(int num)
                 tmpCreep->number = min;
                 tmpCreep->animationCurrIter = 0;
 
-                if(exitX < currX && exitY < currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_left.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_left;
-                    tmpCreep->direction = DirectionUpLeft;
-                }
-                else if(exitX == currX && exitY < currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up;
-                    tmpCreep->direction = DirectionUp;
-                }
-                else if(exitX > currX && exitY < currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_right.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_right;
-                    tmpCreep->direction = DirectionUpRight;
-                }
-                else if(exitX < currX && exitY == currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_left.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_left;
-                    tmpCreep->direction = DirectionLeft;
-                }
-                else if(exitX > currX && exitY == currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_right.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_right;
-                    tmpCreep->direction = DirectionRight;
-                }
-                else if(exitX < currX && exitY > currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_left.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_left;
-                    tmpCreep->direction = DirectionDownLeft;
-                }
-                else if(exitX == currX && exitY > currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down;
-                    tmpCreep->direction = DirectionDown;
-                }
-                else if(exitX > currX && exitY > currY)
-                {
-                    tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_right.size();
-                    tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_right;
-                    tmpCreep->direction = DirectionDownRight;
+                if(!getIsometric()) {
+                    if(exitX < currX && exitY < currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_left.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_left;
+                        tmpCreep->direction = DirectionUpLeft;
+                    } else if(exitX == currX && exitY < currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up;
+                        tmpCreep->direction = DirectionUp;
+                    } else if(exitX > currX && exitY < currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_right.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_right;
+                        tmpCreep->direction = DirectionUpRight;
+                    } else if(exitX < currX && exitY == currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_left.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_left;
+                        tmpCreep->direction = DirectionLeft;
+                    } else if(exitX > currX && exitY == currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_right.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_right;
+                        tmpCreep->direction = DirectionRight;
+                    } else if(exitX < currX && exitY > currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_left.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_left;
+                        tmpCreep->direction = DirectionDownLeft;
+                    } else if(exitX == currX && exitY > currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down;
+                        tmpCreep->direction = DirectionDown;
+                    } else if(exitX > currX && exitY > currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_right.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_right;
+                        tmpCreep->direction = DirectionDownRight;
+                    }
+                } else {
+                    if(exitX < currX && exitY < currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up;
+                        tmpCreep->direction = DirectionUp;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_left.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_left;
+//                        tmpCreep->direction = DirectionUpLeft;
+                    } else if(exitX == currX && exitY < currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_right.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_right;
+                        tmpCreep->direction = DirectionUpRight;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up;
+//                        tmpCreep->direction = DirectionUp;
+                    } else if(exitX > currX && exitY < currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_right.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_right;
+                        tmpCreep->direction = DirectionRight;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_right.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_right;
+//                        tmpCreep->direction = DirectionUpRight;
+                    } else if(exitX < currX && exitY == currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_up_left.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_up_left;
+                        tmpCreep->direction = DirectionUpLeft;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_left.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_left;
+//                        tmpCreep->direction = DirectionLeft;
+                    } else if(exitX > currX && exitY == currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_right.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_right;
+                        tmpCreep->direction = DirectionDownRight;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_right.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_right;
+//                        tmpCreep->direction = DirectionRight;
+                    } else if(exitX < currX && exitY > currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_left.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_left;
+                        tmpCreep->direction = DirectionLeft;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_left.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_left;
+//                        tmpCreep->direction = DirectionDownLeft;
+                    } else if(exitX == currX && exitY > currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_left.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_left;
+                        tmpCreep->direction = DirectionDownLeft;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down;
+//                        tmpCreep->direction = DirectionDown;
+                    } else if(exitX > currX && exitY > currY) {
+                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down.size();
+                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down;
+                        tmpCreep->direction = DirectionDown;
+//                        tmpCreep->animationMaxIter = tmpCreep->defUnit->walk_down_right.size();
+//                        tmpCreep->activePixmaps = tmpCreep->defUnit->walk_down_right;
+//                        tmpCreep->direction = DirectionDownRight;
+                    }
                 }
 //                qDebug() << "tmpCreep->animationMaxIter: " << tmpCreep << "->" << tmpCreep->animationMaxIter;
                 tmpCreep->pixmap = tmpCreep->activePixmaps[0];
@@ -704,8 +750,18 @@ bool Field::setCreep(int x, int y, Creep* creep)//, int type)
     {
         if(creep == NULL)
         {
-            int coorByMapX = mainCoorMapX + spaceWidget + x*sizeCell;
-            int coorByMapY = mainCoorMapY + spaceWidget + y*sizeCell;
+            int coorByMapX, coorByMapY;
+            if(!getIsometric()) {
+                coorByMapX = mainCoorMapX + spaceWidget + x*sizeCell;
+                coorByMapY = mainCoorMapY + spaceWidget + y*sizeCell;
+            } else {
+                int halfSizeCellX = sizeCell/2;
+                int halfSizeCellY = halfSizeCellX/2;
+                int isometricCoorX = halfSizeCellX*getSizeY();
+                int isometricCoorY = halfSizeCellY*y;
+                coorByMapX = mainCoorMapX + isometricCoorX+spaceWidget - halfSizeCellX + x*halfSizeCellX;
+                coorByMapY = mainCoorMapY + isometricCoorY+spaceWidget - halfSizeCellY*2 + x*halfSizeCellY;
+            }
 
             Creep* creep;
             if(creepSet)

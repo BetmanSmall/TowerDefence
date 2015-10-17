@@ -1,7 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-//#define CIRCLET8
+#define CIRCLET8
 #include <iostream>
 
 #include <QPixmap>
