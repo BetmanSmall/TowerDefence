@@ -3,12 +3,13 @@
  <tileset firstgid="1" name="Iso-64x64-outside" tilewidth="64" tileheight="64">
   <image source="textures/Iso-64x64-outside.png" width="640" height="1024"/>
  </tileset>
- <tileset firstgid="161" name="tower1_scout" tilewidth="64" tileheight="64">
+ <tileset firstgid="161" name="tower1_winter_scout" tilewidth="64" tileheight="64">
   <properties>
    <property name="attack" value="1"/>
-   <property name="name" value="Scout"/>
-   <property name="radius" value="5"/>
-   <property name="size" value="2"/>
+   <property name="height" value="1"/>
+   <property name="name" value="Winter Scout"/>
+   <property name="radius" value="1"/>
+   <property name="size" value="1"/>
    <property name="type" value="1"/>
   </properties>
   <image source="textures/warcraft2/tilesets/winter/human/buildings/scout_tower.png" trans="ff00ff" width="128" height="192"/>
@@ -21,13 +22,56 @@
    <terrain name="bullet_fly_down" tile="5"/>
   </terraintypes>
  </tileset>
- <tileset firstgid="167" name="creep" tilewidth="128" tileheight="128">
+ <tileset firstgid="167" name="tower2_summer_scout" tilewidth="64" tileheight="64">
+  <properties>
+   <property name="attack" value="1"/>
+   <property name="height" value="1"/>
+   <property name="name" value="Summer Scout"/>
+   <property name="radius" value="1"/>
+   <property name="size" value="1"/>
+   <property name="type" value="2"/>
+  </properties>
+  <image source="textures/warcraft2/tilesets/summer/human/buildings/guard_tower.png" trans="ff00ff" width="64" height="128"/>
+  <terraintypes>
+   <terrain name="idle_up" tile="0"/>
+  </terraintypes>
+ </tileset>
+ <tileset firstgid="169" name="tower3_duckTower" tilewidth="64" tileheight="128">
+  <properties>
+   <property name="attack" value="5"/>
+   <property name="height" value="2"/>
+   <property name="name" value="Duck Tower"/>
+   <property name="radius" value="5"/>
+   <property name="size" value="1"/>
+   <property name="type" value="3"/>
+  </properties>
+  <image source="textures/warcraft2/duck_tower01.png" trans="ff00ff" width="64" height="128"/>
+  <terraintypes>
+   <terrain name="idle_up" tile="0"/>
+  </terraintypes>
+ </tileset>
+ <tileset firstgid="170" name="tower4_mystic" tilewidth="64" tileheight="64">
+  <properties>
+   <property name="attack" value="1"/>
+   <property name="height" value="1"/>
+   <property name="name" value="Mystic Tower"/>
+   <property name="radius" value="3"/>
+   <property name="size" value="1"/>
+   <property name="type" value="4"/>
+  </properties>
+  <image source="textures/isom_tiles_castle.png" trans="ff00ff" width="192" height="256"/>
+  <terraintypes>
+   <terrain name="idle_up" tile="0"/>
+  </terraintypes>
+ </tileset>
+ <tileset firstgid="182" name="creep" tilewidth="128" tileheight="128">
   <properties>
    <property name="health_point" value="100"/>
    <property name="name" value="Warrior"/>
   </properties>
   <image source="textures/warrior.png" trans="ff00ff" width="768" height="1024"/>
   <terraintypes>
+   <terrain name="idle_up" tile="0"/>
    <terrain name="idle_up" tile="28"/>
    <terrain name="idle_up_right" tile="34"/>
    <terrain name="idle_right" tile="40"/>
@@ -171,7 +215,7 @@
    </animation>
   </tile>
  </tileset>
- <tileset firstgid="215" name="creep2_troll_axethrower" tilewidth="72" tileheight="72">
+ <tileset firstgid="230" name="creep2_troll_axethrower" tilewidth="72" tileheight="72">
   <properties>
    <property name="health_point" value="100"/>
    <property name="name" value="Troll"/>
@@ -249,9 +293,6 @@
    <terrain name="death2_down" tile="54"/>
    <terrain name="death3_down" tile="59"/>
   </terraintypes>
- </tileset>
- <tileset firstgid="275" name="01" tilewidth="64" tileheight="64">
-  <image source="textures/tower01.png" trans="ff00ff" width="64" height="128"/>
  </tileset>
  <layer name="background" width="32" height="32">
   <data>
@@ -1461,7 +1502,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="275"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1527,7 +1568,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="276"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="52"/>
@@ -1623,7 +1664,7 @@
    <tile gid="111"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="275"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1689,7 +1730,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="276"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>

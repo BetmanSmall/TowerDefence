@@ -511,6 +511,7 @@ void GameWidget::drawTowersByField()
 
 void GameWidget::drawTowersByTowers()
 {
+//    qDebug() << "GameWidget::drawTowersByTowers();";
     int mainCoorMapX = field.getMainCoorMapX();
     int mainCoorMapY = field.getMainCoorMapY();
     int spaceWidget = field.getSpaceWidget();
@@ -525,50 +526,72 @@ void GameWidget::drawTowersByTowers()
         int y = towers[k]->currY;
         int size = towers[k]->defTower->size;
 
-        int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;
-        int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;
-        int localSizeCell = sizeCell*size;
+        if(!field.getIsometric()) {
+//            qDebug() << "GameWidget::drawTowersByTowers(); -- NO Isometric!";
 
-        if(!mapLoad)
-            p.fillRect(pxlsX+1, pxlsY+1, localSizeCell-1, localSizeCell-1, QColor(127, 255, 0));
-        else
-            p.drawPixmap(pxlsX, pxlsY, localSizeCell/* + sizeCell*/, localSizeCell/* + sizeCell*/, towers[k]->pixmap);
+            int pxlsX = mainCoorMapX + spaceWidget + x*sizeCell;
+            int pxlsY = mainCoorMapY + spaceWidget + y*sizeCell;
+            int localSizeCell = sizeCell*size;
 
-//        int attackX = towers[k]->attackX;
-//        int attackY = towers[k]->attackY;
-//        if(attackX != -1 && attackY != -1)
-//        {
-//            attackX = mainCoorMapX + spaceWidget + attackX*sizeCell;
-//            attackY = mainCoorMapY + spaceWidget + attackY*sizeCell;
-//            p.drawLine(pxlsX+localSizeCell/2, pxlsY+localSizeCell/2, attackX, attackY);
-//        }
+            if(!mapLoad)
+                p.fillRect(pxlsX+1, pxlsY+1, localSizeCell-1, localSizeCell-1, QColor(127, 255, 0));
+            else
+                p.drawPixmap(pxlsX, pxlsY, localSizeCell/* + sizeCell*/, localSizeCell/* + sizeCell*/, towers[k]->pixmap);
 
-        for(int iBullet = 0; iBullet < towers[k]->bullets.size(); iBullet++) {
-//            int bulletX = mainCoorMapX + spaceWidget + towers[k]->bullets[iBullet].getCurrX()*sizeCell;
-//            int bulletY = mainCoorMapY + spaceWidget + towers[k]->bullets[iBullet].getCurrY()*sizeCell;
-            int bulletX = towers[k]->bullets[iBullet].getCurrX() - mainCoorMapX;
-            int bulletY = towers[k]->bullets[iBullet].getCurrY() - mainCoorMapY;
+    //        int attackX = towers[k]->attackX;
+    //        int attackY = towers[k]->attackY;
+    //        if(attackX != -1 && attackY != -1)
+    //        {
+    //            attackX = mainCoorMapX + spaceWidget + attackX*sizeCell;
+    //            attackY = mainCoorMapY + spaceWidget + attackY*sizeCell;
+    //            p.drawLine(pxlsX+localSizeCell/2, pxlsY+localSizeCell/2, attackX, attackY);
+    //        }
 
-            p.drawPixmap(bulletX, bulletY, sizeCell, sizeCell, towers[k]->bullets[iBullet].getPixmap());
+            for(int iBullet = 0; iBullet < towers[k]->bullets.size(); iBullet++) {
+    //            int bulletX = mainCoorMapX + spaceWidget + towers[k]->bullets[iBullet].getCurrX()*sizeCell;
+    //            int bulletY = mainCoorMapY + spaceWidget + towers[k]->bullets[iBullet].getCurrY()*sizeCell;
+                int bulletX = towers[k]->bullets[iBullet].getCurrX() - mainCoorMapX;
+                int bulletY = towers[k]->bullets[iBullet].getCurrY() - mainCoorMapY;
+
+                p.drawPixmap(bulletX, bulletY, sizeCell, sizeCell, towers[k]->bullets[iBullet].getPixmap());
+            }
+
+    //        QPixmap bullet_fly_up = towers[k]->defTower->bullet_fly_up;
+    //        QPixmap bullet_fly_up_right = towers[k]->defTower->bullet_fly_up_right;
+    //        QPixmap bullet_fly_right = towers[k]->defTower->bullet_fly_right;
+    //        QPixmap bullet_fly_down_right = towers[k]->defTower->bullet_fly_down_right;
+    //        QPixmap bullet_fly_down = towers[k]->defTower->bullet_fly_down;
+    //        QPixmap bullet_fly_down_left = towers[k]->defTower->bullet_fly_down_left;
+    //        QPixmap bullet_fly_left = towers[k]->defTower->bullet_fly_left;
+    //        QPixmap bullet_fly_up_left = towers[k]->defTower->bullet_fly_up_left;
+
+    //        p.drawPixmap(pxlsX, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up);
+    //        p.drawPixmap(pxlsX + localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_right);
+    //        p.drawPixmap(pxlsX + localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_right);
+    //        p.drawPixmap(pxlsX + localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_right);
+    //        p.drawPixmap(pxlsX, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down);
+    //        p.drawPixmap(pxlsX - localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_left);
+    //        p.drawPixmap(pxlsX - localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_left);
+    //        p.drawPixmap(pxlsX - localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_left);
+        } else {
+//            qDebug() << "GameWidget::drawTowersByTowers(); -- Isometric!";
+
+            int sizeCellX = sizeCell;
+            int sizeCellY = sizeCellX/2;
+            int height = towers[k]->defTower->height;
+
+            int isometricSpaceX = (field.getSizeY()-y)*(sizeCellX/2);
+            int isometricSpaceY = y*(sizeCellY/2);
+
+            int pxlsX = mainCoorMapX + isometricSpaceX+spaceWidget + x*(sizeCellX/2);
+            int pxlsY = mainCoorMapY + isometricSpaceY+spaceWidget + x*(sizeCellY/2);
+
+            if(!mapLoad) {
+//                p.fillRect(pxlsX+1, pxlsY+1, localSizeCell-1, localSizeCell-1, QColor(127, 255, 0));
+            } else {
+                p.drawPixmap(pxlsX - sizeCellX/2, pxlsY + sizeCellY - (sizeCellY*2)*height, sizeCellX, (sizeCellY*2)*height, towers[k]->pixmap);
+            }
         }
-
-//        QPixmap bullet_fly_up = towers[k]->defTower->bullet_fly_up;
-//        QPixmap bullet_fly_up_right = towers[k]->defTower->bullet_fly_up_right;
-//        QPixmap bullet_fly_right = towers[k]->defTower->bullet_fly_right;
-//        QPixmap bullet_fly_down_right = towers[k]->defTower->bullet_fly_down_right;
-//        QPixmap bullet_fly_down = towers[k]->defTower->bullet_fly_down;
-//        QPixmap bullet_fly_down_left = towers[k]->defTower->bullet_fly_down_left;
-//        QPixmap bullet_fly_left = towers[k]->defTower->bullet_fly_left;
-//        QPixmap bullet_fly_up_left = towers[k]->defTower->bullet_fly_up_left;
-
-//        p.drawPixmap(pxlsX, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up);
-//        p.drawPixmap(pxlsX + localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_right);
-//        p.drawPixmap(pxlsX + localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_right);
-//        p.drawPixmap(pxlsX + localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_right);
-//        p.drawPixmap(pxlsX, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down);
-//        p.drawPixmap(pxlsX - localSizeCell, pxlsY + localSizeCell, localSizeCell, localSizeCell, bullet_fly_down_left);
-//        p.drawPixmap(pxlsX - localSizeCell, pxlsY, localSizeCell, localSizeCell, bullet_fly_left);
-//        p.drawPixmap(pxlsX - localSizeCell, pxlsY - localSizeCell, localSizeCell, localSizeCell, bullet_fly_up_left);
     }
 }
 
@@ -642,7 +665,7 @@ void GameWidget::drawCreeps()
                             creeps[k]->coorByMapY = pxlsY;
                             // -----------------------
                         } else {
-                            qDebug() << "GameWidget::drawCreeps(); -- Isometric!";
+//                            qDebug() << "GameWidget::drawCreeps(); -- Isometric!";
 
                             int mainX = mainCoorMapX + isometricCoorX + x*(sizeCellX/2);
                             int mainY = mainCoorMapY + isometricCoorY + x*(sizeCellY/2);
@@ -1266,6 +1289,8 @@ void GameWidget::loadMap(QString mapName)
                             tower.radius = xmlReader.attributes().value("value").toInt();
                         else if(xmlReader.attributes().value("name").toString() == "size")
                             tower.size = xmlReader.attributes().value("value").toInt();
+                        else if(xmlReader.attributes().value("name").toString() == "height")
+                            tower.height = xmlReader.attributes().value("value").toInt();
                         else if(xmlReader.attributes().value("name").toString() == "type")
                             tower.type = xmlReader.attributes().value("value").toInt();
 

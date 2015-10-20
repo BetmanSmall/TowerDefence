@@ -13,6 +13,7 @@ public:
     int attack;
     int radius;
     int size;
+    int height;
     int type;
 
     QPixmap pixmap;
