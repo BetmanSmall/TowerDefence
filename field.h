@@ -242,7 +242,7 @@ public:
     /**
      * @brief Говорит всем криппам ходить
      * @return 2 - Все криппы мертвы
-     * @return 1 - Усли колличество криппов в точке @exitPoint превышено $gameOverLimitCreeps
+     * @return 1 - Eсли колличество криппов в точке @exitPoint превышено $gameOverLimitCreeps
      * @return 0 - Все криппы сходили успешно
      * @return -1 - Какому-либо криппу перекрыли путь до $exitPoint
      */

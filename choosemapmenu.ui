@@ -63,6 +63,28 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="loadMap5Button">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Isometric Map</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="loadMap1Button">
          <property name="text">
           <string/>
@@ -166,13 +188,6 @@
       <widget class="QPushButton" name="loadMap4Button">
        <property name="text">
         <string>Boloto Isometric Map</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="loadMap5Button">
-       <property name="text">
-        <string>Isometric Map</string>
        </property>
       </widget>
      </item>

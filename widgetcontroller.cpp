@@ -35,7 +35,7 @@ WidgetController::WidgetController(QWidget *parent) :
 //    show();
 //    move(100,100);
 
-    setWindowState(Qt::WindowFullScreen);
+//    setWindowState(Qt::WindowFullScreen);
 
     showMainMenu();
 }
@@ -48,6 +48,9 @@ void WidgetController::paintEvent(QPaintEvent *)
 //    qDebug() << pix;
 
     p.drawPixmap(0, 0, width(), height(), pix);
+//    p.fillRect(0, 0, width(), height(), QColor(0, 0, 0));
+
+    p.end();
 }
 
 void WidgetController::showMainMenu()

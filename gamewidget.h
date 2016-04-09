@@ -16,6 +16,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QXmlStreamReader>
+#include <QBitmap>
 
 #include "field.h"
 #include "faction.h"
@@ -72,6 +73,7 @@ public:
     void paintEvent(QPaintEvent *);
     void drawGrid();
     void drawField();
+    void drawFullField();
     void drawRelief();
     void drawTowersByField();
     void drawTowersByTowers();
