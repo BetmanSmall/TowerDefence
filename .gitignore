@@ -2,12 +2,14 @@
 *.slo
 *.lo
 *.o
+*.obj
 *.a
 *.la
 *.lai
 *.so
 *.dll
 *.dylib
+*.lib
 
 # Qt-es
 object_script.*.Release
@@ -41,3 +43,17 @@ target_wrapper.*
 
 # QtCreator CMake
 CMakeLists.txt.user*
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Fortran module files
+*.mod
+
+# Executables
+*.exe
+*.out
+*.app
+TowerDefence.pro.user
+docs/html/
