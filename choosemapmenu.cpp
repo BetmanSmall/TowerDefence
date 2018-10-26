@@ -9,7 +9,11 @@ ChooseMapMenu::ChooseMapMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     TOWER_DEFENCE_PATH = "../../TowerDefence/";
+#else
+    TOWER_DEFENCE_PATH = "./";
+#endif
 
     ui->loadMap1Button->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/button1v2.png"));
     ui->loadMap2Button->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/button2v2.png"));

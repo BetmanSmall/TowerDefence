@@ -5,7 +5,12 @@
 WidgetController::WidgetController(QWidget *parent) :
     QWidget(parent)
 {
+
+#ifdef QT_DEBUG
     TOWER_DEFENCE_PATH = "../../TowerDefence/";
+#else
+    TOWER_DEFENCE_PATH = "./";
+#endif
 
 //    this->setMaximumWidth(640);
 //    this->setMaximumHeight(480);

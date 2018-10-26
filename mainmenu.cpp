@@ -10,7 +10,11 @@ MainMenu::MainMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     TOWER_DEFENCE_PATH = "../../TowerDefence/";
+#else
+    TOWER_DEFENCE_PATH = "./";
+#endif
 
     ui->playButton->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/Play.png"));
     ui->optionsButton->setIcon(QIcon(TOWER_DEFENCE_PATH + "images/Options.png"));

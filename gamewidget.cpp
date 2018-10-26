@@ -7,7 +7,11 @@ GameWidget::GameWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef QT_DEBUG
     TOWER_DEFENCE_PATH = "../../TowerDefence/";
+#else
+    TOWER_DEFENCE_PATH = "./";
+#endif
 
     srand(time(0));
 
